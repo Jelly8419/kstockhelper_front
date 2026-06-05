@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Dark-first financial theme tokens */
+:root {
+  --background: #0a0c10;
+  --foreground: #e6e8eb;
+  --surface: #12151b;
+  --surface-hover: #1a1e26;
+  --border: #232831;
+  --muted: #8b93a1;
+  --brand: #2e7cf6;
+  --brand-hover: #1f6ae0;
+  /* Korean market convention: red = up, blue = down */
+  --up: #f0616d;
+  --down: #4d8df6;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

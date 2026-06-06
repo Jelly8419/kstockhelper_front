@@ -13,6 +13,15 @@ const PREVIEW_COLUMNS =
 const FULL_COLUMNS =
   "id,category,subcategory,title,preview,source,url,is_premium,published_at,stock_ids,body,summary,key_points,key_figures";
 
+/** Number of items per page for the news feed. */
+export const NEWS_PAGE_SIZE = 20;
+
+export interface NewsPage {
+  items: NewsPreview[];
+  /** Whether more pages exist after this one. */
+  hasMore: boolean;
+}
+
 function mapPreview(row: NewsPreviewRow): NewsPreview {
   return {
     id: row.id,
@@ -39,15 +48,28 @@ function mapFull(row: NewsFullRow): NewsDetailItem {
 }
 
 /**
- * Fetch the published news list (preview view).
- * Optionally filter by ticker; "all" returns everything.
+ * Fetch one page of the published news list (preview view).
+ * Filter by ticker ("all" = no filter). Server-side pagination + filtering.
+ *
+ * Pages are ordered by (published_at desc, id desc) for stable pagination —
+ * a single timestamp key alone can drop/duplicate rows at page boundaries.
  */
-export async function getNewsList(filter: NewsFilter = "all"): Promise<NewsPreview[]> {
+export async function getNewsPage(
+  filter: NewsFilter = "all",
+  page = 0,
+  pageSize = NEWS_PAGE_SIZE
+): Promise<NewsPage> {
   const supabase = createClient();
+  const from = page * pageSize;
+  // Fetch one extra row to detect whether more pages exist.
+  const to = from + pageSize; // inclusive end → pageSize+1 rows
+
   let query = supabase
     .from("news_preview")
     .select(PREVIEW_COLUMNS)
-    .order("published_at", { ascending: false });
+    .order("published_at", { ascending: false })
+    .order("id", { ascending: false })
+    .range(from, to);
 
   // PostgREST array containment filter on stock_ids.
   if (filter !== "all") {
@@ -56,10 +78,14 @@ export async function getNewsList(filter: NewsFilter = "all"): Promise<NewsPrevi
 
   const { data, error } = await query;
   if (error) {
-    console.error("getNewsList error:", error.message);
-    return [];
+    console.error("getNewsPage error:", error.message);
+    return { items: [], hasMore: false };
   }
-  return (data as NewsPreviewRow[]).map(mapPreview);
+
+  const rows = data as NewsPreviewRow[];
+  const hasMore = rows.length > pageSize;
+  const items = rows.slice(0, pageSize).map(mapPreview);
+  return { items, hasMore };
 }
 
 /** Fetch a single news item detail (full view). Returns null if not found. */

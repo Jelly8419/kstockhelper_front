@@ -104,3 +104,32 @@ export async function getNewsById(id: string): Promise<NewsDetailItem | null> {
   if (!data) return null;
   return mapFull(data as NewsFullRow);
 }
+
+export interface NewsSitemapEntry {
+  id: string;
+  publishedAt: string;
+}
+
+/**
+ * Fetch all published news ids + timestamps for the sitemap.
+ * Capped to avoid an unbounded sitemap as data grows.
+ */
+export async function getNewsSitemapEntries(
+  limit = 5000
+): Promise<NewsSitemapEntry[]> {
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from("news_preview")
+    .select("id,published_at")
+    .order("published_at", { ascending: false })
+    .limit(limit);
+
+  if (error || !data) {
+    console.error("getNewsSitemapEntries error:", error?.message);
+    return [];
+  }
+  return (data as { id: string; published_at: string }[]).map((r) => ({
+    id: r.id,
+    publishedAt: r.published_at,
+  }));
+}

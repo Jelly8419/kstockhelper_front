@@ -19,7 +19,7 @@ export function Footer() {
         </nav>
 
         <p className="mt-2 text-xs text-muted">
-          © {new Date().getFullYear()} kstockhelper.io
+          © {new Date().getFullYear()} kstockhelper.com
         </p>
       </div>
     </footer>

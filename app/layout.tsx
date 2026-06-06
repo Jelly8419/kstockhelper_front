@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { Gnb } from "@/components/layout/Gnb";
 import { Footer } from "@/components/layout/Footer";
@@ -33,6 +34,7 @@ export default function RootLayout({
         <Gnb />
         <main className="flex-1">{children}</main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );

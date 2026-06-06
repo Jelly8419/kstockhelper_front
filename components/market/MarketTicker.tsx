@@ -13,7 +13,7 @@ export function MarketTicker() {
         <h2 className="text-sm font-semibold text-foreground">Market Overview</h2>
         {lastUpdated && (
           <span className="text-xs text-muted">
-            Updated {formatRegisteredTime(lastUpdated.toISOString())}
+            Updated {formatRegisteredTime(lastUpdated)}
           </span>
         )}
       </div>

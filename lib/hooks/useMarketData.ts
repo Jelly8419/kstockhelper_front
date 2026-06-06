@@ -2,32 +2,26 @@
 
 import { useEffect, useState } from "react";
 import { MarketItem } from "@/types/market";
-import { MOCK_MARKET } from "@/lib/mock/marketData";
+import { getMarketData } from "@/lib/api/market";
 
 const REFRESH_MS = 5 * 60 * 1000; // PRD: refresh every 5 minutes
 
 interface UseMarketData {
   items: MarketItem[];
-  lastUpdated: Date | null;
+  /** Latest updated_at from the data (ISO), or null. */
+  lastUpdated: string | null;
   isLoading: boolean;
 }
 
 /**
- * Provides market board data.
- * Currently returns mock data and sets up the 5-minute refresh loop.
- *
- * TODO (backend): replace fetchMarket() with the real API call, and
- * gate refreshing to weekdays 09:00–15:35 KST (freeze at last value after close).
+ * Provides market board data from the market_data table, refreshing every
+ * 5 minutes. The backend gates collection to market hours, so off-hours the
+ * data simply stays at the last value (no extra client-side gating needed).
  */
-async function fetchMarket(): Promise<MarketItem[]> {
-  // TODO: real API call. For now, return mock data.
-  return MOCK_MARKET;
-}
-
 export function useMarketData(): UseMarketData {
-  const [items, setItems] = useState<MarketItem[]>(MOCK_MARKET);
-  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [items, setItems] = useState<MarketItem[]>([]);
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     let active = true;
@@ -35,10 +29,10 @@ export function useMarketData(): UseMarketData {
     const load = async () => {
       setIsLoading(true);
       try {
-        const data = await fetchMarket();
+        const { items, lastUpdated } = await getMarketData();
         if (!active) return;
-        setItems(data);
-        setLastUpdated(new Date());
+        setItems(items);
+        setLastUpdated(lastUpdated);
       } finally {
         if (active) setIsLoading(false);
       }

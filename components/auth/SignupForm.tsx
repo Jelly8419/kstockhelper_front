@@ -19,12 +19,14 @@ export function SignupForm() {
   const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // Step 1: send an email OTP (verification code).
+  // Step 1: send a 6-digit email verification code (OTP).
   const sendCode = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
+    setNotice(null);
     setLoading(true);
     try {
       const supabase = createClient();
@@ -37,21 +39,44 @@ export function SignupForm() {
         return;
       }
       setStep("code");
+      setNotice(`A 6-digit code was sent to ${email}.`);
     } finally {
       setLoading(false);
     }
   };
 
-  // Step 2: verify the OTP code.
+  // Resend the code without leaving the code step.
+  const resendCode = async () => {
+    setError(null);
+    setNotice(null);
+    setLoading(true);
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: { shouldCreateUser: true },
+      });
+      if (error) {
+        setError(error.message);
+        return;
+      }
+      setNotice("A new code was sent.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Step 2: verify the OTP code → creates the session.
   const verifyCode = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
+    setNotice(null);
     setLoading(true);
     try {
       const supabase = createClient();
       const { error } = await supabase.auth.verifyOtp({
         email,
-        token: code,
+        token: code.trim(),
         type: "email",
       });
       if (error) {
@@ -64,7 +89,7 @@ export function SignupForm() {
     }
   };
 
-  // Step 3: set the account password (8–16 chars).
+  // Step 3: set the account password (8–16 chars) on the now-authenticated user.
   const setAccountPassword = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -106,6 +131,7 @@ export function SignupForm() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
           />
+          {notice && <p className="text-xs text-muted">{notice}</p>}
           {error && <p className="text-xs text-down">{error}</p>}
           <Button type="submit" size="lg" disabled={loading}>
             {loading ? "Sending…" : "Send Verification Code"}
@@ -119,15 +145,39 @@ export function SignupForm() {
             label="Verification Code"
             name="code"
             inputMode="numeric"
+            autoComplete="one-time-code"
             required
             value={code}
             onChange={(e) => setCode(e.target.value)}
-            placeholder="Enter the code sent to your email"
+            placeholder="Enter the 6-digit code"
           />
+          {notice && <p className="text-xs text-muted">{notice}</p>}
           {error && <p className="text-xs text-down">{error}</p>}
           <Button type="submit" size="lg" disabled={loading}>
             {loading ? "Verifying…" : "Verify Code"}
           </Button>
+          <div className="flex items-center justify-between text-xs">
+            <button
+              type="button"
+              onClick={() => {
+                setStep("email");
+                setCode("");
+                setError(null);
+                setNotice(null);
+              }}
+              className="text-muted hover:text-foreground"
+            >
+              ← Change email
+            </button>
+            <button
+              type="button"
+              onClick={resendCode}
+              disabled={loading}
+              className="text-brand hover:underline disabled:opacity-50"
+            >
+              Resend code
+            </button>
+          </div>
         </form>
       )}
 

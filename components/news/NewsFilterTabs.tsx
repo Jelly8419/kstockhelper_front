@@ -1,7 +1,7 @@
 "use client";
 
 import { NewsFilter } from "@/types/news";
-import { TICKERS } from "@/lib/mock/newsData";
+import { TICKERS } from "@/lib/constants/tickers";
 
 interface Tab {
   id: NewsFilter;

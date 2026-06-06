@@ -1,16 +1,15 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { NewsFilter, NewsItem } from "@/types/news";
+import { NewsFilter, NewsPreview } from "@/types/news";
 import { NewsFilterTabs } from "./NewsFilterTabs";
 import { NewsCard } from "./NewsCard";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { SignupGateModal } from "@/components/access/SignupGateModal";
-import { PremiumGateModal } from "@/components/access/PremiumGateModal";
 
-export function NewsList({ items }: { items: NewsItem[] }) {
+export function NewsList({ items }: { items: NewsPreview[] }) {
   const [filter, setFilter] = useState<NewsFilter>("all");
-  const [gate, setGate] = useState<"none" | "signup" | "premium">("none");
+  const [gateOpen, setGateOpen] = useState(false);
   const { tier } = useAuth();
 
   const filtered = useMemo(() => {
@@ -18,11 +17,9 @@ export function NewsList({ items }: { items: NewsItem[] }) {
     return items.filter((n) => n.tickers.includes(filter));
   }, [items, filter]);
 
-  // Premium users navigate directly; others get a gate modal on click.
+  // Members navigate directly; guests get a sign-up modal on click.
   const handleBlockedClick =
-    tier === "premium"
-      ? undefined
-      : () => setGate(tier === "guest" ? "signup" : "premium");
+    tier === "member" ? undefined : () => setGateOpen(true);
 
   return (
     <section aria-label="News" className="flex flex-col gap-4">
@@ -48,8 +45,7 @@ export function NewsList({ items }: { items: NewsItem[] }) {
         </div>
       )}
 
-      <SignupGateModal open={gate === "signup"} onClose={() => setGate("none")} />
-      <PremiumGateModal open={gate === "premium"} onClose={() => setGate("none")} />
+      <SignupGateModal open={gateOpen} onClose={() => setGateOpen(false)} />
     </section>
   );
 }

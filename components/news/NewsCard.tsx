@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { NewsItem } from "@/types/news";
-import { TICKER_LABEL } from "@/lib/mock/newsData";
+import { NewsPreview } from "@/types/news";
+import { TICKER_LABEL } from "@/lib/constants/tickers";
 import { Badge } from "@/components/ui/Badge";
 import { formatRegisteredTime } from "@/lib/utils/format";
-import { previewWords } from "@/lib/utils/truncate";
 
 interface Props {
-  item: NewsItem;
+  item: NewsPreview;
   /** When provided, intercepts the click instead of navigating (for gating). */
   onBlockedClick?: () => void;
 }
@@ -35,8 +34,8 @@ export function NewsCard({ item, onBlockedClick }: Props) {
         {item.title}
       </h3>
 
-      <p className="text-sm leading-relaxed text-muted">
-        {previewWords(item.body)}
+      <p className="line-clamp-3 text-sm leading-relaxed text-muted">
+        {item.preview}
       </p>
     </>
   );

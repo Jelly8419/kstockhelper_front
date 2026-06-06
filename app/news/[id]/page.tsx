@@ -1,10 +1,17 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getMockNewsById } from "@/lib/mock/newsData";
+import { getNewsById } from "@/lib/api/news";
 import { NewsDetailGate } from "@/components/news/NewsDetailGate";
 
-export default function NewsDetailPage({ params }: { params: { id: string } }) {
-  const item = getMockNewsById(params.id);
+// Real-time content — always fetch fresh.
+export const dynamic = "force-dynamic";
+
+export default async function NewsDetailPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const item = await getNewsById(params.id);
   if (!item) notFound();
 
   return (

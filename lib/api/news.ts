@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { toTickerLabels } from "@/lib/constants/tickers";
+import { NEWS_PAGE_SIZE } from "@/lib/constants/news";
 import {
   NewsPreview,
   NewsPreviewRow,
@@ -13,13 +14,12 @@ const PREVIEW_COLUMNS =
 const FULL_COLUMNS =
   "id,category,subcategory,title,preview,source,url,is_premium,published_at,stock_ids,body,summary,key_points,key_figures";
 
-/** Number of items per page for the news feed. */
-export const NEWS_PAGE_SIZE = 20;
-
 export interface NewsPage {
   items: NewsPreview[];
   /** Whether more pages exist after this one. */
   hasMore: boolean;
+  /** Total number of items matching the filter (for pagination). */
+  total: number;
 }
 
 function mapPreview(row: NewsPreviewRow): NewsPreview {
@@ -61,12 +61,11 @@ export async function getNewsPage(
 ): Promise<NewsPage> {
   const supabase = createClient();
   const from = page * pageSize;
-  // Fetch one extra row to detect whether more pages exist.
-  const to = from + pageSize; // inclusive end → pageSize+1 rows
+  const to = from + pageSize - 1; // exact page window
 
   let query = supabase
     .from("news_preview")
-    .select(PREVIEW_COLUMNS)
+    .select(PREVIEW_COLUMNS, { count: "exact" })
     .order("published_at", { ascending: false })
     .order("id", { ascending: false })
     .range(from, to);
@@ -76,16 +75,16 @@ export async function getNewsPage(
     query = query.contains("stock_ids", [filter]);
   }
 
-  const { data, error } = await query;
+  const { data, error, count } = await query;
   if (error) {
     console.error("getNewsPage error:", error.message);
-    return { items: [], hasMore: false };
+    return { items: [], hasMore: false, total: 0 };
   }
 
-  const rows = data as NewsPreviewRow[];
-  const hasMore = rows.length > pageSize;
-  const items = rows.slice(0, pageSize).map(mapPreview);
-  return { items, hasMore };
+  const total = count ?? 0;
+  const items = (data as NewsPreviewRow[]).map(mapPreview);
+  const hasMore = from + items.length < total;
+  return { items, hasMore, total };
 }
 
 /** Fetch a single news item detail (full view). Returns null if not found. */

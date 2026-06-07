@@ -18,6 +18,7 @@ export function SignupForm() {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -95,6 +96,10 @@ export function SignupForm() {
     setError(null);
     if (password.length < PASSWORD_MIN || password.length > PASSWORD_MAX) {
       setError(`Password must be ${PASSWORD_MIN}–${PASSWORD_MAX} characters.`);
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
       return;
     }
     setLoading(true);
@@ -193,6 +198,18 @@ export function SignupForm() {
             maxLength={PASSWORD_MAX}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="••••••••"
+          />
+          <Input
+            label="Confirm Password"
+            name="confirmPassword"
+            type="password"
+            autoComplete="new-password"
+            required
+            minLength={PASSWORD_MIN}
+            maxLength={PASSWORD_MAX}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="••••••••"
           />
           {error && <p className="text-xs text-down">{error}</p>}

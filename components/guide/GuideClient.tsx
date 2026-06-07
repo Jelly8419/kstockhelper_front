@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { ExchangeConnectForm } from "@/components/connect/ExchangeConnectForm";
 import { useAuth } from "@/lib/hooks/useAuth";

@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId: user.id, bybitUid }),
     });
-
+    console.log("bybit verify proxy response status:", res.status);
     const data = (await res.json().catch(() => null)) as {
       success?: boolean;
       message?: string;

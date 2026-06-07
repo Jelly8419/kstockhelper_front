@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-import { BYBIT_REFERRAL_URL } from "@/lib/constants/site";
 
 export function SignupBanner() {
   return (
@@ -15,16 +14,16 @@ export function SignupBanner() {
           </p>
         </div>
         <div className="flex shrink-0 flex-col items-start gap-1.5 sm:items-end">
-          <a href={BYBIT_REFERRAL_URL} target="_blank" rel="noopener noreferrer">
+          <Link href="/guide">
             <Button variant="primary" size="lg">
               Start Trading
             </Button>
-          </a>
+          </Link>
           <Link
             href="/settings"
             className="text-xs text-muted hover:text-foreground"
           >
-            Already on Bybit? Connect your account →
+            Already have an account? Connect your UID →
           </Link>
         </div>
       </div>

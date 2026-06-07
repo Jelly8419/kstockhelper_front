@@ -3,18 +3,20 @@
 import { useCallback, useEffect, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
-import { UserTier } from "@/types/user";
+import { BinanceStatus, UserTier } from "@/types/user";
 
 interface AuthState {
-  /** guest (logged out) | free (logged in, no Bybit) | premium (Bybit connected). */
+  /** guest (logged out) | free (logged in, no access) | premium (Bybit or Binance-approved). */
   tier: UserTier;
   email: string | null;
   bybitUid: string | null;
+  binanceUid: string | null;
+  binanceStatus: BinanceStatus;
   isLoading: boolean;
 }
 
 interface UseAuth extends AuthState {
-  /** Re-read session + profile (call after Bybit verify succeeds). */
+  /** Re-read session + profile (call after a connect/verify succeeds). */
   refresh: () => Promise<void>;
 }
 
@@ -22,13 +24,15 @@ const GUEST: AuthState = {
   tier: "guest",
   email: null,
   bybitUid: null,
+  binanceUid: null,
+  binanceStatus: "not_applied",
   isLoading: false,
 };
 
 /**
  * Real Supabase-backed auth state with 3-tier access.
  * Content access itself is enforced in the DB (news_full view via is_premium());
- * this hook drives the UI.
+ * this hook drives the UI. premium = DB tier 'premium' (Bybit) OR Binance approved.
  */
 export function useAuth(): UseAuth {
   const [state, setState] = useState<AuthState>({ ...GUEST, isLoading: true });
@@ -40,15 +44,20 @@ export function useAuth(): UseAuth {
     const email = session.user.email ?? null;
     const { data } = await supabase
       .from("users")
-      .select("tier, bybit_uid")
+      .select("tier, bybit_uid, binance_uid, binance_uid_status")
       .eq("id", session.user.id)
       .maybeSingle();
 
     const dbTier = data?.tier as "free" | "premium" | undefined;
+    const binanceStatus = (data?.binance_uid_status as BinanceStatus) ?? "not_applied";
+    const isPremium = dbTier === "premium" || binanceStatus === "approved";
+
     return {
-      tier: (dbTier === "premium" ? "premium" : "free") as UserTier,
+      tier: (isPremium ? "premium" : "free") as UserTier,
       email,
       bybitUid: (data?.bybit_uid as string | null) ?? null,
+      binanceUid: (data?.binance_uid as string | null) ?? null,
+      binanceStatus,
       isLoading: false,
     };
   }, []);

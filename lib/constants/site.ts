@@ -13,3 +13,7 @@ export const SITE_DESCRIPTION =
 
 /** Bybit affiliate referral link (premium signup). */
 export const BYBIT_REFERRAL_URL = "https://partner.bybit.com/b/116059";
+
+/** Binance affiliate referral link (premium signup). */
+export const BINANCE_REFERRAL_URL =
+  "https://www.binance.com/register?ref=ZB3O2YH3";

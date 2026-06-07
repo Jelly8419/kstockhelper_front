@@ -1,21 +1,25 @@
 /**
- * Access tier used to gate content.
- * Simplified to 2 levels: guest (not logged in) / member (logged in).
- *
- * Future: when Bybit/Binance referral lands, `member` can split into
- * member / premium. The DB `tier` column (free/premium) is preserved via
- * `rawTier` for that purpose.
+ * Access tier used to gate content (3 levels):
+ *  - guest:   not logged in
+ *  - free:    logged in, no active connection → preview only
+ *  - premium: logged in + Bybit connected OR Binance approved → full access
  */
-export type UserTier = "guest" | "member";
+export type UserTier = "guest" | "free" | "premium";
 
-/** Raw membership tier stored in the DB `users.tier` column. */
-export type RawTier = "free" | "premium";
+/** Binance connection review status (manual approval). */
+export type BinanceStatus =
+  | "not_applied"
+  | "pending"
+  | "approved"
+  | "rejected";
 
 export interface SessionUser {
   id: string;
   email: string;
-  /** Simplified access tier used by the UI. */
   tier: UserTier;
-  /** Original DB tier (free/premium), kept for future premium gating. */
-  rawTier: RawTier | null;
+  /** Connected Bybit UID, if any (auto-verified). */
+  bybitUid: string | null;
+  /** Submitted Binance UID, if any (manually reviewed). */
+  binanceUid: string | null;
+  binanceStatus: BinanceStatus;
 }

@@ -10,3 +10,10 @@ export const SITE_NAME = "K-Stock Helper";
 export const SITE_TITLE = "K-Stock Helper - Korean Stock News in English";
 export const SITE_DESCRIPTION =
   "Real-time Korean stock market news and disclosures in English for global investors";
+
+/** Bybit affiliate referral link (premium signup). */
+export const BYBIT_REFERRAL_URL = "https://partner.bybit.com/b/116059";
+
+/** Binance affiliate referral link (premium signup). */
+export const BINANCE_REFERRAL_URL =
+  "https://www.binance.com/register?ref=ZB3O2YH3";

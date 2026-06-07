@@ -5,14 +5,16 @@ import { NewsDetailItem } from "@/types/news";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { NewsDetail } from "./NewsDetail";
 import { Button } from "@/components/ui/Button";
+import { BYBIT_REFERRAL_URL } from "@/lib/constants/site";
 
 /**
  * Route-level access guard for news detail (covers direct URL access).
- * - member → full detail
- * - guest  → "Sign up to read" panel
+ * - premium → full detail
+ * - free    → connect-Bybit panel
+ * - guest   → sign-up panel
  *
- * Defense in depth: even for a member, if the DB returned no body (gated),
- * we fall back to the sign-up panel instead of an empty page.
+ * Defense in depth: if the DB returned no body (gated), fall back to a gate
+ * panel instead of an empty page.
  */
 export function NewsDetailGate({ item }: { item: NewsDetailItem }) {
   const { tier, isLoading } = useAuth();
@@ -22,20 +24,56 @@ export function NewsDetailGate({ item }: { item: NewsDetailItem }) {
   }
 
   const hasContent = item.summary != null || item.body != null;
-
-  if (tier === "member" && hasContent) {
+  if (tier === "premium" && hasContent) {
     return <NewsDetail item={item} />;
   }
 
+  // Guest → sign up first.
+  if (tier === "guest") {
+    return (
+      <Panel title="Sign up to read" description="Create a free account to read full news and disclosures.">
+        <Link href="/signup">
+          <Button>Sign Up</Button>
+        </Link>
+      </Panel>
+    );
+  }
+
+  // Free → connect Bybit to unlock premium.
+  return (
+    <Panel
+      title="Unlock Premium Access"
+      description="Connect your Bybit account to get full access to all news & disclosures."
+    >
+      <Link href="/settings">
+        <Button>Connect Bybit Account</Button>
+      </Link>
+      <a
+        href={BYBIT_REFERRAL_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-sm text-brand hover:underline"
+      >
+        Learn more
+      </a>
+    </Panel>
+  );
+}
+
+function Panel({
+  title,
+  description,
+  children,
+}: {
+  title: string;
+  description: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="flex flex-col items-center gap-4 rounded-2xl border border-border bg-surface px-6 py-16 text-center">
-      <h1 className="text-xl font-semibold text-foreground">Sign up to read</h1>
-      <p className="max-w-sm text-sm text-muted">
-        Create a free account to read full news and disclosures.
-      </p>
-      <Link href="/signup">
-        <Button>Sign Up</Button>
-      </Link>
+      <h1 className="text-xl font-semibold text-foreground">{title}</h1>
+      <p className="max-w-sm text-sm text-muted">{description}</p>
+      {children}
     </div>
   );
 }

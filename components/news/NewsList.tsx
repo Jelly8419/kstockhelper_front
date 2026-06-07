@@ -7,6 +7,7 @@ import { NewsCard } from "./NewsCard";
 import { Pagination } from "@/components/ui/Pagination";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { SignupGateModal } from "@/components/access/SignupGateModal";
+import { BybitGateModal } from "@/components/access/BybitGateModal";
 import { NEWS_PAGE_SIZE } from "@/lib/constants/news";
 
 interface Props {
@@ -26,15 +27,17 @@ export function NewsList({ initialItems, initialTotal }: Props) {
   const [page, setPage] = useState(0);
   const [total, setTotal] = useState(initialTotal);
   const [loading, setLoading] = useState(false);
-  const [gateOpen, setGateOpen] = useState(false);
+  const [gate, setGate] = useState<"none" | "signup" | "bybit">("none");
   const { tier } = useAuth();
 
   const sectionRef = useRef<HTMLElement | null>(null);
   const totalPages = Math.max(1, Math.ceil(total / NEWS_PAGE_SIZE));
 
-  // Members navigate directly; guests get a sign-up modal on click.
+  // premium → navigate; free → Bybit modal; guest → sign-up modal.
   const handleBlockedClick =
-    tier === "member" ? undefined : () => setGateOpen(true);
+    tier === "premium"
+      ? undefined
+      : () => setGate(tier === "guest" ? "signup" : "bybit");
 
   const fetchPage = useCallback(
     async (nextFilter: NewsFilter, nextPage: number, scroll: boolean) => {
@@ -103,7 +106,11 @@ export function NewsList({ initialItems, initialTotal }: Props) {
         <Pagination page={page} totalPages={totalPages} onChange={changePage} />
       </div>
 
-      <SignupGateModal open={gateOpen} onClose={() => setGateOpen(false)} />
+      <SignupGateModal
+        open={gate === "signup"}
+        onClose={() => setGate("none")}
+      />
+      <BybitGateModal open={gate === "bybit"} onClose={() => setGate("none")} />
     </section>
   );
 }

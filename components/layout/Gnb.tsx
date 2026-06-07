@@ -32,12 +32,15 @@ export function Gnb() {
 
         {/* Right: auth actions */}
         <nav className="flex items-center gap-2">
-          {isLoading ? null : tier === "member" ? (
+          {isLoading ? null : tier !== "guest" ? (
             <>
               {email && (
-                <span className="hidden max-w-[180px] truncate text-sm text-muted sm:inline">
+                <Link
+                  href="/settings"
+                  className="hidden max-w-[180px] truncate text-sm text-muted hover:text-foreground sm:inline"
+                >
                   {email}
-                </span>
+                </Link>
               )}
               <Button variant="ghost" size="sm" onClick={handleLogout}>
                 Log Out

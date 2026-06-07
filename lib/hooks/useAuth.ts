@@ -1,73 +1,75 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
-import { RawTier, UserTier } from "@/types/user";
+import { UserTier } from "@/types/user";
 
 interface AuthState {
-  /** Simplified access tier: "member" when logged in, else "guest". */
+  /** guest (logged out) | free (logged in, no Bybit) | premium (Bybit connected). */
   tier: UserTier;
   email: string | null;
-  /** DB tier (free/premium), for future premium gating. Null until loaded. */
-  rawTier: RawTier | null;
+  bybitUid: string | null;
   isLoading: boolean;
+}
+
+interface UseAuth extends AuthState {
+  /** Re-read session + profile (call after Bybit verify succeeds). */
+  refresh: () => Promise<void>;
 }
 
 const GUEST: AuthState = {
   tier: "guest",
   email: null,
-  rawTier: null,
+  bybitUid: null,
   isLoading: false,
 };
 
 /**
- * Real Supabase-backed auth state.
- * - Logged in  → tier "member"
- * - Logged out → tier "guest"
- * Reacts to login/logout in real time via onAuthStateChange.
- *
- * Note: actual content access is enforced in the DB (news_full view via
- * is_premium()). This hook only drives the UI.
+ * Real Supabase-backed auth state with 3-tier access.
+ * Content access itself is enforced in the DB (news_full view via is_premium());
+ * this hook drives the UI.
  */
-export function useAuth(): AuthState {
+export function useAuth(): UseAuth {
   const [state, setState] = useState<AuthState>({ ...GUEST, isLoading: true });
+
+  const resolve = useCallback(async (session: Session | null) => {
+    const supabase = createClient();
+    if (!session?.user) return GUEST;
+
+    const email = session.user.email ?? null;
+    const { data } = await supabase
+      .from("users")
+      .select("tier, bybit_uid")
+      .eq("id", session.user.id)
+      .maybeSingle();
+
+    const dbTier = data?.tier as "free" | "premium" | undefined;
+    return {
+      tier: (dbTier === "premium" ? "premium" : "free") as UserTier,
+      email,
+      bybitUid: (data?.bybit_uid as string | null) ?? null,
+      isLoading: false,
+    };
+  }, []);
+
+  const refresh = useCallback(async () => {
+    const supabase = createClient();
+    const { data } = await supabase.auth.getSession();
+    setState(await resolve(data.session));
+  }, [resolve]);
 
   useEffect(() => {
     const supabase = createClient();
     let active = true;
 
-    // Read the DB tier for a logged-in user (best-effort; UI doesn't block on it).
-    const loadRawTier = async (userId: string): Promise<RawTier | null> => {
-      const { data, error } = await supabase
-        .from("users")
-        .select("tier")
-        .eq("id", userId)
-        .maybeSingle();
-      if (error || !data) return null;
-      return (data.tier as RawTier) ?? null;
-    };
-
     const apply = async (session: Session | null) => {
-      if (!session?.user) {
-        if (active) setState(GUEST);
-        return;
-      }
-      const email = session.user.email ?? null;
-      // Show member access immediately; enrich with rawTier when it resolves.
-      if (active) {
-        setState({ tier: "member", email, rawTier: null, isLoading: false });
-      }
-      const rawTier = await loadRawTier(session.user.id);
-      if (active) {
-        setState({ tier: "member", email, rawTier, isLoading: false });
-      }
+      const next = await resolve(session);
+      if (active) setState(next);
     };
 
-    // Initial session.
     supabase.auth.getSession().then(({ data }) => apply(data.session));
 
-    // Live updates on login / logout / token refresh.
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -78,7 +80,7 @@ export function useAuth(): AuthState {
       active = false;
       subscription.unsubscribe();
     };
-  }, []);
+  }, [resolve]);
 
-  return state;
+  return { ...state, refresh };
 }

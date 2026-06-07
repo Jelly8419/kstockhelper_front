@@ -102,7 +102,8 @@ export function ExchangeConnectForm({
         label={cfg.label}
         name={cfg.field}
         value={uid}
-        onChange={(e) => setUid(e.target.value)}
+        onChange={(e) => setUid(e.target.value.replace(/\D/g, ""))}
+        inputMode="numeric"
         placeholder="e.g. 123456789"
       />
       {error && <p className="text-xs text-down">{error}</p>}

@@ -72,7 +72,7 @@ export function ChangeUidModal({
         <Input
           label={`New ${exchangeName} UID`}
           value={uid}
-          onChange={setUid}
+          onChange={(v) => setUid(v.replace(/\D/g, ""))}
           placeholder="e.g. 987654321"
         />
         {error && <p className="text-xs text-down">{error}</p>}
@@ -120,6 +120,7 @@ function Input({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
+        inputMode="numeric"
         className="h-11 rounded-lg border border-border bg-surface px-3 text-sm text-foreground placeholder:text-muted outline-none transition-colors focus:border-brand"
       />
     </div>

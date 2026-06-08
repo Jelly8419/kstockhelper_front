@@ -52,21 +52,39 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify({ userId: user.id, bybitUid }),
     });
     console.log("bybit verify proxy response status:", res.status);
-    const data = (await res.json().catch(() => null)) as {
-      success?: boolean;
-      message?: string;
-    } | null;
+    const raw = await res.text();
+    const data = (() => {
+      try {
+        return JSON.parse(raw) as { success?: boolean; message?: string };
+      } catch {
+        return null;
+      }
+    })();
+
+    // TEMP DEBUG: surface what the backend actually returned.
+    const _debug = {
+      backendHost: (() => {
+        try {
+          return new URL(BACKEND_VERIFY_URL).host;
+        } catch {
+          return "invalid-url";
+        }
+      })(),
+      backendStatus: res.status,
+      backendRaw: raw.slice(0, 300),
+      sentUserId: user.id,
+    };
 
     if (!data) {
       return NextResponse.json(
-        { success: false, message: "Verification failed. Please try again." },
+        { success: false, message: "Verification failed. Please try again.", _debug },
         { status: 502 }
       );
     }
 
     // Pass the backend's { success, message } through verbatim (message may be Korean).
     return NextResponse.json(
-      { success: data.success === true, message: data.message ?? "" },
+      { success: data.success === true, message: data.message ?? "", _debug },
       { status: 200 }
     );
   } catch (e) {

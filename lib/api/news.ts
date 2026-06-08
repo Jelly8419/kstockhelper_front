@@ -7,6 +7,7 @@ import {
   NewsDetailItem,
   NewsFullRow,
   NewsFilter,
+  NewsCategory,
 } from "@/types/news";
 
 const PREVIEW_COLUMNS =
@@ -49,7 +50,8 @@ function mapFull(row: NewsFullRow): NewsDetailItem {
 
 /**
  * Fetch one page of the published news list (preview view).
- * Filter by ticker ("all" = no filter). Server-side pagination + filtering.
+ * Two independent filters: content type (`category`) and ticker (`filter`,
+ * "all" = no ticker filter). Server-side pagination + filtering.
  *
  * Pages are ordered by (published_at desc, id desc) for stable pagination —
  * a single timestamp key alone can drop/duplicate rows at page boundaries.
@@ -57,7 +59,8 @@ function mapFull(row: NewsFullRow): NewsDetailItem {
 export async function getNewsPage(
   filter: NewsFilter = "all",
   page = 0,
-  pageSize = NEWS_PAGE_SIZE
+  pageSize = NEWS_PAGE_SIZE,
+  category?: NewsCategory
 ): Promise<NewsPage> {
   const supabase = createClient();
   const from = page * pageSize;
@@ -69,6 +72,11 @@ export async function getNewsPage(
     .order("published_at", { ascending: false })
     .order("id", { ascending: false })
     .range(from, to);
+
+  // Content-type filter (news vs disclosure).
+  if (category) {
+    query = query.eq("category", category);
+  }
 
   // PostgREST array containment filter on stock_ids.
   if (filter !== "all") {

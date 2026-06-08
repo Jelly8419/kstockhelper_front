@@ -90,7 +90,19 @@ export async function POST(request: NextRequest) {
   } catch (e) {
     console.error("bybit verify proxy error:", e);
     return NextResponse.json(
-      { success: false, message: "Verification failed. Please try again." },
+      {
+        success: false,
+        message: "Verification failed. Please try again.",
+        _debug: {
+          stage: "fetch-threw",
+          backendUrl: BACKEND_VERIFY_URL,
+          error: e instanceof Error ? `${e.name}: ${e.message}` : String(e),
+          cause:
+            e instanceof Error && e.cause
+              ? String((e.cause as { message?: string })?.message ?? e.cause)
+              : null,
+        },
+      },
       { status: 502 }
     );
   }

@@ -20,19 +20,28 @@ export async function POST(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) {
-    return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
+    return NextResponse.json(
+      { success: false, message: "Not authenticated." },
+      { status: 401 }
+    );
   }
 
   let body: { bybitUid?: unknown };
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
+    return NextResponse.json(
+      { success: false, message: "Invalid request body." },
+      { status: 400 }
+    );
   }
 
   const bybitUid = typeof body.bybitUid === "string" ? body.bybitUid.trim() : "";
   if (!bybitUid) {
-    return NextResponse.json({ error: "Bybit UID is required." }, { status: 400 });
+    return NextResponse.json(
+      { success: false, message: "Bybit UID is required." },
+      { status: 400 }
+    );
   }
 
   if (!BACKEND_VERIFY_URL) {
@@ -51,58 +60,28 @@ export async function POST(request: NextRequest) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId: user.id, bybitUid }),
     });
-    console.log("bybit verify proxy response status:", res.status);
-    const raw = await res.text();
-    const data = (() => {
-      try {
-        return JSON.parse(raw) as { success?: boolean; message?: string };
-      } catch {
-        return null;
-      }
-    })();
 
-    // TEMP DEBUG: surface what the backend actually returned.
-    const _debug = {
-      backendHost: (() => {
-        try {
-          return new URL(BACKEND_VERIFY_URL).host;
-        } catch {
-          return "invalid-url";
-        }
-      })(),
-      backendStatus: res.status,
-      backendRaw: raw.slice(0, 300),
-      sentUserId: user.id,
-    };
+    const data = (await res.json().catch(() => null)) as {
+      success?: boolean;
+      message?: string;
+    } | null;
 
     if (!data) {
       return NextResponse.json(
-        { success: false, message: "Verification failed. Please try again.", _debug },
+        { success: false, message: "Verification failed. Please try again." },
         { status: 502 }
       );
     }
 
     // Pass the backend's { success, message } through verbatim (message may be Korean).
     return NextResponse.json(
-      { success: data.success === true, message: data.message ?? "", _debug },
+      { success: data.success === true, message: data.message ?? "" },
       { status: 200 }
     );
   } catch (e) {
     console.error("bybit verify proxy error:", e);
     return NextResponse.json(
-      {
-        success: false,
-        message: "Verification failed. Please try again.",
-        _debug: {
-          stage: "fetch-threw",
-          backendUrl: BACKEND_VERIFY_URL,
-          error: e instanceof Error ? `${e.name}: ${e.message}` : String(e),
-          cause:
-            e instanceof Error && e.cause
-              ? String((e.cause as { message?: string })?.message ?? e.cause)
-              : null,
-        },
-      },
+      { success: false, message: "Verification failed. Please try again." },
       { status: 502 }
     );
   }

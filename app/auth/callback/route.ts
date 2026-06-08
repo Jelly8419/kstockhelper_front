@@ -31,6 +31,10 @@ export async function GET(request: Request) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  // First-time sign-ups (consent recorded just now) land on the guide page;
+  // returning users go to their requested destination.
+  let firstTime = false;
+
   if (user) {
     // The profile row is created by the on_auth_user_created DB trigger.
     const { data: profile } = await supabase
@@ -52,6 +56,7 @@ export async function GET(request: Request) {
             privacy_version: PRIVACY_POLICY.lastUpdated,
           })
           .eq("id", user.id);
+        firstTime = true;
       } else {
         // Otherwise (e.g. arrived via the login page) gate through /consent (A3).
         const consent = new URL("/consent", origin);
@@ -61,7 +66,8 @@ export async function GET(request: Request) {
     }
   }
 
-  return NextResponse.redirect(`${origin}${next}`);
+  const destination = firstTime ? "/guide" : next;
+  return NextResponse.redirect(`${origin}${destination}`);
 }
 
 /** Only allow same-origin relative paths to prevent open-redirect. */

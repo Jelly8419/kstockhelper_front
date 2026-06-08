@@ -8,10 +8,10 @@ import { PRIVACY_POLICY, TERMS_OF_SERVICE } from "@/lib/legal/content";
 
 /**
  * Consent gate (A3): shown after OAuth sign-in when the user has not yet
- * accepted the Terms. Records consent on their profile row, then continues to
- * `next`.
+ * accepted the Terms. Records consent on their profile row, then sends the
+ * first-time user to the guide page.
  */
-export function ConsentForm({ next }: { next: string }) {
+export function ConsentForm() {
   const router = useRouter();
   const [agreed, setAgreed] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -51,7 +51,8 @@ export function ConsentForm({ next }: { next: string }) {
         return;
       }
 
-      router.replace(next);
+      // Consenting here means a first-time sign-up → land on the guide page.
+      router.replace("/guide");
       router.refresh();
     } finally {
       setLoading(false);

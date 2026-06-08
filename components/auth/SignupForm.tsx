@@ -136,7 +136,8 @@ export function SignupForm() {
           .eq("id", user.id);
       }
 
-      router.push("/");
+      // New account → land on the guide page.
+      router.push("/guide");
       router.refresh();
     } finally {
       setLoading(false);

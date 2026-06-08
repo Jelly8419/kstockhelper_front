@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import { NewsFilter, NewsPreview } from "@/types/news";
+import { NewsCategory, NewsFilter, NewsPreview } from "@/types/news";
+import { NewsTypeTabs } from "./NewsTypeTabs";
 import { NewsFilterTabs } from "./NewsFilterTabs";
 import { NewsCard } from "./NewsCard";
 import { Pagination } from "@/components/ui/Pagination";
@@ -14,6 +15,8 @@ interface Props {
   /** First page, fetched on the server for fast initial render. */
   initialItems: NewsPreview[];
   initialTotal: number;
+  /** Content type the server-rendered first page was fetched for. */
+  initialCategory: NewsCategory;
 }
 
 interface NewsPageResponse {
@@ -21,7 +24,12 @@ interface NewsPageResponse {
   total: number;
 }
 
-export function NewsList({ initialItems, initialTotal }: Props) {
+export function NewsList({
+  initialItems,
+  initialTotal,
+  initialCategory,
+}: Props) {
+  const [category, setCategory] = useState<NewsCategory>(initialCategory);
   const [filter, setFilter] = useState<NewsFilter>("all");
   const [items, setItems] = useState<NewsPreview[]>(initialItems);
   const [page, setPage] = useState(0);
@@ -31,6 +39,10 @@ export function NewsList({ initialItems, initialTotal }: Props) {
   const { tier } = useAuth();
 
   const sectionRef = useRef<HTMLElement | null>(null);
+  // Tracks the in-flight request so rapid tab/filter switches cancel the
+  // previous one — avoids wasted requests and out-of-order responses
+  // (a slow earlier fetch overwriting a newer result).
+  const abortRef = useRef<AbortController | null>(null);
   const totalPages = Math.max(1, Math.ceil(total / NEWS_PAGE_SIZE));
 
   // premium → navigate; free → Bybit modal; guest → sign-up modal.
@@ -40,11 +52,22 @@ export function NewsList({ initialItems, initialTotal }: Props) {
       : () => setGate(tier === "guest" ? "signup" : "bybit");
 
   const fetchPage = useCallback(
-    async (nextFilter: NewsFilter, nextPage: number, scroll: boolean) => {
+    async (
+      nextCategory: NewsCategory,
+      nextFilter: NewsFilter,
+      nextPage: number,
+      scroll: boolean
+    ) => {
+      // Cancel any request still in flight before starting a new one.
+      abortRef.current?.abort();
+      const controller = new AbortController();
+      abortRef.current = controller;
+
       setLoading(true);
       try {
         const res = await fetch(
-          `/api/news?filter=${nextFilter}&page=${nextPage}`
+          `/api/news?category=${nextCategory}&filter=${nextFilter}&page=${nextPage}`,
+          { signal: controller.signal }
         );
         const data: NewsPageResponse = await res.json();
         setItems(data.items);
@@ -53,34 +76,50 @@ export function NewsList({ initialItems, initialTotal }: Props) {
         if (scroll) {
           sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
         }
+      } catch (err) {
+        // Aborts (superseded by a newer request) are expected — ignore them.
+        // Other failures leave the current list in place, same as before.
+        if ((err as Error).name !== "AbortError") {
+          console.error("news fetch failed:", err);
+        }
       } finally {
-        setLoading(false);
+        // Only the latest request clears the loading state — a cancelled one
+        // must not flip it off while its replacement is still loading.
+        if (abortRef.current === controller) setLoading(false);
       }
     },
     []
   );
 
+  // Switching content type resets the ticker filter and pagination.
+  const changeCategory = useCallback(
+    (next: NewsCategory) => {
+      setCategory(next);
+      setFilter("all");
+      fetchPage(next, "all", 0, false);
+    },
+    [fetchPage]
+  );
+
   const changeFilter = useCallback(
     (next: NewsFilter) => {
       setFilter(next);
-      fetchPage(next, 0, false);
+      fetchPage(category, next, 0, false);
     },
-    [fetchPage]
+    [fetchPage, category]
   );
 
   const changePage = useCallback(
     (next: number) => {
       if (next < 0 || next >= totalPages || next === page) return;
-      fetchPage(filter, next, true);
+      fetchPage(category, filter, next, true);
     },
-    [fetchPage, filter, page, totalPages]
+    [fetchPage, category, filter, page, totalPages]
   );
 
   return (
     <section ref={sectionRef} aria-label="News" className="flex flex-col gap-4">
-      <h2 className="text-sm font-semibold text-foreground">
-        News & Disclosures
-      </h2>
+      <NewsTypeTabs active={category} onChange={changeCategory} />
 
       <NewsFilterTabs active={filter} onChange={changeFilter} />
 
@@ -88,7 +127,7 @@ export function NewsList({ initialItems, initialTotal }: Props) {
         <p className="py-12 text-center text-sm text-muted">Loading…</p>
       ) : items.length === 0 ? (
         <p className="py-8 text-center text-sm text-muted">
-          No items for this filter.
+          No {category === "news" ? "news" : "disclosures"} for this filter.
         </p>
       ) : (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

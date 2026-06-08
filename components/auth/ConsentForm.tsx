@@ -4,8 +4,6 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/Button";
-import { Accordion } from "@/components/ui/Accordion";
-import { LegalContent } from "@/components/legal/LegalContent";
 import { PRIVACY_POLICY, TERMS_OF_SERVICE } from "@/lib/legal/content";
 
 /**
@@ -15,15 +13,14 @@ import { PRIVACY_POLICY, TERMS_OF_SERVICE } from "@/lib/legal/content";
  */
 export function ConsentForm({ next }: { next: string }) {
   const router = useRouter();
-  const [agreeTerms, setAgreeTerms] = useState(false);
-  const [agreePrivacy, setAgreePrivacy] = useState(false);
+  const [agreed, setAgreed] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
-    if (!agreeTerms || !agreePrivacy) {
+    if (!agreed) {
       setError("Please agree to the Terms of Service and Privacy Policy.");
       return;
     }
@@ -67,72 +64,38 @@ export function ConsentForm({ next }: { next: string }) {
         Before you continue, please review and agree to our terms.
       </p>
 
-      <div className="flex flex-col gap-3">
-        <Accordion
-          title={
-            <label className="flex items-start gap-2">
-              <input
-                type="checkbox"
-                checked={agreeTerms}
-                onChange={(e) => setAgreeTerms(e.target.checked)}
-                onClick={(e) => e.stopPropagation()}
-                className="mt-0.5 h-4 w-4 shrink-0 accent-brand"
-              />
-              <span className="text-xs text-foreground">
-                I agree to the{" "}
-                <a
-                  href="/terms"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                  className="text-brand hover:underline"
-                >
-                  Terms of Service
-                </a>
-              </span>
-            </label>
-          }
-          scrollMaxHeight="14rem"
-        >
-          <LegalContent document={TERMS_OF_SERVICE} />
-        </Accordion>
-
-        <Accordion
-          title={
-            <label className="flex items-start gap-2">
-              <input
-                type="checkbox"
-                checked={agreePrivacy}
-                onChange={(e) => setAgreePrivacy(e.target.checked)}
-                onClick={(e) => e.stopPropagation()}
-                className="mt-0.5 h-4 w-4 shrink-0 accent-brand"
-              />
-              <span className="text-xs text-foreground">
-                I agree to the{" "}
-                <a
-                  href="/privacy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                  className="text-brand hover:underline"
-                >
-                  Privacy Policy
-                </a>
-              </span>
-            </label>
-          }
-          scrollMaxHeight="14rem"
-        >
-          <LegalContent document={PRIVACY_POLICY} />
-        </Accordion>
-      </div>
+      <label className="flex items-start gap-2">
+        <input
+          type="checkbox"
+          checked={agreed}
+          onChange={(e) => setAgreed(e.target.checked)}
+          className="mt-0.5 h-4 w-4 shrink-0 accent-brand"
+        />
+        <span className="text-xs text-foreground">
+          I have read and agree to the{" "}
+          <a
+            href="/terms"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-brand hover:underline"
+          >
+            Terms of Service
+          </a>{" "}
+          and{" "}
+          <a
+            href="/privacy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-brand hover:underline"
+          >
+            Privacy Policy
+          </a>
+          .
+        </span>
+      </label>
 
       {error && <p className="text-xs text-down">{error}</p>}
-      <Button
-        type="submit"
-        size="lg"
-        disabled={loading || !agreeTerms || !agreePrivacy}
-      >
+      <Button type="submit" size="lg" disabled={loading || !agreed}>
         {loading ? "Saving…" : "Agree and Continue"}
       </Button>
     </form>

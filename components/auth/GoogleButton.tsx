@@ -31,8 +31,18 @@ function GoogleMark() {
  * "Continue with Google" OAuth button.
  * After Google auth, Supabase redirects to /auth/callback, which exchanges the
  * code for a session and gates first-time users through /consent.
+ *
+ * When `consentGiven` is true (the user already accepted the Terms on this
+ * page), we pass it through the OAuth round-trip so the callback can record
+ * consent and skip the /consent gate.
  */
-export function GoogleButton({ next = "/" }: { next?: string }) {
+export function GoogleButton({
+  next = "/",
+  consentGiven = false,
+}: {
+  next?: string;
+  consentGiven?: boolean;
+}) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -45,6 +55,7 @@ export function GoogleButton({ next = "/" }: { next?: string }) {
       // (localhost in dev, production domain in prod).
       const callback = new URL("/auth/callback", window.location.origin);
       callback.searchParams.set("next", next);
+      if (consentGiven) callback.searchParams.set("consent", "1");
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: { redirectTo: callback.toString() },

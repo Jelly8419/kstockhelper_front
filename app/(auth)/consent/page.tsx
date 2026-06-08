@@ -29,7 +29,8 @@ export default async function ConsentPage({
     redirect("/login");
   }
 
-  // Already consented → skip the gate.
+  // Already consented (e.g. a returning user landing here directly) → skip the
+  // gate and send them on to their destination.
   const { data: profile } = await supabase
     .from("users")
     .select("terms_agreed_at")
@@ -43,7 +44,7 @@ export default async function ConsentPage({
   return (
     <div className="mx-auto flex max-w-sm flex-col gap-6 px-4 py-16">
       <h1 className="text-2xl font-semibold text-foreground">One last step</h1>
-      <ConsentForm next={next} />
+      <ConsentForm />
     </div>
   );
 }

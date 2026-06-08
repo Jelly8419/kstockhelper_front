@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { ExchangeConnectForm } from "@/components/connect/ExchangeConnectForm";
 import { useAuth } from "@/lib/hooks/useAuth";
@@ -13,6 +14,12 @@ export function GuideClient() {
     <div className="mx-auto flex max-w-container flex-col gap-8 px-4 py-12 sm:px-6">
       {/* Header */}
       <header className="flex flex-col gap-3">
+        <Link
+          href="/"
+          className="inline-flex w-fit items-center gap-1 text-sm text-muted transition-colors hover:text-foreground"
+        >
+          ← Back to Home
+        </Link>
         <h1 className="text-3xl font-bold text-foreground">
           Start Trading – Guide
         </h1>

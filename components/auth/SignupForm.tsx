@@ -6,6 +6,9 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { Accordion } from "@/components/ui/Accordion";
+import { LegalContent } from "@/components/legal/LegalContent";
+import { PRIVACY_POLICY, TERMS_OF_SERVICE } from "@/lib/legal/content";
 
 type Step = "email" | "code" | "password";
 
@@ -19,6 +22,8 @@ export function SignupForm() {
   const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [agreeTerms, setAgreeTerms] = useState(false);
+  const [agreePrivacy, setAgreePrivacy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -102,14 +107,37 @@ export function SignupForm() {
       setError("Passwords do not match.");
       return;
     }
+    if (!agreeTerms || !agreePrivacy) {
+      setError("Please agree to the Terms of Service and Privacy Policy.");
+      return;
+    }
     setLoading(true);
     try {
       const supabase = createClient();
-      const { error } = await supabase.auth.updateUser({ password });
+      const {
+        data: { user },
+        error,
+      } = await supabase.auth.updateUser({ password });
       if (error) {
         setError(error.message);
         return;
       }
+
+      // Record legal consent on the profile row (created by the signup trigger).
+      // Version = the document's "Last Updated" date.
+      if (user) {
+        const now = new Date().toISOString();
+        await supabase
+          .from("users")
+          .update({
+            terms_agreed_at: now,
+            terms_version: TERMS_OF_SERVICE.lastUpdated,
+            privacy_agreed_at: now,
+            privacy_version: PRIVACY_POLICY.lastUpdated,
+          })
+          .eq("id", user.id);
+      }
+
       router.push("/");
       router.refresh();
     } finally {
@@ -212,8 +240,73 @@ export function SignupForm() {
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="••••••••"
           />
+          {/* Legal consent: expand the arrow to read the full text inline. */}
+          <div className="flex flex-col gap-3">
+            <Accordion
+              title={
+                <label className="flex items-start gap-2">
+                  <input
+                    type="checkbox"
+                    checked={agreeTerms}
+                    onChange={(e) => setAgreeTerms(e.target.checked)}
+                    onClick={(e) => e.stopPropagation()}
+                    className="mt-0.5 h-4 w-4 shrink-0 accent-brand"
+                  />
+                  <span className="text-xs text-foreground">
+                    I agree to the{" "}
+                    <a
+                      href="/terms"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="text-brand hover:underline"
+                    >
+                      Terms of Service
+                    </a>
+                  </span>
+                </label>
+              }
+              scrollMaxHeight="14rem"
+            >
+              <LegalContent document={TERMS_OF_SERVICE} />
+            </Accordion>
+
+            <Accordion
+              title={
+                <label className="flex items-start gap-2">
+                  <input
+                    type="checkbox"
+                    checked={agreePrivacy}
+                    onChange={(e) => setAgreePrivacy(e.target.checked)}
+                    onClick={(e) => e.stopPropagation()}
+                    className="mt-0.5 h-4 w-4 shrink-0 accent-brand"
+                  />
+                  <span className="text-xs text-foreground">
+                    I agree to the{" "}
+                    <a
+                      href="/privacy"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="text-brand hover:underline"
+                    >
+                      Privacy Policy
+                    </a>
+                  </span>
+                </label>
+              }
+              scrollMaxHeight="14rem"
+            >
+              <LegalContent document={PRIVACY_POLICY} />
+            </Accordion>
+          </div>
+
           {error && <p className="text-xs text-down">{error}</p>}
-          <Button type="submit" size="lg" disabled={loading}>
+          <Button
+            type="submit"
+            size="lg"
+            disabled={loading || !agreeTerms || !agreePrivacy}
+          >
             {loading ? "Creating account…" : "Create Account"}
           </Button>
         </form>

@@ -57,39 +57,21 @@ export async function POST(request: NextRequest) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId: user.id, binanceUid }),
     });
-    console.log("binance connect proxy response status:", res.status);
-    const raw = await res.text();
-    const data = (() => {
-      try {
-        return JSON.parse(raw) as { success?: boolean; message?: string };
-      } catch {
-        return null;
-      }
-    })();
 
-    // TEMP DEBUG: surface what the backend actually returned.
-    const _debug = {
-      backendHost: (() => {
-        try {
-          return new URL(BACKEND_CONNECT_URL).host;
-        } catch {
-          return "invalid-url";
-        }
-      })(),
-      backendStatus: res.status,
-      backendRaw: raw.slice(0, 300),
-      sentUserId: user.id,
-    };
+    const data = (await res.json().catch(() => null)) as {
+      success?: boolean;
+      message?: string;
+    } | null;
 
     if (!data) {
       return NextResponse.json(
-        { success: false, message: "Connection failed. Please try again.", _debug },
+        { success: false, message: "Connection failed. Please try again." },
         { status: 502 }
       );
     }
 
     return NextResponse.json(
-      { success: data.success === true, message: data.message ?? "", _debug },
+      { success: data.success === true, message: data.message ?? "" },
       { status: 200 }
     );
   } catch (e) {

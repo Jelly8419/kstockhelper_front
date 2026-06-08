@@ -10,10 +10,20 @@ export function Footer() {
         </p>
 
         <nav className="mt-1 flex gap-4 text-xs">
-          <Link href="/privacy" className="text-muted hover:text-foreground">
+          <Link
+            href="/privacy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted hover:text-foreground"
+          >
             Privacy Policy
           </Link>
-          <Link href="/terms" className="text-muted hover:text-foreground">
+          <Link
+            href="/terms"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted hover:text-foreground"
+          >
             Terms of Service
           </Link>
         </nav>

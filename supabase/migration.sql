@@ -35,13 +35,24 @@ end$$;
 
 -- users (profile, 1:1 with auth.users) ----------------------------------------
 create table if not exists public.users (
-  id              uuid primary key references auth.users (id) on delete cascade,
-  email           text not null,
-  tier            public.user_tier not null default 'free',
-  ibkr_linked_at  timestamptz,
-  created_at      timestamptz not null default now(),
-  updated_at      timestamptz not null default now()
+  id                 uuid primary key references auth.users (id) on delete cascade,
+  email              text not null,
+  tier               public.user_tier not null default 'free',
+  ibkr_linked_at     timestamptz,
+  -- Legal consent (captured at signup; version = document "Last Updated" date).
+  terms_agreed_at    timestamptz,
+  terms_version      text,
+  privacy_agreed_at  timestamptz,
+  privacy_version    text,
+  created_at         timestamptz not null default now(),
+  updated_at         timestamptz not null default now()
 );
+
+-- Backfill columns for existing deployments (idempotent).
+alter table public.users add column if not exists terms_agreed_at   timestamptz;
+alter table public.users add column if not exists terms_version     text;
+alter table public.users add column if not exists privacy_agreed_at timestamptz;
+alter table public.users add column if not exists privacy_version   text;
 
 -- stocks (ticker master) ------------------------------------------------------
 create table if not exists public.stocks (

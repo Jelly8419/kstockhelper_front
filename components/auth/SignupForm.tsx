@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { Accordion } from "@/components/ui/Accordion";
 import { LegalContent } from "@/components/legal/LegalContent";
 import { PRIVACY_POLICY, TERMS_OF_SERVICE } from "@/lib/legal/content";
+import { GoogleButton } from "@/components/auth/GoogleButton";
 
 type Step = "email" | "code" | "password";
 
@@ -169,6 +170,17 @@ export function SignupForm() {
           <Button type="submit" size="lg" disabled={loading}>
             {loading ? "Sending…" : "Send Verification Code"}
           </Button>
+
+          {/* Divider */}
+          <div className="flex items-center gap-3">
+            <span className="h-px flex-1 bg-border" />
+            <span className="text-xs text-muted">or</span>
+            <span className="h-px flex-1 bg-border" />
+          </div>
+
+          {/* Google sign-up: consent is collected on /consent after the
+              OAuth callback (A3), so no checkbox is needed here. */}
+          <GoogleButton next="/" />
         </form>
       )}
 

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { GoogleButton } from "@/components/auth/GoogleButton";
 
 export function LoginForm() {
   const router = useRouter();
@@ -61,6 +62,16 @@ export function LoginForm() {
       <Button type="submit" size="lg" disabled={loading}>
         {loading ? "Signing in…" : "Log In"}
       </Button>
+
+      {/* Divider */}
+      <div className="flex items-center gap-3">
+        <span className="h-px flex-1 bg-border" />
+        <span className="text-xs text-muted">or</span>
+        <span className="h-px flex-1 bg-border" />
+      </div>
+
+      <GoogleButton next="/" />
+
       <p className="text-center text-sm text-muted">
         No account?{" "}
         <Link href="/signup" className="text-brand hover:underline">

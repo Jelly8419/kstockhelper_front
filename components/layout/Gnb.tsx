@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
@@ -22,8 +23,15 @@ export function Gnb() {
       <div className="mx-auto flex h-16 max-w-container items-center justify-between px-4 sm:px-6">
         {/* Left: logo + wordmark → home */}
         <Link href="/" className="flex items-center gap-2">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand text-sm font-bold text-white">
-            K
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white p-1">
+            <Image
+              src="/logo-k-symbol.png"
+              alt="K-Stock Helper"
+              width={32}
+              height={32}
+              className="h-full w-full"
+              priority
+            />
           </span>
           <span className="text-base font-semibold tracking-tight text-foreground">
             K-Stock Helper

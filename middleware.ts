@@ -1,14 +1,47 @@
-import { type NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
 import { shouldShowBanner, SHOW_BANNER_HEADER } from "@/lib/geo/bannerGate";
+import {
+  ADMIN_BASE_PATH,
+  ADMIN_COOKIE,
+  ADMIN_LOGIN_PATH,
+  PATHNAME_HEADER,
+  isTokenExpired,
+} from "@/lib/admin/constants";
 
 export async function middleware(request: NextRequest) {
-  // Geo-gate the banner: inject the decision as a request header so server
-  // components can read it via headers().
+  const { pathname } = request.nextUrl;
+  request.headers.set(PATHNAME_HEADER, pathname);
+
+  // -------------------------------------------------------------------------
+  // Admin console guard: protect /console/* (except the login page).
+  // The authoritative auth check is the backend (401 on data calls); this is
+  // a cheap edge gate that redirects unauthenticated/expired sessions to login
+  // before any admin page renders. /api/admin/* is intentionally NOT guarded
+  // here — those routes handle 401 themselves and return JSON.
+  // -------------------------------------------------------------------------
+  if (
+    pathname.startsWith(ADMIN_BASE_PATH) &&
+    pathname !== ADMIN_LOGIN_PATH
+  ) {
+    const token = request.cookies.get(ADMIN_COOKIE)?.value;
+    if (isTokenExpired(token)) {
+      const url = request.nextUrl.clone();
+      url.pathname = ADMIN_LOGIN_PATH;
+      url.search = "";
+      return NextResponse.redirect(url);
+    }
+    // Authenticated admin pages don't need the Supabase session refresh, but
+    // still forward the modified request headers (x-pathname) to the layout.
+    return NextResponse.next({ request: { headers: request.headers } });
+  }
+
+  // -------------------------------------------------------------------------
+  // Public site: geo-gate the banner + refresh the Supabase session.
+  // -------------------------------------------------------------------------
   const showBanner = shouldShowBanner(request);
   request.headers.set(SHOW_BANNER_HEADER, showBanner ? "true" : "false");
 
-  // Supabase session refresh (propagates the modified request headers).
   return await updateSession(request);
 }
 

@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { Gnb } from "@/components/layout/Gnb";
 import { Footer } from "@/components/layout/Footer";
+import { ADMIN_BASE_PATH, PATHNAME_HEADER } from "@/lib/admin/constants";
 import {
   SITE_URL,
   SITE_NAME,
@@ -63,14 +65,24 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Admin console renders its own chrome — skip the public Gnb/Footer there.
+  const pathname = headers().get(PATHNAME_HEADER) ?? "";
+  const isAdmin = pathname.startsWith(ADMIN_BASE_PATH);
+
   return (
     <html lang="en" className="dark">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
-        <Gnb />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        {isAdmin ? (
+          children
+        ) : (
+          <>
+            <Gnb />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </>
+        )}
         <Analytics />
       </body>
     </html>

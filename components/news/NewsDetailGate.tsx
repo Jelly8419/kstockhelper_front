@@ -5,12 +5,11 @@ import { NewsDetailItem } from "@/types/news";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { NewsDetail } from "./NewsDetail";
 import { Button } from "@/components/ui/Button";
-import { BYBIT_REFERRAL_URL } from "@/lib/constants/site";
 
 /**
  * Route-level access guard for news detail (covers direct URL access).
  * - premium → full detail
- * - free    → connect-Bybit panel
+ * - free    → connect-UID panel
  * - guest   → sign-up panel
  *
  * Defense in depth: if the DB returned no body (gated), fall back to a gate
@@ -39,23 +38,15 @@ export function NewsDetailGate({ item }: { item: NewsDetailItem }) {
     );
   }
 
-  // Free → connect Bybit to unlock premium.
+  // Free → connect UID to unlock premium.
   return (
     <Panel
       title="Unlock Premium Access"
-      description="Connect your Bybit account to get full access to all news & disclosures."
+      description="Connect your UID to get full access to all news & disclosures."
     >
       <Link href="/settings">
-        <Button>Connect Bybit Account</Button>
+        <Button>Connect Your UID</Button>
       </Link>
-      <a
-        href={BYBIT_REFERRAL_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-sm text-brand hover:underline"
-      >
-        Learn more
-      </a>
     </Panel>
   );
 }

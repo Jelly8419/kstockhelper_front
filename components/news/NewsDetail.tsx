@@ -23,16 +23,6 @@ export function NewsDetail({ item }: { item: NewsDetailItem }) {
         <h1 className="text-2xl font-semibold leading-tight text-foreground">
           {item.title}
         </h1>
-        {item.source && item.url && (
-          <a
-            href={item.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-brand hover:underline"
-          >
-            Source: {item.source} ↗
-          </a>
-        )}
       </header>
 
       {/* Summary */}

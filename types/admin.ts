@@ -68,3 +68,25 @@ export interface AdminMutationResult {
   success: boolean;
   message: string;
 }
+
+/** Premium application review status (applications.status). */
+export type ApplicationStatus = "PENDING" | "APPROVED" | "REJECTED";
+
+/**
+ * A premium-membership application row (GET /premium-applications).
+ *
+ * The list only returns PENDING applications. Bybit is auto-approved via the
+ * affiliate API, so in practice these are Binance applications — but the
+ * exchange field stays typed as Exchange to tolerate the rare manual Bybit
+ * exception case the backend may surface.
+ */
+export interface PremiumApplication {
+  applicationId: string;
+  userId: string;
+  email: string;
+  exchange: Exchange;
+  uid: string;
+  membershipTier: MembershipTier;
+  status: ApplicationStatus;
+  appliedAt: string;
+}

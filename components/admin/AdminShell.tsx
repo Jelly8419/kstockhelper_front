@@ -42,6 +42,12 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             >
               회원관리
             </Link>
+            <Link
+              href={`${ADMIN_BASE_PATH}/premium-applications`}
+              className="text-sm text-muted hover:text-foreground"
+            >
+              프리미엄 회원 신청 관리
+            </Link>
             <LogoutButton />
           </nav>
         </div>

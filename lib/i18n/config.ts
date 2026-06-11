@@ -32,6 +32,26 @@ export const supportedUiLocales = [
 
 export type SupportedLocale = (typeof supportedUiLocales)[number];
 
+/**
+ * Locales for which news/disclosure CONTENT is translated (separate from UI
+ * i18n). Per the content-translation policy, only these get translated
+ * `translated_title` / `summary` / `key_points`; every other locale (including
+ * `en` and supported-UI-only locales like `es`/`id`) falls back to the English
+ * content fields. `en` is intentionally absent — the news body itself is the
+ * English source, not a translation row.
+ */
+export const contentLocales = ["vi", "ru", "pt-BR", "hi", "uk"] as const;
+
+export type ContentLocale = (typeof contentLocales)[number];
+
+/** Is this locale one we translate news/disclosure content into? */
+export function isContentLocale(value: unknown): value is ContentLocale {
+  return (
+    typeof value === "string" &&
+    (contentLocales as readonly string[]).includes(value)
+  );
+}
+
 /** Excluded or deferred locales — kept for documentation/intent, not selectable. */
 export const excludedOrDeferredLocales = [
   "ja", // Japan referral restriction

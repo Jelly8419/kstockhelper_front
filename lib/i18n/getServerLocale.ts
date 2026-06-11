@@ -1,6 +1,10 @@
 import { headers } from "next/headers";
-import { LOCALE_HEADER, type SupportedLocale } from "./config";
-import { normalizeLocale } from "./normalize";
+import {
+  LOCALE_HEADER,
+  type ContentLocale,
+  type SupportedLocale,
+} from "./config";
+import { normalizeLocale, resolveContentLocale } from "./normalize";
 
 /**
  * Read the active UI locale in a Server Component / route handler.
@@ -13,4 +17,13 @@ import { normalizeLocale } from "./normalize";
 export function getServerLocale(): SupportedLocale {
   const value = headers().get(LOCALE_HEADER);
   return normalizeLocale(value);
+}
+
+/**
+ * Read the active news/disclosure CONTENT locale in a Server Component / route
+ * handler. Derived from the UI locale (`x-locale`): returns a `ContentLocale`
+ * when content is translated for it, or `null` to use the English source.
+ */
+export function getServerContentLocale(): ContentLocale | null {
+  return resolveContentLocale(getServerLocale());
 }

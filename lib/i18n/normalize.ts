@@ -5,8 +5,10 @@
 import {
   DEFAULT_LOCALE,
   countryLocaleMap,
+  isContentLocale,
   isSupportedLocale,
   supportedUiLocales,
+  type ContentLocale,
   type SupportedLocale,
 } from "./config";
 
@@ -17,6 +19,21 @@ import {
 export function normalizeLocale(locale?: string | null): SupportedLocale {
   if (isSupportedLocale(locale)) return locale;
   return DEFAULT_LOCALE;
+}
+
+/**
+ * Resolve the news/disclosure CONTENT locale from a UI locale.
+ *
+ * Returns the `ContentLocale` when the UI locale is in the translated set
+ * (`vi`/`ru`/`pt-BR`/`hi`/`uk`), or `null` to signal "use the English content
+ * source" (covers `en` and supported-UI-only locales like `es`/`id`). Null —
+ * not `'en'` — because there is no `en` translation row to query; the news body
+ * itself is the English source.
+ */
+export function resolveContentLocale(
+  uiLocale?: string | null
+): ContentLocale | null {
+  return isContentLocale(uiLocale) ? uiLocale : null;
 }
 
 /**

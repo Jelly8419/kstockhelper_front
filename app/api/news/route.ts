@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getNewsPage } from "@/lib/api/news";
 import { NewsFilter, NewsCategory } from "@/types/news";
+import { getServerContentLocale } from "@/lib/i18n/getServerLocale";
 
 const VALID_FILTERS: NewsFilter[] = ["all", "samsung", "skhynix", "hyundai"];
 const VALID_CATEGORIES: NewsCategory[] = ["news", "disclosure"];
@@ -29,6 +30,10 @@ export async function GET(request: NextRequest) {
 
   const page = Math.max(0, Number(searchParams.get("page") ?? "0") || 0);
 
-  const result = await getNewsPage(filter, page, undefined, category);
+  // Content locale comes from the x-locale header (set by middleware), not the
+  // client — keeps the list in the same language as the SSR'd first page.
+  const contentLocale = getServerContentLocale();
+
+  const result = await getNewsPage(filter, page, undefined, category, contentLocale);
   return NextResponse.json(result);
 }

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getNewsById } from "@/lib/api/news";
 import { NewsDetailGate } from "@/components/news/NewsDetailGate";
 import { getTranslations } from "@/lib/i18n/getTranslations";
+import { getServerContentLocale } from "@/lib/i18n/getServerLocale";
 
 // Real-time content — always fetch fresh.
 export const dynamic = "force-dynamic";
@@ -12,7 +13,8 @@ export default async function NewsDetailPage({
 }: {
   params: { id: string };
 }) {
-  const item = await getNewsById(params.id);
+  const contentLocale = getServerContentLocale();
+  const item = await getNewsById(params.id, contentLocale);
   if (!item) notFound();
 
   const { t } = getTranslations();

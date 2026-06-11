@@ -63,6 +63,7 @@ export async function POST(request: NextRequest) {
 
     const data = (await res.json().catch(() => null)) as {
       success?: boolean;
+      code?: string;
       message?: string;
     } | null;
 
@@ -73,9 +74,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Pass the backend's { success, message } through verbatim (message may be Korean).
+    // Pass the backend's { success, code, message } through. The frontend maps
+    // `code` → i18n key (the source of truth); `message` is a fallback only.
+    // Note: BYBIT_REFERRAL_NOT_FOUND is success:false on HTTP 200 — preserved here.
     return NextResponse.json(
-      { success: data.success === true, message: data.message ?? "" },
+      {
+        success: data.success === true,
+        code: data.code ?? null,
+        message: data.message ?? "",
+      },
       { status: 200 }
     );
   } catch (e) {

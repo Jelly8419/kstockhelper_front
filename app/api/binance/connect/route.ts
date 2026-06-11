@@ -60,6 +60,7 @@ export async function POST(request: NextRequest) {
 
     const data = (await res.json().catch(() => null)) as {
       success?: boolean;
+      code?: string;
       message?: string;
     } | null;
 
@@ -70,8 +71,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Pass { success, code, message } through. The frontend maps `code` → i18n
+    // key (the source of truth); `message` is a fallback only.
     return NextResponse.json(
-      { success: data.success === true, message: data.message ?? "" },
+      {
+        success: data.success === true,
+        code: data.code ?? null,
+        message: data.message ?? "",
+      },
       { status: 200 }
     );
   } catch (e) {

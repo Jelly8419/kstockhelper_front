@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
+import { useTranslation } from "@/lib/i18n/useTranslation";
 
 interface Props {
   open: boolean;
@@ -26,6 +27,7 @@ export function ChangeUidModal({
   manual,
   onSubmit,
 }: Props) {
+  const { t } = useTranslation();
   const [uid, setUid] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -42,7 +44,7 @@ export function ChangeUidModal({
     setError(null);
     const trimmed = uid.trim();
     if (!trimmed) {
-      setError(`Please enter your new ${exchangeName} UID.`);
+      setError(t("changeUid.errorUidRequired", { exchange: exchangeName }));
       return;
     }
     setSubmitting(true);
@@ -60,27 +62,35 @@ export function ChangeUidModal({
   };
 
   return (
-    <Modal open={open} onClose={close} title={`Change ${exchangeName} UID`}>
-      <p className="text-sm text-muted">Changing your UID will:</p>
+    <Modal
+      open={open}
+      onClose={close}
+      title={t("changeUid.title", { exchange: exchangeName })}
+    >
+      <p className="text-sm text-muted">{t("changeUid.intro")}</p>
       <ul className="mt-2 flex flex-col gap-1 text-sm text-foreground">
-        <li>• Disable your Premium membership</li>
-        <li>• Reset your current approval status</li>
-        <li>• Submit your new UID for {manual ? "review" : "verification"}</li>
+        <li>• {t("changeUid.bulletDisablePremium")}</li>
+        <li>• {t("changeUid.bulletResetStatus")}</li>
+        <li>
+          •{" "}
+          {manual
+            ? t("changeUid.bulletResubmitReview")
+            : t("changeUid.bulletResubmitVerify")}
+        </li>
       </ul>
 
       <form onSubmit={submit} className="mt-5 flex flex-col gap-3">
         <Input
-          label={`New ${exchangeName} UID`}
+          label={t("changeUid.newUidLabel", { exchange: exchangeName })}
           value={uid}
           onChange={(v) => setUid(v.replace(/\D/g, ""))}
-          placeholder="e.g. 987654321"
+          placeholder={t("changeUid.newUidPlaceholder")}
         />
         {error && <p className="text-xs text-down">{error}</p>}
         <p className="rounded-lg border border-border bg-background px-3 py-2 text-xs text-muted">
-          ⓘ{" "}
-          {manual
-            ? "After submission, your application will be reset and reviewed again."
-            : "After submission, your UID will be re-verified automatically."}
+          {/* eslint-disable-next-line i18next/no-literal-string -- decorative info glyph */}
+          <span aria-hidden>ⓘ</span>{" "}
+          {manual ? t("changeUid.infoReview") : t("changeUid.infoVerify")}
         </p>
         <div className="flex justify-end gap-2">
           <Button
@@ -90,10 +100,10 @@ export function ChangeUidModal({
             onClick={close}
             disabled={submitting}
           >
-            Cancel
+            {t("changeUid.cancel")}
           </Button>
           <Button type="submit" size="sm" disabled={submitting}>
-            {submitting ? "Submitting…" : "Submit & Re-apply"}
+            {submitting ? t("changeUid.submitting") : t("changeUid.submit")}
           </Button>
         </div>
       </form>

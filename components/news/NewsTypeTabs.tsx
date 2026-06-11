@@ -1,15 +1,16 @@
 "use client";
 
 import { NewsCategory } from "@/types/news";
+import { useTranslation } from "@/lib/i18n/useTranslation";
 
 interface Tab {
   id: NewsCategory;
-  label: string;
+  labelKey: string;
 }
 
 const TABS: Tab[] = [
-  { id: "news", label: "News" },
-  { id: "disclosure", label: "Disclosures" },
+  { id: "news", labelKey: "news.typeNews" },
+  { id: "disclosure", labelKey: "news.typeDisclosures" },
 ];
 
 interface Props {
@@ -19,11 +20,12 @@ interface Props {
 
 /** Top-level content-type tabs: News vs Disclosures. */
 export function NewsTypeTabs({ active, onChange }: Props) {
+  const { t } = useTranslation();
   return (
     <div
       className="flex gap-1 border-b border-border"
       role="tablist"
-      aria-label="Content type"
+      aria-label={t("news.ariaType")}
     >
       {TABS.map((tab) => {
         const isActive = tab.id === active;
@@ -39,7 +41,7 @@ export function NewsTypeTabs({ active, onChange }: Props) {
                 : "border-b-2 border-transparent text-muted hover:text-foreground"
             }`}
           >
-            {tab.label}
+            {t(tab.labelKey)}
           </button>
         );
       })}

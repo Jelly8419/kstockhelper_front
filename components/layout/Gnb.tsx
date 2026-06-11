@@ -4,11 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
+import { LocaleSwitcher } from "@/components/layout/LocaleSwitcher";
 import { useAuth } from "@/lib/hooks/useAuth";
+import { useTranslation } from "@/lib/i18n/useTranslation";
 import { createClient } from "@/lib/supabase/client";
 
 export function Gnb() {
   const { tier, email, isLoading } = useAuth();
+  const { t } = useTranslation();
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -33,13 +36,16 @@ export function Gnb() {
               priority
             />
           </span>
+          {/* Brand name — not translated. */}
+          {/* eslint-disable-next-line i18next/no-literal-string */}
           <span className="text-base font-semibold tracking-tight text-foreground">
             K-Stock Helper
           </span>
         </Link>
 
-        {/* Right: auth actions */}
+        {/* Right: language selector + auth actions */}
         <nav className="flex items-center gap-2">
+          <LocaleSwitcher />
           {isLoading ? null : tier !== "guest" ? (
             <>
               {email && (
@@ -53,25 +59,25 @@ export function Gnb() {
               {/* Mobile: email link is hidden, so expose Settings via an icon. */}
               <Link
                 href="/settings"
-                aria-label="Settings"
+                aria-label={t("gnb.settings")}
                 className="flex h-8 w-8 items-center justify-center rounded-lg text-muted transition-colors hover:bg-surface-hover hover:text-foreground sm:hidden"
               >
                 <SettingsIcon />
               </Link>
               <Button variant="ghost" size="sm" onClick={handleLogout}>
-                Log Out
+                {t("gnb.logOut")}
               </Button>
             </>
           ) : (
             <>
               <Link href="/login">
                 <Button variant="ghost" size="sm">
-                  Log In
+                  {t("gnb.logIn")}
                 </Button>
               </Link>
               <Link href="/signup">
                 <Button variant="primary" size="sm">
-                  Sign Up
+                  {t("gnb.signUp")}
                 </Button>
               </Link>
             </>

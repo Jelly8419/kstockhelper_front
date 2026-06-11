@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { NewsDetailItem } from "@/types/news";
 import { useAuth } from "@/lib/hooks/useAuth";
+import { useTranslation } from "@/lib/i18n/useTranslation";
 import { NewsDetail } from "./NewsDetail";
 import { Button } from "@/components/ui/Button";
 
@@ -17,9 +18,10 @@ import { Button } from "@/components/ui/Button";
  */
 export function NewsDetailGate({ item }: { item: NewsDetailItem }) {
   const { tier, isLoading } = useAuth();
+  const { t } = useTranslation();
 
   if (isLoading) {
-    return <p className="text-sm text-muted">Loading…</p>;
+    return <p className="text-sm text-muted">{t("common.loading")}</p>;
   }
 
   const hasContent = item.summary != null || item.body != null;
@@ -30,9 +32,12 @@ export function NewsDetailGate({ item }: { item: NewsDetailItem }) {
   // Guest → sign up first.
   if (tier === "guest") {
     return (
-      <Panel title="Sign up to read" description="Create a free account to read full news and disclosures.">
+      <Panel
+        title={t("newsGate.signupTitle")}
+        description={t("newsGate.signupBody")}
+      >
         <Link href="/signup">
-          <Button>Sign Up</Button>
+          <Button>{t("newsGate.signupCta")}</Button>
         </Link>
       </Panel>
     );
@@ -41,11 +46,11 @@ export function NewsDetailGate({ item }: { item: NewsDetailItem }) {
   // Free → connect UID to unlock premium.
   return (
     <Panel
-      title="Unlock Premium Access"
-      description="Connect your UID to get full access to all news & disclosures."
+      title={t("newsGate.premiumTitle")}
+      description={t("newsGate.premiumBody")}
     >
       <Link href="/settings">
-        <Button>Connect Your UID</Button>
+        <Button>{t("newsGate.premiumCta")}</Button>
       </Link>
     </Panel>
   );

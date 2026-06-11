@@ -1,3 +1,32 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  "plugins": ["i18next"],
+  "rules": {
+    "i18next/no-literal-string": [
+      "error",
+      {
+        "mode": "jsx-text-only"
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "app/(admin)/**",
+        "app/api/admin/**",
+        "components/admin/**",
+        "lib/admin/**",
+        "lib/legal/**",
+        "components/legal/**",
+        "components/guide/**",
+        "app/privacy/**",
+        "app/terms/**",
+        "lib/i18n/**",
+        "locales/**"
+      ],
+      "rules": {
+        "i18next/no-literal-string": "off"
+      }
+    }
+  ]
 }

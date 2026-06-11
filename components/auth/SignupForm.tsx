@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { PRIVACY_POLICY, TERMS_OF_SERVICE } from "@/lib/legal/content";
 import { GoogleButton } from "@/components/auth/GoogleButton";
+import { useTranslation } from "@/lib/i18n/useTranslation";
 
 type Step = "email" | "code" | "password";
 
@@ -16,6 +17,7 @@ const PASSWORD_MAX = 16;
 
 export function SignupForm() {
   const router = useRouter();
+  const { t } = useTranslation();
   const [step, setStep] = useState<Step>("email");
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
@@ -43,7 +45,7 @@ export function SignupForm() {
         return;
       }
       setStep("code");
-      setNotice(`A 6-digit code was sent to ${email}.`);
+      setNotice(t("auth.codeSent", { email }));
     } finally {
       setLoading(false);
     }
@@ -64,7 +66,7 @@ export function SignupForm() {
         setError(error.message);
         return;
       }
-      setNotice("A new code was sent.");
+      setNotice(t("auth.codeResent"));
     } finally {
       setLoading(false);
     }
@@ -98,15 +100,17 @@ export function SignupForm() {
     e.preventDefault();
     setError(null);
     if (password.length < PASSWORD_MIN || password.length > PASSWORD_MAX) {
-      setError(`Password must be ${PASSWORD_MIN}–${PASSWORD_MAX} characters.`);
+      setError(
+        t("auth.errorPasswordLength", { min: PASSWORD_MIN, max: PASSWORD_MAX })
+      );
       return;
     }
     if (password !== confirmPassword) {
-      setError("Passwords do not match.");
+      setError(t("auth.errorPasswordMismatch"));
       return;
     }
     if (!agreed) {
-      setError("Please agree to the Terms of Service and Privacy Policy.");
+      setError(t("auth.errorAgreeRequired"));
       return;
     }
     setLoading(true);
@@ -148,20 +152,22 @@ export function SignupForm() {
     <div className="flex flex-col gap-4">
       {/* Step indicator */}
       <p className="text-xs text-muted">
-        Step {step === "email" ? 1 : step === "code" ? 2 : 3} of 3
+        {t("auth.stepOf", {
+          current: step === "email" ? 1 : step === "code" ? 2 : 3,
+        })}
       </p>
 
       {step === "email" && (
         <form onSubmit={sendCode} className="flex flex-col gap-4">
           <Input
-            label="Email"
+            label={t("auth.email")}
             name="email"
             type="email"
             autoComplete="email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@example.com"
+            placeholder={t("auth.emailPlaceholder")}
           />
           {/* Legal consent — collected up front, gates both sign-up methods. */}
           <label className="flex items-start gap-2">
@@ -172,23 +178,23 @@ export function SignupForm() {
               className="mt-0.5 h-4 w-4 shrink-0 accent-brand"
             />
             <span className="text-xs text-foreground">
-              I have read and agree to the{" "}
+              {t("auth.agreePrefix")}{" "}
               <a
                 href="/terms"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-brand hover:underline"
               >
-                Terms of Service
+                {t("footer.terms")}
               </a>{" "}
-              and{" "}
+              {t("auth.agreeMiddle")}{" "}
               <a
                 href="/privacy"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-brand hover:underline"
               >
-                Privacy Policy
+                {t("footer.privacy")}
               </a>
               .
             </span>
@@ -197,13 +203,13 @@ export function SignupForm() {
           {notice && <p className="text-xs text-muted">{notice}</p>}
           {error && <p className="text-xs text-down">{error}</p>}
           <Button type="submit" size="lg" disabled={loading || !agreed}>
-            {loading ? "Sending…" : "Send Verification Code"}
+            {loading ? t("auth.sending") : t("auth.sendCode")}
           </Button>
 
           {/* Divider */}
           <div className="flex items-center gap-3">
             <span className="h-px flex-1 bg-border" />
-            <span className="text-xs text-muted">or</span>
+            <span className="text-xs text-muted">{t("common.or")}</span>
             <span className="h-px flex-1 bg-border" />
           </div>
 
@@ -218,19 +224,19 @@ export function SignupForm() {
       {step === "code" && (
         <form onSubmit={verifyCode} className="flex flex-col gap-4">
           <Input
-            label="Verification Code"
+            label={t("auth.verificationCode")}
             name="code"
             inputMode="numeric"
             autoComplete="one-time-code"
             required
             value={code}
             onChange={(e) => setCode(e.target.value)}
-            placeholder="Enter the 6-digit code"
+            placeholder={t("auth.verificationCodePlaceholder")}
           />
           {notice && <p className="text-xs text-muted">{notice}</p>}
           {error && <p className="text-xs text-down">{error}</p>}
           <Button type="submit" size="lg" disabled={loading}>
-            {loading ? "Verifying…" : "Verify Code"}
+            {loading ? t("auth.verifying") : t("auth.verifyCode")}
           </Button>
           <div className="flex items-center justify-between text-xs">
             <button
@@ -243,7 +249,7 @@ export function SignupForm() {
               }}
               className="text-muted hover:text-foreground"
             >
-              ← Change email
+              {t("auth.changeEmail")}
             </button>
             <button
               type="button"
@@ -251,7 +257,7 @@ export function SignupForm() {
               disabled={loading}
               className="text-brand hover:underline disabled:opacity-50"
             >
-              Resend code
+              {t("auth.resendCode")}
             </button>
           </div>
         </form>
@@ -260,7 +266,7 @@ export function SignupForm() {
       {step === "password" && (
         <form onSubmit={setAccountPassword} className="flex flex-col gap-4">
           <Input
-            label="Password (8–16 characters)"
+            label={t("auth.passwordWithRule")}
             name="password"
             type="password"
             autoComplete="new-password"
@@ -269,10 +275,10 @@ export function SignupForm() {
             maxLength={PASSWORD_MAX}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="••••••••"
+            placeholder={t("auth.passwordPlaceholder")}
           />
           <Input
-            label="Confirm Password"
+            label={t("auth.confirmPassword")}
             name="confirmPassword"
             type="password"
             autoComplete="new-password"
@@ -281,20 +287,20 @@ export function SignupForm() {
             maxLength={PASSWORD_MAX}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder="••••••••"
+            placeholder={t("auth.passwordPlaceholder")}
           />
           {/* Consent was already collected in step 1. */}
           {error && <p className="text-xs text-down">{error}</p>}
           <Button type="submit" size="lg" disabled={loading}>
-            {loading ? "Creating account…" : "Create Account"}
+            {loading ? t("auth.creatingAccount") : t("auth.createAccount")}
           </Button>
         </form>
       )}
 
       <p className="text-center text-sm text-muted">
-        Already have an account?{" "}
+        {t("auth.haveAccount")}{" "}
         <Link href="/login" className="text-brand hover:underline">
-          Log In
+          {t("auth.logIn")}
         </Link>
       </p>
     </div>

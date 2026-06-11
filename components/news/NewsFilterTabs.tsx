@@ -2,16 +2,17 @@
 
 import { NewsFilter } from "@/types/news";
 import { TICKERS } from "@/lib/constants/tickers";
+import { useTranslation } from "@/lib/i18n/useTranslation";
 
 interface Tab {
   id: NewsFilter;
+  /** Ticker label (a data value, not translated). "all" uses an i18n key instead. */
   label: string;
 }
 
-const TABS: Tab[] = [
-  { id: "all", label: "All" },
-  ...TICKERS.map((t) => ({ id: t.id, label: t.label })),
-];
+// Ticker labels are stock symbols (data), so they are NOT translated. Only the
+// leading "All" tab is a UI string, resolved via i18n in render.
+const TICKER_TABS: Tab[] = TICKERS.map((t) => ({ id: t.id, label: t.label }));
 
 interface Props {
   active: NewsFilter;
@@ -19,9 +20,19 @@ interface Props {
 }
 
 export function NewsFilterTabs({ active, onChange }: Props) {
+  const { t } = useTranslation();
+  const tabs: { id: NewsFilter; label: string }[] = [
+    { id: "all", label: t("news.filterAll") },
+    ...TICKER_TABS,
+  ];
+
   return (
-    <div className="flex flex-wrap gap-2" role="tablist" aria-label="News filter">
-      {TABS.map((tab) => {
+    <div
+      className="flex flex-wrap gap-2"
+      role="tablist"
+      aria-label={t("news.ariaFilter")}
+    >
+      {tabs.map((tab) => {
         const isActive = tab.id === active;
         return (
           <button

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { useTranslation } from "@/lib/i18n/useTranslation";
 
 /** Multi-color Google "G" mark (official brand colors), inline to avoid deps. */
 function GoogleMark() {
@@ -45,6 +46,7 @@ export function GoogleButton({
 }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   const signIn = async () => {
     setError(null);
@@ -66,7 +68,7 @@ export function GoogleButton({
       }
       // On success the browser is redirected to Google — no further action.
     } catch {
-      setError("Could not start Google sign-in. Please try again.");
+      setError(t("auth.googleError"));
       setLoading(false);
     }
   };
@@ -80,7 +82,7 @@ export function GoogleButton({
         className="inline-flex h-12 w-full items-center justify-center gap-3 rounded-lg bg-white px-6 text-base font-medium text-[#1f1f1f] transition-colors hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-60"
       >
         <GoogleMark />
-        {loading ? "Connecting…" : "Continue with Google"}
+        {loading ? t("auth.connecting") : t("auth.continueWithGoogle")}
       </button>
       {error && <p className="text-xs text-down">{error}</p>}
     </div>

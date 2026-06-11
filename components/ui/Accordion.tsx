@@ -35,7 +35,8 @@ export function Accordion({
             open ? "rotate-90" : ""
           }`}
         >
-          ▸
+          {/* eslint-disable-next-line i18next/no-literal-string -- decorative caret */}
+          {"▸"}
         </span>
         <span className="flex-1">{title}</span>
       </button>

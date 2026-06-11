@@ -83,3 +83,17 @@ export interface NewsFullRow extends NewsPreviewRow {
   key_points: string[] | null;
   key_figures: KeyFigure[] | null;
 }
+
+/**
+ * A row from `news_translations` (anon-readable; PK (news_id, locale)).
+ * Only translated fields: `key_figures`/`body` are never translated.
+ * Backend stores the translated title under `translated_title`; we map it onto
+ * our `title` field at the data layer.
+ */
+export interface NewsTranslationRow {
+  news_id: string;
+  translated_title: string | null;
+  summary: string | null;
+  /** jsonb string[] from the backend. */
+  key_points: string[] | null;
+}

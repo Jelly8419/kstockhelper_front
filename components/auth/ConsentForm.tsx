@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/Button";
 import { PRIVACY_POLICY, TERMS_OF_SERVICE } from "@/lib/legal/content";
+import { useTranslation } from "@/lib/i18n/useTranslation";
 
 /**
  * Consent gate (A3): shown after OAuth sign-in when the user has not yet
@@ -13,6 +14,7 @@ import { PRIVACY_POLICY, TERMS_OF_SERVICE } from "@/lib/legal/content";
  */
 export function ConsentForm() {
   const router = useRouter();
+  const { t } = useTranslation();
   const [agreed, setAgreed] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -21,7 +23,7 @@ export function ConsentForm() {
     e.preventDefault();
     setError(null);
     if (!agreed) {
-      setError("Please agree to the Terms of Service and Privacy Policy.");
+      setError(t("auth.errorAgreeRequired"));
       return;
     }
     setLoading(true);
@@ -47,7 +49,7 @@ export function ConsentForm() {
         .eq("id", user.id);
 
       if (error) {
-        setError("Could not save your consent. Please try again.");
+        setError(t("auth.errorConsentFailed"));
         return;
       }
 
@@ -61,9 +63,7 @@ export function ConsentForm() {
 
   return (
     <form onSubmit={submit} className="flex flex-col gap-4">
-      <p className="text-sm text-muted">
-        Before you continue, please review and agree to our terms.
-      </p>
+      <p className="text-sm text-muted">{t("auth.consentIntro")}</p>
 
       <label className="flex items-start gap-2">
         <input
@@ -73,23 +73,23 @@ export function ConsentForm() {
           className="mt-0.5 h-4 w-4 shrink-0 accent-brand"
         />
         <span className="text-xs text-foreground">
-          I have read and agree to the{" "}
+          {t("auth.agreePrefix")}{" "}
           <a
             href="/terms"
             target="_blank"
             rel="noopener noreferrer"
             className="text-brand hover:underline"
           >
-            Terms of Service
+            {t("footer.terms")}
           </a>{" "}
-          and{" "}
+          {t("auth.agreeMiddle")}{" "}
           <a
             href="/privacy"
             target="_blank"
             rel="noopener noreferrer"
             className="text-brand hover:underline"
           >
-            Privacy Policy
+            {t("footer.privacy")}
           </a>
           .
         </span>
@@ -97,7 +97,7 @@ export function ConsentForm() {
 
       {error && <p className="text-xs text-down">{error}</p>}
       <Button type="submit" size="lg" disabled={loading || !agreed}>
-        {loading ? "Saving…" : "Agree and Continue"}
+        {loading ? t("auth.saving") : t("auth.agreeAndContinue")}
       </Button>
     </form>
   );

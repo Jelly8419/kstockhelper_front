@@ -3,17 +3,21 @@
 import { useMarketData } from "@/lib/hooks/useMarketData";
 import { MarketCard } from "./MarketCard";
 import { formatRegisteredTime } from "@/lib/utils/format";
+import { useTranslation } from "@/lib/i18n/useTranslation";
 
 export function MarketTicker() {
   const { items, lastUpdated } = useMarketData();
+  const { t } = useTranslation();
 
   return (
-    <section aria-label="Market overview" className="flex flex-col gap-3">
+    <section aria-label={t("market.ariaOverview")} className="flex flex-col gap-3">
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-semibold text-foreground">Market Overview</h2>
+        <h2 className="text-sm font-semibold text-foreground">
+          {t("market.overview")}
+        </h2>
         {lastUpdated && (
           <span className="text-xs text-muted">
-            Updated {formatRegisteredTime(lastUpdated)}
+            {t("market.updated", { time: formatRegisteredTime(lastUpdated) })}
           </span>
         )}
       </div>

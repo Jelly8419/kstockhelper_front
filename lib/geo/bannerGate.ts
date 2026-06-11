@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import { getCountryCode } from "./country";
 
 /** Header the frontend reads to decide whether to render the banner. */
 export const SHOW_BANNER_HEADER = "x-show-banner";
@@ -45,23 +46,11 @@ const KR_WHITELIST_IPS = new Set<string>([
  * country for testing.
  */
 export function shouldShowBanner(request: NextRequest): boolean {
-  let country = request.geo?.country;
-
-  // Fallback header (some Vercel setups expose this).
-  if (!country) {
-    country = request.headers.get("x-vercel-ip-country") ?? undefined;
-  }
-
-  // Dev-only override for local testing.
-  if (process.env.NODE_ENV !== "production") {
-    const debug = request.nextUrl.searchParams.get("debugCountry");
-    if (debug) country = debug.toUpperCase();
-  }
+  const country = getCountryCode(request);
 
   // Unknown → show.
   if (!country) return true;
 
-  country = country.toUpperCase();
   if (!BLOCKED_COUNTRIES.has(country)) return true;
 
   // Blocked. KR has an IP whitelist exception.

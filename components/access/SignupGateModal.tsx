@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
+import { useTranslation } from "@/lib/i18n/useTranslation";
 
 interface Props {
   open: boolean;
@@ -12,17 +13,16 @@ interface Props {
 /** Shown to guests (non-members): sign up to read. */
 export function SignupGateModal({ open, onClose }: Props) {
   const router = useRouter();
+  const { t } = useTranslation();
   return (
-    <Modal open={open} onClose={onClose} title="Sign up to read">
-      <p className="text-sm text-muted">
-        Create a free account to read full news and disclosures.
-      </p>
+    <Modal open={open} onClose={onClose} title={t("newsGate.signupTitle")}>
+      <p className="text-sm text-muted">{t("newsGate.signupBody")}</p>
       <div className="mt-5 flex justify-end gap-2">
         <Button variant="ghost" size="sm" onClick={onClose}>
-          Cancel
+          {t("common.cancel")}
         </Button>
         <Button size="sm" onClick={() => router.push("/signup")}>
-          Sign Up
+          {t("newsGate.signupCta")}
         </Button>
       </div>
     </Modal>

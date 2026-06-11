@@ -2,6 +2,11 @@ import { NextResponse, type NextRequest } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
 import { shouldShowBanner, SHOW_BANNER_HEADER } from "@/lib/geo/bannerGate";
 import {
+  resolveRequestLocale,
+  LOCALE_COOKIE,
+  LOCALE_HEADER,
+} from "@/lib/i18n/middlewareLocale";
+import {
   ADMIN_BASE_PATH,
   ADMIN_COOKIE,
   ADMIN_LOGIN_PATH,
@@ -37,12 +42,23 @@ export async function middleware(request: NextRequest) {
   }
 
   // -------------------------------------------------------------------------
-  // Public site: geo-gate the banner + refresh the Supabase session.
+  // Public site: resolve UI locale, geo-gate the banner, refresh the session.
   // -------------------------------------------------------------------------
   const showBanner = shouldShowBanner(request);
   request.headers.set(SHOW_BANNER_HEADER, showBanner ? "true" : "false");
 
-  return await updateSession(request);
+  // Resolve the active locale (5-step priority) and forward it to server
+  // components via x-locale. When the URL carries a locale prefix (/vi/…) we
+  // rewrite to the internal path. The locale cookie and any rewrite are applied
+  // on the SAME response Supabase writes its session cookies to, so refreshing
+  // the locale never drops the auth session.
+  const { locale, rewritePath, shouldSetCookie } = resolveRequestLocale(request);
+  request.headers.set(LOCALE_HEADER, locale);
+
+  return await updateSession(request, {
+    rewritePath,
+    setLocaleCookie: shouldSetCookie ? { name: LOCALE_COOKIE, value: locale } : null,
+  });
 }
 
 export const config = {

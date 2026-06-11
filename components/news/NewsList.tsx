@@ -7,6 +7,7 @@ import { NewsFilterTabs } from "./NewsFilterTabs";
 import { NewsCard } from "./NewsCard";
 import { Pagination } from "@/components/ui/Pagination";
 import { useAuth } from "@/lib/hooks/useAuth";
+import { useTranslation } from "@/lib/i18n/useTranslation";
 import { SignupGateModal } from "@/components/access/SignupGateModal";
 import { BybitGateModal } from "@/components/access/BybitGateModal";
 import { NEWS_PAGE_SIZE } from "@/lib/constants/news";
@@ -37,6 +38,7 @@ export function NewsList({
   const [loading, setLoading] = useState(false);
   const [gate, setGate] = useState<"none" | "signup" | "bybit">("none");
   const { tier } = useAuth();
+  const { t } = useTranslation();
 
   const sectionRef = useRef<HTMLElement | null>(null);
   // Tracks the in-flight request so rapid tab/filter switches cancel the
@@ -118,16 +120,24 @@ export function NewsList({
   );
 
   return (
-    <section ref={sectionRef} aria-label="News" className="flex flex-col gap-4">
+    <section
+      ref={sectionRef}
+      aria-label={t("news.ariaList")}
+      className="flex flex-col gap-4"
+    >
       <NewsTypeTabs active={category} onChange={changeCategory} />
 
       <NewsFilterTabs active={filter} onChange={changeFilter} />
 
       {loading ? (
-        <p className="py-12 text-center text-sm text-muted">Loading…</p>
+        <p className="py-12 text-center text-sm text-muted">
+          {t("common.loading")}
+        </p>
       ) : items.length === 0 ? (
         <p className="py-8 text-center text-sm text-muted">
-          No {category === "news" ? "news" : "disclosures"} for this filter.
+          {category === "news"
+            ? t("news.emptyNews")
+            : t("news.emptyDisclosures")}
         </p>
       ) : (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

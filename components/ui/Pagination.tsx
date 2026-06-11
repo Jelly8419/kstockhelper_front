@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslation } from "@/lib/i18n/useTranslation";
+
 interface Props {
   /** 0-based current page. */
   page: number;
@@ -32,6 +34,7 @@ function buildPages(page: number, totalPages: number): number[] {
 }
 
 export function Pagination({ page, totalPages, onChange }: Props) {
+  const { t } = useTranslation();
   if (totalPages <= 1) return null;
 
   const pages = buildPages(page, totalPages);
@@ -41,13 +44,13 @@ export function Pagination({ page, totalPages, onChange }: Props) {
   return (
     <nav
       className="flex flex-wrap items-center justify-center gap-1.5"
-      aria-label="Pagination"
+      aria-label={t("pagination.aria")}
     >
       <button
         type="button"
         onClick={() => onChange(page - 1)}
         disabled={page === 0}
-        aria-label="Previous page"
+        aria-label={t("pagination.previous")}
         className={`${btn} border border-border bg-surface text-muted hover:bg-surface-hover disabled:cursor-not-allowed disabled:opacity-40`}
       >
         «
@@ -79,7 +82,7 @@ export function Pagination({ page, totalPages, onChange }: Props) {
         type="button"
         onClick={() => onChange(page + 1)}
         disabled={page >= totalPages - 1}
-        aria-label="Next page"
+        aria-label={t("pagination.next")}
         className={`${btn} border border-border bg-surface text-muted hover:bg-surface-hover disabled:cursor-not-allowed disabled:opacity-40`}
       >
         »

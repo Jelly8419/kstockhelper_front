@@ -7,11 +7,14 @@ import { createClient } from "@/lib/supabase/client";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
+import { useTranslation } from "@/lib/i18n/useTranslation";
+import { errorKeyForCode } from "@/lib/i18n/errorCodes";
 import { ChangeUidModal } from "./ChangeUidModal";
 
 export function SettingsClient() {
   const router = useRouter();
   const auth = useAuth();
+  const { t } = useTranslation();
   const { tier, email, bybitUid, binanceUid, binanceStatus, isLoading } = auth;
 
   // Route guard: redirect guests to login once auth has resolved.
@@ -29,14 +32,16 @@ export function SettingsClient() {
   };
 
   if (isLoading || tier === "guest") {
-    return <p className="text-sm text-muted">Loading…</p>;
+    return <p className="text-sm text-muted">{t("common.loading")}</p>;
   }
 
   return (
     <div className="flex flex-col gap-8">
       {/* Account */}
       <section className="flex flex-col gap-2">
-        <h2 className="text-sm font-semibold text-muted">Account</h2>
+        <h2 className="text-sm font-semibold text-muted">
+          {t("settings.account")}
+        </h2>
         <p className="text-sm text-foreground">{email}</p>
       </section>
 
@@ -55,7 +60,7 @@ export function SettingsClient() {
       {/* Logout */}
       <section>
         <Button variant="secondary" onClick={handleLogout}>
-          Log Out
+          {t("settings.logOut")}
         </Button>
       </section>
     </div>
@@ -74,6 +79,7 @@ function BybitSection({
   bybitUid: string | null;
   onConnected: () => Promise<void>;
 }) {
+  const { t } = useTranslation();
   const [uid, setUid] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -88,13 +94,14 @@ function BybitSection({
     });
     const data = (await res.json().catch(() => null)) as {
       success?: boolean;
+      code?: string | null;
       message?: string;
     } | null;
     if (!data?.success) {
-      return (
-        data?.message ??
-        "UID not found. Make sure you signed up via our referral link."
-      );
+      // Prefer the backend `code` → i18n key; fall back to message, then default.
+      const key = errorKeyForCode(data?.code);
+      const localized = key ? t(key) : "";
+      return localized || data?.message || t("settings.errorBybitReferral");
     }
     await onConnected();
     return null;
@@ -105,7 +112,7 @@ function BybitSection({
     setError(null);
     const trimmed = uid.trim();
     if (!trimmed) {
-      setError("Please enter your Bybit UID.");
+      setError(t("settings.errorBybitUidRequired"));
       return;
     }
     setSubmitting(true);
@@ -119,22 +126,28 @@ function BybitSection({
 
   return (
     <SectionCard
-      title="Bybit Connection"
-      badge={connected ? <Badge tone="brand">Premium</Badge> : null}
+      title={t("settings.bybitConnection")}
+      badge={
+        connected ? <Badge tone="brand">{t("settings.premium")}</Badge> : null
+      }
     >
       {connected ? (
         <div className="flex flex-col gap-2">
-          <p className="text-sm font-medium text-up">Connected</p>
-          {bybitUid && <p className="text-xs text-muted">UID: {bybitUid}</p>}
-          <p className="text-sm text-muted">
-            You have full access to all news &amp; disclosures.
+          <p className="text-sm font-medium text-up">
+            {t("settings.connected")}
           </p>
+          {bybitUid && (
+            <p className="text-xs text-muted">
+              {t("settings.uidValue", { uid: bybitUid })}
+            </p>
+          )}
+          <p className="text-sm text-muted">{t("settings.fullAccess")}</p>
           <button
             type="button"
             onClick={() => setChangeOpen(true)}
             className="self-start text-xs text-brand hover:underline"
           >
-            Change UID
+            {t("settings.changeUid")}
           </button>
           <ChangeUidModal
             open={changeOpen}
@@ -148,16 +161,18 @@ function BybitSection({
         <>
           <form onSubmit={handleConnect} className="flex flex-col gap-3">
             <Input
-              label="Bybit UID"
+              label={t("settings.bybitUidLabel")}
               name="bybitUid"
               value={uid}
               onChange={(e) => setUid(e.target.value.replace(/\D/g, ""))}
               inputMode="numeric"
-              placeholder="e.g. 12345678"
+              placeholder={t("settings.bybitUidPlaceholder")}
             />
             {error && <p className="text-xs text-down">{error}</p>}
             <Button type="submit" disabled={submitting}>
-              {submitting ? "Connecting…" : "Connect & Unlock Premium"}
+              {submitting
+                ? t("settings.connecting")
+                : t("settings.connectUnlock")}
             </Button>
           </form>
           <UidGuide exchange="Bybit" />
@@ -179,6 +194,7 @@ function BinanceSection({
   binanceUid: string | null;
   onSubmitted: () => Promise<void>;
 }) {
+  const { t } = useTranslation();
   const [uid, setUid] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -195,10 +211,13 @@ function BinanceSection({
     });
     const data = (await res.json().catch(() => null)) as {
       success?: boolean;
+      code?: string | null;
       message?: string;
     } | null;
     if (!data?.success) {
-      return data?.message ?? "Submission failed. Please try again.";
+      const key = errorKeyForCode(data?.code);
+      const localized = key ? t(key) : "";
+      return localized || data?.message || t("settings.errorSubmitFailed");
     }
     await onSubmitted();
     return null;
@@ -209,7 +228,7 @@ function BinanceSection({
     setError(null);
     const trimmed = uid.trim();
     if (!trimmed) {
-      setError("Please enter your Binance UID.");
+      setError(t("settings.errorBinanceUidRequired"));
       return;
     }
     setSubmitting(true);
@@ -228,42 +247,46 @@ function BinanceSection({
   const renderForm = (cta: string) => (
     <form onSubmit={submit} className="flex flex-col gap-3">
       <Input
-        label="Binance UID"
+        label={t("settings.binanceUidLabel")}
         name="binanceUid"
         value={uid}
         onChange={(e) => setUid(e.target.value.replace(/\D/g, ""))}
         inputMode="numeric"
-        placeholder="e.g. 123456789"
+        placeholder={t("settings.binanceUidPlaceholder")}
       />
       {error && <p className="text-xs text-down">{error}</p>}
       <Button type="submit" disabled={submitting}>
-        {submitting ? "Submitting…" : cta}
+        {submitting ? t("settings.submitting") : cta}
       </Button>
     </form>
   );
 
   const badge =
     status === "approved" ? (
-      <Badge tone="brand">Premium</Badge>
+      <Badge tone="brand">{t("settings.premium")}</Badge>
     ) : status === "pending" ? (
-      <Badge tone="neutral">Under review</Badge>
+      <Badge tone="neutral">{t("settings.underReview")}</Badge>
     ) : null;
 
   return (
-    <SectionCard title="Binance Connection" badge={badge}>
+    <SectionCard title={t("settings.binanceConnection")} badge={badge}>
       {status === "approved" ? (
         <div className="flex flex-col gap-2">
-          <p className="text-sm font-medium text-up">Approved ✅</p>
-          {binanceUid && <p className="text-xs text-muted">UID: {binanceUid}</p>}
-          <p className="text-sm text-muted">
-            You have full access to all news &amp; disclosures.
+          <p className="text-sm font-medium text-up">
+            {t("settings.approved")}
           </p>
+          {binanceUid && (
+            <p className="text-xs text-muted">
+              {t("settings.uidValue", { uid: binanceUid })}
+            </p>
+          )}
+          <p className="text-sm text-muted">{t("settings.fullAccess")}</p>
           <button
             type="button"
             onClick={() => setChangeOpen(true)}
             className="self-start text-xs text-brand hover:underline"
           >
-            Change UID
+            {t("settings.changeUid")}
           </button>
           <ChangeUidModal
             open={changeOpen}
@@ -275,10 +298,13 @@ function BinanceSection({
         </div>
       ) : status === "pending" && !editing ? (
         <div className="flex flex-col gap-3">
-          <p className="text-sm font-medium text-foreground">Under review</p>
+          <p className="text-sm font-medium text-foreground">
+            {t("settings.underReview")}
+          </p>
           <p className="text-sm text-muted">
-            Your Binance UID{binanceUid ? ` (${binanceUid})` : ""} is being
-            reviewed by our team (usually within 24 hours).
+            {t("settings.binanceUnderReview", {
+              uidSuffix: binanceUid ? ` (${binanceUid})` : "",
+            })}
           </p>
           <button
             type="button"
@@ -288,23 +314,28 @@ function BinanceSection({
             }}
             className="self-start text-xs text-brand hover:underline"
           >
-            Change UID
+            {t("settings.changeUid")}
           </button>
         </div>
       ) : status === "rejected" && !editing ? (
         <div className="flex flex-col gap-3">
-          <p className="text-sm font-medium text-down">Rejected</p>
+          <p className="text-sm font-medium text-down">
+            {t("settings.rejected")}
+          </p>
           <p className="text-sm text-muted">
-            We couldn&apos;t verify your Binance referral. Make sure you signed
-            up via our referral link, then re-apply.
+            {t("settings.binanceRejected")}
           </p>
           <Button onClick={() => { setUid(""); setEditing(true); }}>
-            Re-apply
+            {t("settings.reapply")}
           </Button>
         </div>
       ) : (
         <>
-          {renderForm(status === "rejected" ? "Re-apply" : "Submit & Apply")}
+          {renderForm(
+            status === "rejected"
+              ? t("settings.reapply")
+              : t("settings.submitAndApply")
+          )}
           <UidGuide exchange="Binance" />
         </>
       )}
@@ -336,15 +367,16 @@ function SectionCard({
 }
 
 function UidGuide({ exchange }: { exchange: string }) {
+  const { t } = useTranslation();
   return (
     <div className="mt-2 rounded-lg border border-border bg-background p-4">
       <p className="mb-2 text-xs font-semibold text-foreground">
-        How to find your {exchange} UID
+        {t("settings.uidGuideTitle", { exchange })}
       </p>
       <ol className="flex flex-col gap-1 text-xs text-muted">
-        <li>1. Open the {exchange} app</li>
-        <li>2. Tap your profile icon</li>
-        <li>3. Copy the UID below your name</li>
+        <li>{t("settings.uidGuideStep1", { exchange })}</li>
+        <li>{t("settings.uidGuideStep2")}</li>
+        <li>{t("settings.uidGuideStep3")}</li>
       </ol>
     </div>
   );

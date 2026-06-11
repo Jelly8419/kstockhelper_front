@@ -1,9 +1,13 @@
+"use client";
+
 import { NewsDetailItem } from "@/types/news";
 import { TICKER_LABEL } from "@/lib/constants/tickers";
 import { Badge } from "@/components/ui/Badge";
 import { formatRegisteredTime } from "@/lib/utils/format";
+import { useTranslation } from "@/lib/i18n/useTranslation";
 
 export function NewsDetail({ item }: { item: NewsDetailItem }) {
+  const { t } = useTranslation();
   return (
     <article className="flex flex-col gap-6">
       <header className="flex flex-col gap-3">
@@ -14,7 +18,9 @@ export function NewsDetail({ item }: { item: NewsDetailItem }) {
             </Badge>
           ))}
           <Badge tone="neutral">
-            {item.category === "disclosure" ? "Disclosure" : "News"}
+            {item.category === "disclosure"
+              ? t("news.badgeDisclosure")
+              : t("news.badgeNews")}
           </Badge>
           <span className="ml-auto text-xs text-muted">
             {formatRegisteredTime(item.publishedAt)}
@@ -28,7 +34,9 @@ export function NewsDetail({ item }: { item: NewsDetailItem }) {
       {/* Summary */}
       {item.summary && (
         <section className="flex flex-col gap-2">
-          <h2 className="text-sm font-semibold text-muted">Summary</h2>
+          <h2 className="text-sm font-semibold text-muted">
+            {t("news.summary")}
+          </h2>
           <p className="text-base leading-relaxed text-foreground">
             {item.summary}
           </p>
@@ -38,7 +46,9 @@ export function NewsDetail({ item }: { item: NewsDetailItem }) {
       {/* Key points (variable length, up to 3) */}
       {item.keyPoints && item.keyPoints.length > 0 && (
         <section className="flex flex-col gap-3 rounded-xl border border-border bg-surface p-5">
-          <h2 className="text-sm font-semibold text-muted">Key Points</h2>
+          <h2 className="text-sm font-semibold text-muted">
+            {t("news.keyPoints")}
+          </h2>
           <ul className="flex flex-col gap-2">
             {item.keyPoints.map((point, i) => (
               <li
@@ -58,7 +68,9 @@ export function NewsDetail({ item }: { item: NewsDetailItem }) {
       {/* Key figures (disclosures): quantitative table */}
       {item.keyFigures && item.keyFigures.length > 0 && (
         <section className="flex flex-col gap-3">
-          <h2 className="text-sm font-semibold text-muted">Key Figures</h2>
+          <h2 className="text-sm font-semibold text-muted">
+            {t("news.keyFigures")}
+          </h2>
           <div className="overflow-hidden rounded-xl border border-border">
             <table className="w-full text-sm">
               <tbody>

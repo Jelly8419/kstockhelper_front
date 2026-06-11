@@ -4,6 +4,8 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { useTranslation } from "@/lib/i18n/useTranslation";
+import { errorKeyForCode } from "@/lib/i18n/errorCodes";
 
 type Exchange = "bybit" | "binance";
 
@@ -19,16 +21,18 @@ interface Props {
 
 const CONFIG = {
   bybit: {
-    label: "Bybit UID",
+    labelKey: "connect.bybitUidLabel",
     endpoint: "/api/bybit/verify",
     field: "bybitUid",
-    cta: "Submit & Apply",
+    doneKey: "connect.bybitDoneTitle",
+    exchangeName: "Bybit",
   },
   binance: {
-    label: "Binance UID",
+    labelKey: "connect.binanceUidLabel",
     endpoint: "/api/binance/connect",
     field: "binanceUid",
-    cta: "Submit & Apply",
+    doneKey: "connect.binanceDoneTitle",
+    exchangeName: "Binance",
   },
 } as const;
 
@@ -43,6 +47,7 @@ export function ExchangeConnectForm({
   onSuccess,
   accent,
 }: Props) {
+  const { t } = useTranslation();
   const router = useRouter();
   const cfg = CONFIG[exchange];
   const [uid, setUid] = useState("");
@@ -60,7 +65,7 @@ export function ExchangeConnectForm({
     }
     const trimmed = uid.trim();
     if (!trimmed) {
-      setError(`Please enter your ${exchange === "bybit" ? "Bybit" : "Binance"} UID.`);
+      setError(t("connect.uidRequired", { exchange: cfg.exchangeName }));
       return;
     }
 
@@ -73,10 +78,15 @@ export function ExchangeConnectForm({
       });
       const data = (await res.json().catch(() => null)) as {
         success?: boolean;
+        code?: string | null;
         message?: string;
       } | null;
       if (!data?.success) {
-        setError(data?.message ?? "Submission failed. Please try again.");
+        // Map by backend `code` (source of truth); fall back to the raw
+        // message, then a generic error. Never key off HTTP status.
+        const key = errorKeyForCode(data?.code);
+        const localized = key ? t(key) : "";
+        setError(localized || data?.message || t("connect.submitFailed"));
         return;
       }
       setDone(true);
@@ -87,11 +97,7 @@ export function ExchangeConnectForm({
   };
 
   if (done) {
-    return (
-      <p className="text-sm font-medium text-up">
-        Submitted! {exchange === "bybit" ? "Premium unlocked." : "Under review."}
-      </p>
-    );
+    return <p className="text-sm font-medium text-up">{t(cfg.doneKey)}</p>;
   }
 
   const btnClass = accent ? ACCENT_BTN[accent] : "";
@@ -99,16 +105,16 @@ export function ExchangeConnectForm({
   return (
     <form onSubmit={submit} className="flex flex-col gap-3">
       <Input
-        label={cfg.label}
+        label={t(cfg.labelKey)}
         name={cfg.field}
         value={uid}
         onChange={(e) => setUid(e.target.value.replace(/\D/g, ""))}
         inputMode="numeric"
-        placeholder="e.g. 123456789"
+        placeholder={t("connect.uidPlaceholder")}
       />
       {error && <p className="text-xs text-down">{error}</p>}
       <Button type="submit" disabled={submitting} className={btnClass}>
-        {submitting ? "Submitting…" : cfg.cta}
+        {submitting ? t("common.submitting") : t("connect.cta")}
       </Button>
     </form>
   );

@@ -1,8 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import { NewsPreview } from "@/types/news";
 import { TICKER_LABEL } from "@/lib/constants/tickers";
 import { Badge } from "@/components/ui/Badge";
 import { formatRegisteredTime } from "@/lib/utils/format";
+import { useTranslation } from "@/lib/i18n/useTranslation";
 
 interface Props {
   item: NewsPreview;
@@ -11,6 +14,7 @@ interface Props {
 }
 
 export function NewsCard({ item, onBlockedClick }: Props) {
+  const { t } = useTranslation();
   const cardClass =
     "flex flex-col gap-3 rounded-xl border border-border bg-surface p-5 text-left transition-colors hover:bg-surface-hover";
 
@@ -23,7 +27,9 @@ export function NewsCard({ item, onBlockedClick }: Props) {
           </Badge>
         ))}
         <Badge tone="neutral">
-          {item.category === "disclosure" ? "Disclosure" : "News"}
+          {item.category === "disclosure"
+            ? t("news.badgeDisclosure")
+            : t("news.badgeNews")}
         </Badge>
         <span className="ml-auto text-xs text-muted">
           {formatRegisteredTime(item.publishedAt)}

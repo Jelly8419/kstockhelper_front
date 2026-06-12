@@ -90,12 +90,13 @@
     "keyFigures": "Cifras clave"
   },
   "newsGate": {
-    "signupTitle": "Regístrate para leer",
-    "signupBody": "Crea una cuenta gratuita para leer noticias y divulgaciones completas.",
-    "signupCta": "Registrarse",
+    "guestTitle": "Este contenido requiere una cuenta",
+    "guestBody": "Regístrate o inicia sesión para leer el resumen completo, los puntos clave y el análisis.",
+    "guestSignupCta": "Regístrate gratis",
+    "guestLoginCta": "Iniciar sesión",
     "premiumTitle": "Desbloquear acceso Premium",
     "premiumBody": "Conecta tu UID para tener acceso completo a todas las noticias y divulgaciones.",
-    "premiumCta": "Conecta tu UID"
+    "premiumUpgradeCta": "Mejorar a Premium"
   },
   "market": {
     "ariaOverview": "Resumen del mercado",
@@ -188,6 +189,10 @@
   },
   "seo": {
     "title": "K-Stock Helper - Noticias de acciones coreanas en inglés",
-    "description": "Noticias y divulgaciones en tiempo real del mercado bursátil coreano en inglés para inversores globales"
+    "description": "Noticias y divulgaciones en tiempo real del mercado bursátil coreano en inglés para inversores globales",
+    "newsTitleSuffix": "KstockHelper",
+    "newsDescription": "Lee un breve resumen de las noticias del mercado bursátil coreano. El análisis completo de IA está disponible para miembros Premium.",
+    "disclosureDescription": "Lee un breve resumen de una divulgación del mercado bursátil coreano y su contexto relacionado. El análisis completo de IA está disponible para miembros Premium.",
+    "relatedStocks": "Acciones relacionadas"
   }
 }

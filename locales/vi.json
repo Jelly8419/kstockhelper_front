@@ -90,12 +90,13 @@
     "keyFigures": "Số liệu chính"
   },
   "newsGate": {
-    "signupTitle": "Đăng ký để đọc",
-    "signupBody": "Tạo tài khoản miễn phí để đọc đầy đủ tin tức và công bố thông tin.",
-    "signupCta": "Đăng ký",
+    "guestTitle": "Nội dung này yêu cầu tài khoản",
+    "guestBody": "Đăng ký hoặc đăng nhập để đọc toàn bộ phần tóm tắt, các điểm chính và phân tích.",
+    "guestSignupCta": "Đăng ký miễn phí",
+    "guestLoginCta": "Đăng nhập",
     "premiumTitle": "Mở khóa quyền truy cập Premium",
     "premiumBody": "Kết nối UID của bạn để có toàn quyền truy cập vào mọi tin tức và công bố thông tin.",
-    "premiumCta": "Kết nối UID của bạn"
+    "premiumUpgradeCta": "Nâng cấp lên Premium"
   },
   "market": {
     "ariaOverview": "Tổng quan thị trường",
@@ -188,6 +189,10 @@
   },
   "seo": {
     "title": "K-Stock Helper - Tin tức chứng khoán Hàn Quốc bằng tiếng Anh",
-    "description": "Tin tức và công bố thông tin thị trường chứng khoán Hàn Quốc theo thời gian thực bằng tiếng Anh dành cho nhà đầu tư toàn cầu"
+    "description": "Tin tức và công bố thông tin thị trường chứng khoán Hàn Quốc theo thời gian thực bằng tiếng Anh dành cho nhà đầu tư toàn cầu",
+    "newsTitleSuffix": "KstockHelper",
+    "newsDescription": "Đọc bản tóm tắt ngắn về tin tức thị trường chứng khoán Hàn Quốc. Phân tích AI đầy đủ dành cho thành viên Premium.",
+    "disclosureDescription": "Đọc bản tóm tắt công bố của thị trường chứng khoán Hàn Quốc và bối cảnh liên quan. Phân tích AI đầy đủ dành cho thành viên Premium.",
+    "relatedStocks": "Cổ phiếu liên quan"
   }
 }

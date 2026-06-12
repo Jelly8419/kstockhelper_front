@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getNewsPage } from "@/lib/api/news";
 import { NewsFilter, NewsCategory } from "@/types/news";
-import { getServerContentLocale } from "@/lib/i18n/getServerLocale";
+import { resolveContentLocale } from "@/lib/i18n/normalize";
 
 const VALID_FILTERS: NewsFilter[] = ["all", "samsung", "skhynix", "hyundai"];
 const VALID_CATEGORIES: NewsCategory[] = ["news", "disclosure"];
@@ -9,9 +9,13 @@ const VALID_CATEGORIES: NewsCategory[] = ["news", "disclosure"];
 export const dynamic = "force-dynamic";
 
 /**
- * GET /api/news?filter=<all|samsung|skhynix|hyundai>&category=<news|disclosure>&page=<n>
+ * GET /api/news?filter=<all|samsung|skhynix|hyundai>&category=<news|disclosure>&page=<n>&locale=<uiLocale>
  * Returns one page of the news preview feed: { items, hasMore, total }.
  * `category` is optional — omit to include both news and disclosures.
+ *
+ * `locale` is the UI locale (from the URL prefix) the client passes so the list
+ * stays in the same language as the SSR'd first page. It's mapped to a content
+ * locale (whitelist → translate, else English source).
  */
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -30,9 +34,7 @@ export async function GET(request: NextRequest) {
 
   const page = Math.max(0, Number(searchParams.get("page") ?? "0") || 0);
 
-  // Content locale comes from the x-locale header (set by middleware), not the
-  // client — keeps the list in the same language as the SSR'd first page.
-  const contentLocale = getServerContentLocale();
+  const contentLocale = resolveContentLocale(searchParams.get("locale"));
 
   const result = await getNewsPage(filter, page, undefined, category, contentLocale);
   return NextResponse.json(result);

@@ -1,7 +1,7 @@
-import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { ConsentForm } from "@/components/auth/ConsentForm";
-import { getTranslations } from "@/lib/i18n/getTranslations";
+import { getAppTranslations } from "@/lib/i18n/getTranslations";
+import { redirect } from "@/lib/i18n/navigation";
 
 export const metadata = { title: "Agree to Terms" };
 
@@ -14,10 +14,13 @@ function sanitizeNext(value: string | undefined): string {
 }
 
 export default async function ConsentPage({
+  params,
   searchParams,
 }: {
+  params: { locale: string };
   searchParams: { next?: string };
 }) {
+  const { locale } = params;
   const next = sanitizeNext(searchParams.next);
   const supabase = createClient();
 
@@ -27,7 +30,7 @@ export default async function ConsentPage({
 
   // Not signed in → nothing to consent to.
   if (!user) {
-    redirect("/login");
+    return redirect({ href: "/login", locale });
   }
 
   // Already consented (e.g. a returning user landing here directly) → skip the
@@ -39,10 +42,10 @@ export default async function ConsentPage({
     .maybeSingle();
 
   if (profile?.terms_agreed_at) {
-    redirect(next);
+    redirect({ href: next, locale });
   }
 
-  const { t } = getTranslations();
+  const { t } = await getAppTranslations();
   return (
     <div className="mx-auto flex max-w-sm flex-col gap-6 px-4 py-16">
       <h1 className="text-2xl font-semibold text-foreground">

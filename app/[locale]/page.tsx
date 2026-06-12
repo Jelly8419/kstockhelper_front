@@ -5,7 +5,7 @@ import { NewsList } from "@/components/news/NewsList";
 import { getNewsPage } from "@/lib/api/news";
 import { NewsCategory } from "@/types/news";
 import { SHOW_BANNER_HEADER } from "@/lib/geo/bannerGate";
-import { getServerContentLocale } from "@/lib/i18n/getServerLocale";
+import { resolveContentLocale } from "@/lib/i18n/normalize";
 
 // Real-time content — always fetch fresh.
 export const dynamic = "force-dynamic";
@@ -13,11 +13,17 @@ export const dynamic = "force-dynamic";
 // Default content type shown on first load.
 const INITIAL_CATEGORY: NewsCategory = "news";
 
-export default async function Home() {
+export default async function Home({
+  params,
+}: {
+  params: { locale: string };
+}) {
+  // Content locale derives from the URL locale (null = English source) and
+  // drives the news_translations overlay.
+  const contentLocale = resolveContentLocale(params.locale);
+
   // First page is fetched on the server for a fast initial render;
   // subsequent pages (and tab/filter changes) load client-side via /api/news.
-  // Content locale (null = English source) drives news_translations overlay.
-  const contentLocale = getServerContentLocale();
   const { items, total } = await getNewsPage(
     "all",
     0,

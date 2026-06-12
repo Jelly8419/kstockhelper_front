@@ -1,11 +1,12 @@
 import { NextResponse, type NextRequest } from "next/server";
+import createMiddleware from "next-intl/middleware";
+import { routing } from "@/lib/i18n/routing";
 import { updateSession } from "@/lib/supabase/middleware";
 import { shouldShowBanner, SHOW_BANNER_HEADER } from "@/lib/geo/bannerGate";
-import {
-  resolveRequestLocale,
-  LOCALE_COOKIE,
-  LOCALE_HEADER,
-} from "@/lib/i18n/middlewareLocale";
+import { getCountryCode } from "@/lib/geo/country";
+import { resolveLocaleByCountry } from "@/lib/i18n/normalize";
+import { resolveBrowserLocale } from "@/lib/i18n/normalize";
+import { LOCALE_COOKIE } from "@/lib/i18n/config";
 import {
   ADMIN_BASE_PATH,
   ADMIN_COOKIE,
@@ -14,21 +15,42 @@ import {
   isTokenExpired,
 } from "@/lib/admin/constants";
 
+const handleI18nRouting = createMiddleware(routing);
+
+/**
+ * Layer the geo/IP country into locale detection (PRD §3 priority:
+ * cookie → Accept-Language → IP country → en).
+ *
+ * next-intl natively detects cookie → Accept-Language only. So when the user has
+ * no locale cookie AND their Accept-Language doesn't resolve to a supported
+ * locale, we inject the country-derived locale as an Accept-Language hint so
+ * next-intl's detection picks it up. We never override an explicit cookie or a
+ * usable browser language.
+ */
+function applyCountryLocaleHint(request: NextRequest) {
+  const hasCookie = request.cookies.has(LOCALE_COOKIE);
+  if (hasCookie) return;
+
+  const browserLocale = resolveBrowserLocale(
+    request.headers.get("accept-language")
+  );
+  if (browserLocale) return; // Accept-Language already yields a supported locale.
+
+  const countryLocale = resolveLocaleByCountry(getCountryCode(request));
+  // resolveLocaleByCountry returns 'en' when unknown; only hint for a real match.
+  if (countryLocale !== routing.defaultLocale) {
+    request.headers.set("accept-language", countryLocale);
+  }
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   request.headers.set(PATHNAME_HEADER, pathname);
 
   // -------------------------------------------------------------------------
-  // Admin console guard: protect /console/* (except the login page).
-  // The authoritative auth check is the backend (401 on data calls); this is
-  // a cheap edge gate that redirects unauthenticated/expired sessions to login
-  // before any admin page renders. /api/admin/* is intentionally NOT guarded
-  // here — those routes handle 401 themselves and return JSON.
+  // Admin console (/console/*): own auth gate, no locale prefix, no i18n.
   // -------------------------------------------------------------------------
-  if (
-    pathname.startsWith(ADMIN_BASE_PATH) &&
-    pathname !== ADMIN_LOGIN_PATH
-  ) {
+  if (pathname.startsWith(ADMIN_BASE_PATH) && pathname !== ADMIN_LOGIN_PATH) {
     const token = request.cookies.get(ADMIN_COOKIE)?.value;
     if (isTokenExpired(token)) {
       const url = request.nextUrl.clone();
@@ -36,36 +58,43 @@ export async function middleware(request: NextRequest) {
       url.search = "";
       return NextResponse.redirect(url);
     }
-    // Authenticated admin pages don't need the Supabase session refresh, but
-    // still forward the modified request headers (x-pathname) to the layout.
+    return NextResponse.next({ request: { headers: request.headers } });
+  }
+  // Admin login page: still skip i18n, but no guard.
+  if (pathname === ADMIN_LOGIN_PATH) {
     return NextResponse.next({ request: { headers: request.headers } });
   }
 
   // -------------------------------------------------------------------------
-  // Public site: resolve UI locale, geo-gate the banner, refresh the session.
+  // API routes & OAuth callback: no locale prefix. Refresh the session only.
+  // (These handle their own responses; locale-routing them would 404/redirect.)
+  // -------------------------------------------------------------------------
+  if (pathname.startsWith("/api/") || pathname.startsWith("/auth/")) {
+    return await updateSession(request);
+  }
+
+  // -------------------------------------------------------------------------
+  // Public site pages: locale routing (next-intl) + banner geo-gate + session.
+  // next-intl owns the URL: `/` → `/{locale}/…` redirect, and serves the
+  // `[locale]` segment. We compose its response with the Supabase session so
+  // auth cookies and locale routing share one response.
   // -------------------------------------------------------------------------
   const showBanner = shouldShowBanner(request);
   request.headers.set(SHOW_BANNER_HEADER, showBanner ? "true" : "false");
 
-  // Resolve the active locale (5-step priority) and forward it to server
-  // components via x-locale. When the URL carries a locale prefix (/vi/…) we
-  // rewrite to the internal path. The locale cookie and any rewrite are applied
-  // on the SAME response Supabase writes its session cookies to, so refreshing
-  // the locale never drops the auth session.
-  const { locale, rewritePath, shouldSetCookie } = resolveRequestLocale(request);
-  request.headers.set(LOCALE_HEADER, locale);
+  applyCountryLocaleHint(request);
 
-  return await updateSession(request, {
-    rewritePath,
-    setLocaleCookie: shouldSetCookie ? { name: LOCALE_COOKIE, value: locale } : null,
-  });
+  const intlResponse = handleI18nRouting(request);
+
+  // A redirect (e.g. `/` → `/en`) is terminal — return it (still refresh the
+  // session cookies onto it so an in-flight session isn't dropped on redirect).
+  return await updateSession(request, intlResponse);
 }
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except static assets and image optimization.
-     */
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    // Everything except Next internals, static assets, and image files.
+    // API routes are matched so the session refresh still runs there.
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt|xml)$).*)",
   ],
 };

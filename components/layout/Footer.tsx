@@ -1,8 +1,8 @@
-import Link from "next/link";
-import { getTranslations } from "@/lib/i18n/getTranslations";
+import { Link } from "@/lib/i18n/navigation";
+import { getAppTranslations } from "@/lib/i18n/getTranslations";
 
-export function Footer() {
-  const { t } = getTranslations();
+export async function Footer() {
+  const { t } = await getAppTranslations();
   return (
     <footer className="border-t border-border bg-surface">
       <div className="mx-auto flex max-w-container flex-col gap-3 px-4 py-8 sm:px-6">

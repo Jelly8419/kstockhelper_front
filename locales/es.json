@@ -98,6 +98,17 @@
     "premiumBody": "Conecta tu UID para tener acceso completo a todas las noticias y divulgaciones.",
     "premiumUpgradeCta": "Mejorar a Premium"
   },
+  "restrictedPremium": {
+    "title": "Acceso Premium no disponible",
+    "body": "Lo sentimos. Debido a regulaciones financieras en ciertas regiones, el acceso Premium no está disponible actualmente en tu país.",
+    "confirm": "Confirmar",
+    "joinWaitlist": "Unirse a la lista de espera",
+    "waitlistSuccess": "Te has unido a la lista de espera. Te avisaremos si el acceso está disponible en tu región en el futuro.",
+    "waitlistAlready": "Ya estás en la lista de espera.",
+    "waitlistError": "Algo salió mal. Inténtalo de nuevo.",
+    "mypageCardTitle": "El acceso Premium no está disponible en tu región",
+    "mypageCardBody": "Debido a regulaciones financieras en ciertas regiones, no podemos ofrecer acceso Premium vinculado a exchanges en tu país."
+  },
   "market": {
     "ariaOverview": "Resumen del mercado",
     "overview": "Resumen del mercado",

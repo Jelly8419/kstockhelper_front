@@ -98,6 +98,17 @@
     "premiumBody": "連接您的 UID 以完整存取所有新聞與公告。",
     "premiumUpgradeCta": "升級至 Premium"
   },
+  "restrictedPremium": {
+    "title": "Premium 存取權目前無法使用",
+    "body": "很抱歉。由於部分地區的金融相關規範，Premium 存取權目前在你的國家/地區尚不可用。",
+    "confirm": "確認",
+    "joinWaitlist": "加入候補名單",
+    "waitlistSuccess": "你已加入候補名單。如果未來你的所在地區開放存取權，我們會通知你。",
+    "waitlistAlready": "你已在候補名單中。",
+    "waitlistError": "發生錯誤。請再試一次。",
+    "mypageCardTitle": "你的所在地區無法使用 Premium 存取權",
+    "mypageCardBody": "由於部分地區的金融相關規範，我們無法在你的國家/地區提供與交易所連結的 Premium 存取權。"
+  },
   "market": {
     "ariaOverview": "市場概覽",
     "overview": "市場概覽",

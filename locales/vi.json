@@ -98,6 +98,17 @@
     "premiumBody": "Kết nối UID của bạn để có toàn quyền truy cập vào mọi tin tức và công bố thông tin.",
     "premiumUpgradeCta": "Nâng cấp lên Premium"
   },
+  "restrictedPremium": {
+    "title": "Không thể truy cập Premium",
+    "body": "Rất tiếc. Do quy định tài chính tại một số khu vực, quyền truy cập Premium hiện chưa khả dụng ở quốc gia của bạn.",
+    "confirm": "Xác nhận",
+    "joinWaitlist": "Tham gia danh sách chờ",
+    "waitlistSuccess": "Bạn đã tham gia danh sách chờ. Chúng tôi sẽ thông báo cho bạn nếu quyền truy cập trong tương lai khả dụng ở khu vực của bạn.",
+    "waitlistAlready": "Bạn đã có trong danh sách chờ.",
+    "waitlistError": "Đã xảy ra lỗi. Vui lòng thử lại.",
+    "mypageCardTitle": "Quyền truy cập Premium không khả dụng ở khu vực của bạn",
+    "mypageCardBody": "Do quy định tài chính tại một số khu vực, chúng tôi không thể cung cấp quyền truy cập Premium liên kết với sàn giao dịch tại quốc gia của bạn."
+  },
   "market": {
     "ariaOverview": "Tổng quan thị trường",
     "overview": "Tổng quan thị trường",

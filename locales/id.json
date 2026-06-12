@@ -98,6 +98,17 @@
     "premiumBody": "Hubungkan UID Anda untuk mendapatkan akses penuh ke semua berita dan keterbukaan informasi.",
     "premiumUpgradeCta": "Upgrade ke Premium"
   },
+  "restrictedPremium": {
+    "title": "Akses Premium tidak tersedia",
+    "body": "Maaf. Karena regulasi keuangan di beberapa wilayah, akses Premium saat ini belum tersedia di negara Anda.",
+    "confirm": "Konfirmasi",
+    "joinWaitlist": "Bergabung ke daftar tunggu",
+    "waitlistSuccess": "Anda telah bergabung ke daftar tunggu. Kami akan memberi tahu Anda jika akses tersedia di wilayah Anda di masa mendatang.",
+    "waitlistAlready": "Anda sudah ada di daftar tunggu.",
+    "waitlistError": "Terjadi kesalahan. Silakan coba lagi.",
+    "mypageCardTitle": "Akses Premium tidak tersedia di wilayah Anda",
+    "mypageCardBody": "Karena regulasi keuangan di beberapa wilayah, kami tidak dapat menawarkan akses Premium yang terhubung dengan exchange di negara Anda."
+  },
   "market": {
     "ariaOverview": "Ikhtisar pasar",
     "overview": "Ikhtisar pasar",

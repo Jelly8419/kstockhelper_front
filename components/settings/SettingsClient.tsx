@@ -9,12 +9,15 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { errorKeyForCode } from "@/lib/i18n/errorCodes";
+import { useRestrictedRegion } from "@/lib/hooks/useRestrictedRegion";
+import { joinWaitlist, type WaitlistStatus } from "@/lib/premium/waitlist";
 import { ChangeUidModal } from "./ChangeUidModal";
 
 export function SettingsClient() {
   const router = useRouter();
   const auth = useAuth();
   const { t } = useTranslation();
+  const restricted = useRestrictedRegion();
   const { tier, email, bybitUid, binanceUid, binanceStatus, isLoading } = auth;
 
   // Route guard: redirect guests to login once auth has resolved.
@@ -45,17 +48,25 @@ export function SettingsClient() {
         <p className="text-sm text-foreground">{email}</p>
       </section>
 
-      <BybitSection
-        connected={tier === "premium" && !!bybitUid}
-        bybitUid={bybitUid}
-        onConnected={auth.refresh}
-      />
+      {restricted ? (
+        // Restricted regions: hide exchange connection cards entirely and offer
+        // the waitlist instead (PRD §7).
+        <RestrictedRegionCard />
+      ) : (
+        <>
+          <BybitSection
+            connected={tier === "premium" && !!bybitUid}
+            bybitUid={bybitUid}
+            onConnected={auth.refresh}
+          />
 
-      <BinanceSection
-        status={binanceStatus}
-        binanceUid={binanceUid}
-        onSubmitted={auth.refresh}
-      />
+          <BinanceSection
+            status={binanceStatus}
+            binanceUid={binanceUid}
+            onSubmitted={auth.refresh}
+          />
+        </>
+      )}
 
       {/* Logout */}
       <section>
@@ -339,6 +350,53 @@ function BinanceSection({
           <UidGuide exchange="Binance" />
         </>
       )}
+    </SectionCard>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Restricted region (exchange-linked Premium unavailable)            */
+/* ------------------------------------------------------------------ */
+function RestrictedRegionCard() {
+  const { t } = useTranslation();
+  const [status, setStatus] = useState<WaitlistStatus | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleJoin = async () => {
+    setSubmitting(true);
+    try {
+      setStatus(await joinWaitlist());
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const message =
+    status === "ok"
+      ? t("restrictedPremium.waitlistSuccess")
+      : status === "already"
+        ? t("restrictedPremium.waitlistAlready")
+        : status === "error"
+          ? t("restrictedPremium.waitlistError")
+          : null;
+
+  const joined = status === "ok" || status === "already";
+
+  return (
+    <SectionCard title={t("restrictedPremium.mypageCardTitle")} badge={null}>
+      <p className="text-sm text-muted">{t("restrictedPremium.mypageCardBody")}</p>
+      {message && (
+        <p className={`text-sm ${status === "error" ? "text-down" : "text-up"}`}>
+          {message}
+        </p>
+      )}
+      <Button
+        onClick={handleJoin}
+        disabled={submitting || joined}
+        className="self-start"
+      >
+        {submitting ? t("common.loading") : t("restrictedPremium.joinWaitlist")}
+      </Button>
     </SectionCard>
   );
 }

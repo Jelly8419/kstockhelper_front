@@ -12,6 +12,7 @@ import { errorKeyForCode } from "@/lib/i18n/errorCodes";
 import { useRestrictedRegion } from "@/lib/hooks/useRestrictedRegion";
 import { joinWaitlist, type WaitlistStatus } from "@/lib/premium/waitlist";
 import { ChangeUidModal } from "./ChangeUidModal";
+import { maskUid } from "@/lib/utils/format";
 
 export function SettingsClient() {
   const router = useRouter();
@@ -149,7 +150,7 @@ function BybitSection({
           </p>
           {bybitUid && (
             <p className="text-xs text-muted">
-              {t("settings.uidValue", { uid: bybitUid })}
+              {t("settings.uidValue", { uid: maskUid(bybitUid) })}
             </p>
           )}
           <p className="text-sm text-muted">{t("settings.fullAccess")}</p>
@@ -288,7 +289,7 @@ function BinanceSection({
           </p>
           {binanceUid && (
             <p className="text-xs text-muted">
-              {t("settings.uidValue", { uid: binanceUid })}
+              {t("settings.uidValue", { uid: maskUid(binanceUid) })}
             </p>
           )}
           <p className="text-sm text-muted">{t("settings.fullAccess")}</p>

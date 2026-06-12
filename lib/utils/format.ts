@@ -18,6 +18,15 @@ export function formatChange(change: number, fractionDigits = 0): string {
   return `${sign}${formatNumber(change, fractionDigits)}`;
 }
 
+/**
+ * Mask a UID for display, keeping the first and last 2 characters visible.
+ * e.g. "123456789" -> "12*****89". Short UIDs (<=4 chars) are fully masked.
+ */
+export function maskUid(uid: string): string {
+  if (uid.length <= 4) return "*".repeat(uid.length);
+  return uid.slice(0, 2) + "*".repeat(uid.length - 4) + uid.slice(-2);
+}
+
 /** Direction of a change for styling. */
 export function changeDirection(value: number): "up" | "down" | "flat" {
   if (value > 0) return "up";

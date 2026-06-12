@@ -1,14 +1,17 @@
 "use client";
 
 import { Link } from "@/lib/i18n/navigation";
-import { Badge } from "@/components/ui/Badge";
 import { ExchangeConnectForm } from "@/components/connect/ExchangeConnectForm";
 import { useAuth } from "@/lib/hooks/useAuth";
+import { useTranslation } from "@/lib/i18n/useTranslation";
 import { BYBIT_REFERRAL_URL, BINANCE_REFERRAL_URL } from "@/lib/constants/site";
+import { getGuideContent } from "./guideContent";
 
 export function GuideClient() {
   const { tier, refresh } = useAuth();
+  const { locale, t } = useTranslation();
   const loggedIn = tier !== "guest";
+  const c = getGuideContent(locale);
 
   return (
     <div className="mx-auto flex max-w-container flex-col gap-8 px-4 py-12 sm:px-6">
@@ -18,68 +21,53 @@ export function GuideClient() {
           href="/"
           className="inline-flex w-fit items-center gap-1 text-sm text-muted transition-colors hover:text-foreground"
         >
-          ← Back to Home
+          {t("common.backToHome")}
         </Link>
-        <h1 className="text-3xl font-bold text-foreground">
-          Start Trading – Guide
-        </h1>
+        <h1 className="text-3xl font-bold text-foreground">{c.page.title}</h1>
         <p className="max-w-xl text-sm leading-relaxed text-muted">
-          Follow the steps below to create an account on your preferred exchange,
-          connect your UID, and get premium access.
+          {c.page.subtitle}
         </p>
       </header>
 
       {/* Step 1: create account */}
-      <StepCard
-        n={1}
-        title="Create an Account on Your Preferred Exchange"
-        subtitle="Choose an exchange and sign up using our referral link."
-      >
-        <p className="mb-4 inline-flex items-center gap-2 rounded-lg bg-brand/10 px-3 py-1.5 text-xs text-brand">
-          ⓘ You&apos;ll receive trading fee discounts.
-        </p>
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          <ExchangeIntro
+      <StepCard n={1} title={c.step1.title} subtitle={c.step1.description}>
+        <div className="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <FeatureBlock
+            title={c.step1.commonTrust.title}
+            description={c.step1.commonTrust.description}
+          />
+          <FeatureBlock
+            title={c.step1.commonDeposit.title}
+            description={c.step1.commonDeposit.description}
+          />
+        </div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <SignupCard
             name="Binance"
             accent="binance"
-            popular
-            features={[
-              "Access Korean stock-linked products",
-              "High liquidity and low trading fees",
-              "Trusted by millions of users worldwide",
-              "Manual approval within 24 hours ⓘ",
-            ]}
+            buttonLabel={c.step1.binanceButton}
             referral={BINANCE_REFERRAL_URL}
           />
-          <ExchangeIntro
+          <SignupCard
             name="Bybit"
             accent="bybit"
-            features={[
-              "Korean stock-linked trading available",
-              "Advanced trading tools & interface",
-              "Fast account opening process",
-              "Instant auto-approval ⚡",
-            ]}
+            buttonLabel={c.step1.bybitButton}
             referral={BYBIT_REFERRAL_URL}
           />
         </div>
-        <p className="mt-4 rounded-lg border border-border bg-background px-4 py-3 text-xs text-muted">
-          ⓘ Only eligible users in supported regions can sign up through our
-          links.
-        </p>
+        <div className="mt-4 flex flex-col gap-2">
+          <Notice>{c.step1.notice.supportedRegions}</Notice>
+          <Notice>{c.step1.notice.newAccountRequired}</Notice>
+        </div>
       </StepCard>
 
       {/* Step 2: connect UID */}
-      <StepCard
-        n={2}
-        title="Connect Your UID & Apply for Premium"
-        subtitle="Enter your UID from the exchange and submit your application."
-      >
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          <ExchangeConnect
+      <StepCard n={2} title={c.step2.title} subtitle={c.step2.description}>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <ConnectCard
             name="Binance"
             accent="binance"
-            steps={["Go to Binance App → Profile → ID", "Copy the UID (numbers only)"]}
+            steps={[c.step2.binanceHelp1, c.step2.binanceHelp2]}
           >
             <ExchangeConnectForm
               exchange="binance"
@@ -87,11 +75,11 @@ export function GuideClient() {
               loggedIn={loggedIn}
               onSuccess={refresh}
             />
-          </ExchangeConnect>
-          <ExchangeConnect
+          </ConnectCard>
+          <ConnectCard
             name="Bybit"
             accent="bybit"
-            steps={["Go to Bybit App → Profile → UID", "Copy the UID (numbers only)"]}
+            steps={[c.step2.bybitHelp1, c.step2.bybitHelp2]}
           >
             <ExchangeConnectForm
               exchange="bybit"
@@ -99,25 +87,38 @@ export function GuideClient() {
               loggedIn={loggedIn}
               onSuccess={refresh}
             />
-          </ExchangeConnect>
+          </ConnectCard>
         </div>
-        <p className="mt-4 rounded-lg border border-border bg-background px-4 py-3 text-xs text-muted">
-          🛡️ Bybit is approved instantly after verification. Binance is reviewed
-          by our team within 24 hours.
-        </p>
+        <div className="mt-4 flex flex-col gap-2">
+          <Notice>{c.step2.notice.sameDayApproval}</Notice>
+          <Notice>{c.step2.notice.premium30Days}</Notice>
+          <Notice>{c.step2.notice.monthlyTradingRequired}</Notice>
+          <Notice>{c.step2.notice.returnToBasic}</Notice>
+        </div>
       </StepCard>
 
-      {/* Step 3: approval + benefits */}
-      <StepCard
-        n={3}
-        title="Get Approved & Go Premium"
-        subtitle="Once your UID is verified, your Premium access is activated."
-      >
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_320px]">
-          <Flow />
-          <PremiumBenefits />
+      {/* Step 3: premium benefits */}
+      <StepCard n={3} title={c.step3.title}>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <BenefitCard
+            title={c.step3.benefitNews.title}
+            description={c.step3.benefitNews.description}
+          />
+          <BenefitCard
+            title={c.step3.benefitMarketData.title}
+            description={c.step3.benefitMarketData.description}
+          />
+          <BenefitCard
+            title={c.step3.benefitComingSoon.title}
+            description={c.step3.benefitComingSoon.description}
+          />
         </div>
       </StepCard>
+
+      {/* Bottom notice */}
+      <p className="rounded-lg border border-border bg-surface/50 px-4 py-3 text-center text-xs leading-relaxed text-muted">
+        ⓘ {c.bottom.notice.uidRequired}
+      </p>
     </div>
   );
 }
@@ -131,7 +132,7 @@ function StepCard({
 }: {
   n: number;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   children: React.ReactNode;
 }) {
   return (
@@ -142,7 +143,7 @@ function StepCard({
         </span>
         <div className="flex flex-col gap-1">
           <h2 className="text-lg font-semibold text-foreground">{title}</h2>
-          <p className="text-sm text-muted">{subtitle}</p>
+          {subtitle && <p className="text-sm text-muted">{subtitle}</p>}
         </div>
       </div>
       <div className="sm:pl-10">{children}</div>
@@ -150,18 +151,34 @@ function StepCard({
   );
 }
 
-function ExchangeIntro({
+function FeatureBlock({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) {
+  return (
+    <div className="flex items-start gap-2 rounded-xl border border-border bg-surface p-4">
+      <span className="text-up">✓</span>
+      <div className="flex flex-col gap-0.5">
+        <span className="text-sm font-semibold text-foreground">{title}</span>
+        <span className="text-xs text-muted">{description}</span>
+      </div>
+    </div>
+  );
+}
+
+function SignupCard({
   name,
   accent,
-  features,
+  buttonLabel,
   referral,
-  popular,
 }: {
   name: string;
   accent: "binance" | "bybit";
-  features: string[];
+  buttonLabel: string;
   referral: string;
-  popular?: boolean;
 }) {
   const btn =
     accent === "binance"
@@ -170,18 +187,7 @@ function ExchangeIntro({
   const nameColor = accent === "binance" ? "text-[#f0b90b]" : "text-foreground";
   return (
     <div className="flex flex-col gap-4 rounded-xl border border-border bg-surface p-6">
-      <div className="flex items-center justify-between">
-        <span className={`text-lg font-bold ${nameColor}`}>{name}</span>
-        {popular && <Badge tone="brand">Most Popular</Badge>}
-      </div>
-      <ul className="flex flex-col gap-2">
-        {features.map((f) => (
-          <li key={f} className="flex items-start gap-2 text-sm text-foreground">
-            <span className="text-up">✓</span>
-            <span>{f}</span>
-          </li>
-        ))}
-      </ul>
+      <span className={`text-lg font-bold ${nameColor}`}>{name}</span>
       <a
         href={referral}
         target="_blank"
@@ -191,15 +197,14 @@ function ExchangeIntro({
         <button
           className={`flex h-11 w-full items-center justify-center gap-2 rounded-lg text-sm font-semibold transition-colors ${btn}`}
         >
-          Sign Up on {name} ↗
+          {buttonLabel} ↗
         </button>
       </a>
-      <p className="text-center text-xs text-muted">ⓘ Referral rewards available</p>
     </div>
   );
 }
 
-function ExchangeConnect({
+function ConnectCard({
   name,
   accent,
   steps,
@@ -226,80 +231,28 @@ function ExchangeConnect({
   );
 }
 
-function Flow() {
-  return (
-    <ol className="flex flex-col gap-5">
-      <FlowStep
-        n={1}
-        title="Create Account"
-        note="Sign up on your preferred exchange using our referral link."
-      />
-      <FlowStep
-        n={2}
-        title="Connect Your UID"
-        note="Enter your UID from the exchange and submit your application."
-      />
-      <FlowStep n={3} title="Get Approved & Go Premium">
-        <ul className="mt-1 flex flex-col gap-1 text-xs text-muted">
-          <li>
-            <span className="font-medium text-foreground">Bybit:</span> Approved
-            automatically after UID verification. ⚡
-          </li>
-          <li>
-            <span className="font-medium text-foreground">Binance:</span> Approved
-            by our team within 24 hours. ⓘ
-          </li>
-        </ul>
-      </FlowStep>
-    </ol>
-  );
-}
-
-function FlowStep({
-  n,
+function BenefitCard({
   title,
-  note,
-  children,
+  description,
 }: {
-  n: number;
   title: string;
-  note?: string;
-  children?: React.ReactNode;
+  description: string;
 }) {
   return (
-    <li className="flex items-start gap-3">
-      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-surface text-sm font-semibold text-foreground">
-        {n}
-      </span>
-      <div className="flex flex-col gap-0.5">
-        <span className="text-sm font-semibold text-foreground">{title}</span>
-        {note && <span className="text-xs text-muted">{note}</span>}
-        {children}
-      </div>
-    </li>
+    <div className="flex flex-col gap-2 rounded-xl border border-border bg-surface p-5">
+      <p className="flex items-start gap-2 text-sm font-semibold text-foreground">
+        <span className="text-up">👑</span>
+        <span>{title}</span>
+      </p>
+      <p className="text-xs leading-relaxed text-muted">{description}</p>
+    </div>
   );
 }
 
-function PremiumBenefits() {
-  const items = [
-    "Full access to all news & disclosures",
-    "Translated Korean DART filings in English",
-    "Real-time Korean market data",
-    "More features coming soon",
-  ];
+function Notice({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col gap-3 rounded-xl border border-border bg-surface p-6">
-      <p className="flex items-center gap-2 text-sm font-semibold text-foreground">
-        👑 Premium Benefits
-      </p>
-      <ul className="flex flex-col gap-2">
-        {items.map((i) => (
-          <li key={i} className="flex items-start gap-2 text-sm text-foreground">
-            <span className="text-up">✓</span>
-            <span>{i}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <p className="rounded-lg border border-border bg-background px-4 py-3 text-xs leading-relaxed text-muted">
+      ⓘ {children}
+    </p>
   );
 }

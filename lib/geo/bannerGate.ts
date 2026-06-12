@@ -30,9 +30,51 @@ const BLOCKED_COUNTRIES = new Set<string>([
 
 /** Korea-based IPs allowed to see the banner despite KR being blocked. */
 const KR_WHITELIST_IPS = new Set<string>([
-  "115.138.38.35", // PM
   "220.65.243.225", // developer
 ]);
+
+/**
+ * Korea-based IP ranges (CIDR) allowed to see the banner despite KR being
+ * blocked. Used for whitelisted users whose IP changes within a known subnet.
+ */
+const KR_WHITELIST_CIDRS: string[] = [
+  "115.138.0.0/16", // PM (dynamic IP, e.g. 115.138.38.35 / 115.138.26.11)
+];
+
+/** Convert a dotted-quad IPv4 string to a 32-bit unsigned integer. */
+function ipv4ToInt(ip: string): number | null {
+  const parts = ip.split(".");
+  if (parts.length !== 4) return null;
+
+  let result = 0;
+  for (const part of parts) {
+    const octet = Number(part);
+    if (!Number.isInteger(octet) || octet < 0 || octet > 255) return null;
+    result = result * 256 + octet;
+  }
+  return result >>> 0;
+}
+
+/** Check whether an IPv4 address falls within a CIDR range (e.g. 1.2.0.0/16). */
+function ipInCidr(ip: string, cidr: string): boolean {
+  const [range, bitsStr] = cidr.split("/");
+  const bits = Number(bitsStr);
+  if (!Number.isInteger(bits) || bits < 0 || bits > 32) return false;
+
+  const ipInt = ipv4ToInt(ip);
+  const rangeInt = ipv4ToInt(range);
+  if (ipInt === null || rangeInt === null) return false;
+
+  // /0 matches everything; avoid the undefined behaviour of `<<32`.
+  const mask = bits === 0 ? 0 : (0xffffffff << (32 - bits)) >>> 0;
+  return (ipInt & mask) === (rangeInt & mask);
+}
+
+/** Whether an IP is allowed via the exact-match Set or any CIDR range. */
+function isWhitelistedKrIp(ip: string): boolean {
+  if (KR_WHITELIST_IPS.has(ip)) return true;
+  return KR_WHITELIST_CIDRS.some((cidr) => ipInCidr(ip, cidr));
+}
 
 /**
  * Decide whether the banner should be shown for this request.
@@ -57,7 +99,7 @@ export function shouldShowBanner(request: NextRequest): boolean {
   if (country === "KR") {
     const ip = request.ip ?? request.headers.get("x-forwarded-for") ?? "";
     const firstIp = ip.split(",")[0].trim();
-    if (KR_WHITELIST_IPS.has(firstIp)) return true;
+    if (isWhitelistedKrIp(firstIp)) return true;
   }
 
   return false;

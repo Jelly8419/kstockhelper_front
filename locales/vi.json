@@ -99,15 +99,15 @@
     "premiumUpgradeCta": "Nâng cấp lên Premium"
   },
   "restrictedPremium": {
-    "title": "Premium Access Not Available",
-    "body": "We’re sorry. Due to financial regulations in certain regions, Premium access is not currently available in your country.",
-    "confirm": "Confirm",
-    "joinWaitlist": "Join Waitlist",
-    "waitlistSuccess": "You’ve joined the waitlist. We’ll notify you if future access becomes available in your region.",
-    "waitlistAlready": "You’re already on the waitlist.",
-    "waitlistError": "Something went wrong. Please try again.",
-    "mypageCardTitle": "Premium access is not available in your region",
-    "mypageCardBody": "Due to financial regulations in certain regions, we are unable to offer exchange-linked Premium access in your country."
+    "title": "Không thể truy cập Premium",
+    "body": "Rất tiếc. Do quy định tài chính tại một số khu vực, quyền truy cập Premium hiện chưa khả dụng ở quốc gia của bạn.",
+    "confirm": "Xác nhận",
+    "joinWaitlist": "Tham gia danh sách chờ",
+    "waitlistSuccess": "Bạn đã tham gia danh sách chờ. Chúng tôi sẽ thông báo cho bạn nếu quyền truy cập trong tương lai khả dụng ở khu vực của bạn.",
+    "waitlistAlready": "Bạn đã có trong danh sách chờ.",
+    "waitlistError": "Đã xảy ra lỗi. Vui lòng thử lại.",
+    "mypageCardTitle": "Quyền truy cập Premium không khả dụng ở khu vực của bạn",
+    "mypageCardBody": "Do quy định tài chính tại một số khu vực, chúng tôi không thể cung cấp quyền truy cập Premium liên kết với sàn giao dịch tại quốc gia của bạn."
   },
   "market": {
     "ariaOverview": "Tổng quan thị trường",

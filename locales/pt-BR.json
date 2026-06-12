@@ -99,15 +99,15 @@
     "premiumUpgradeCta": "Fazer upgrade para Premium"
   },
   "restrictedPremium": {
-    "title": "Premium Access Not Available",
-    "body": "We’re sorry. Due to financial regulations in certain regions, Premium access is not currently available in your country.",
-    "confirm": "Confirm",
-    "joinWaitlist": "Join Waitlist",
-    "waitlistSuccess": "You’ve joined the waitlist. We’ll notify you if future access becomes available in your region.",
-    "waitlistAlready": "You’re already on the waitlist.",
-    "waitlistError": "Something went wrong. Please try again.",
-    "mypageCardTitle": "Premium access is not available in your region",
-    "mypageCardBody": "Due to financial regulations in certain regions, we are unable to offer exchange-linked Premium access in your country."
+    "title": "Acesso Premium indisponível",
+    "body": "Sentimos muito. Devido a regulamentações financeiras em certas regiões, o acesso Premium não está disponível no seu país no momento.",
+    "confirm": "Confirmar",
+    "joinWaitlist": "Entrar na lista de espera",
+    "waitlistSuccess": "Você entrou na lista de espera. Avisaremos se o acesso futuro ficar disponível na sua região.",
+    "waitlistAlready": "Você já está na lista de espera.",
+    "waitlistError": "Algo deu errado. Tente novamente.",
+    "mypageCardTitle": "O acesso Premium não está disponível na sua região",
+    "mypageCardBody": "Devido a regulamentações financeiras em certas regiões, não podemos oferecer acesso Premium vinculado a exchanges no seu país."
   },
   "market": {
     "ariaOverview": "Visão geral do mercado",

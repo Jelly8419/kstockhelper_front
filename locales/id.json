@@ -99,15 +99,15 @@
     "premiumUpgradeCta": "Upgrade ke Premium"
   },
   "restrictedPremium": {
-    "title": "Premium Access Not Available",
-    "body": "We’re sorry. Due to financial regulations in certain regions, Premium access is not currently available in your country.",
-    "confirm": "Confirm",
-    "joinWaitlist": "Join Waitlist",
-    "waitlistSuccess": "You’ve joined the waitlist. We’ll notify you if future access becomes available in your region.",
-    "waitlistAlready": "You’re already on the waitlist.",
-    "waitlistError": "Something went wrong. Please try again.",
-    "mypageCardTitle": "Premium access is not available in your region",
-    "mypageCardBody": "Due to financial regulations in certain regions, we are unable to offer exchange-linked Premium access in your country."
+    "title": "Akses Premium tidak tersedia",
+    "body": "Maaf. Karena regulasi keuangan di beberapa wilayah, akses Premium saat ini belum tersedia di negara Anda.",
+    "confirm": "Konfirmasi",
+    "joinWaitlist": "Bergabung ke daftar tunggu",
+    "waitlistSuccess": "Anda telah bergabung ke daftar tunggu. Kami akan memberi tahu Anda jika akses tersedia di wilayah Anda di masa mendatang.",
+    "waitlistAlready": "Anda sudah ada di daftar tunggu.",
+    "waitlistError": "Terjadi kesalahan. Silakan coba lagi.",
+    "mypageCardTitle": "Akses Premium tidak tersedia di wilayah Anda",
+    "mypageCardBody": "Karena regulasi keuangan di beberapa wilayah, kami tidak dapat menawarkan akses Premium yang terhubung dengan exchange di negara Anda."
   },
   "market": {
     "ariaOverview": "Ikhtisar pasar",

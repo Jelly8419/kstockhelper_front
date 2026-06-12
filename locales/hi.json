@@ -99,15 +99,15 @@
     "premiumUpgradeCta": "Premium में अपग्रेड करें"
   },
   "restrictedPremium": {
-    "title": "Premium Access Not Available",
-    "body": "We’re sorry. Due to financial regulations in certain regions, Premium access is not currently available in your country.",
-    "confirm": "Confirm",
-    "joinWaitlist": "Join Waitlist",
-    "waitlistSuccess": "You’ve joined the waitlist. We’ll notify you if future access becomes available in your region.",
-    "waitlistAlready": "You’re already on the waitlist.",
-    "waitlistError": "Something went wrong. Please try again.",
-    "mypageCardTitle": "Premium access is not available in your region",
-    "mypageCardBody": "Due to financial regulations in certain regions, we are unable to offer exchange-linked Premium access in your country."
+    "title": "Premium पहुँच उपलब्ध नहीं है",
+    "body": "हमें खेद है। कुछ क्षेत्रों में वित्तीय नियमों के कारण, Premium पहुँच वर्तमान में आपके देश में उपलब्ध नहीं है।",
+    "confirm": "पुष्टि करें",
+    "joinWaitlist": "प्रतीक्षा सूची में शामिल हों",
+    "waitlistSuccess": "आप प्रतीक्षा सूची में शामिल हो गए हैं। यदि भविष्य में आपके क्षेत्र में पहुँच उपलब्ध होती है, तो हम आपको सूचित करेंगे।",
+    "waitlistAlready": "आप पहले से ही प्रतीक्षा सूची में हैं।",
+    "waitlistError": "कुछ गलत हो गया। कृपया फिर से प्रयास करें।",
+    "mypageCardTitle": "आपके क्षेत्र में Premium पहुँच उपलब्ध नहीं है",
+    "mypageCardBody": "कुछ क्षेत्रों में वित्तीय नियमों के कारण, हम आपके देश में एक्सचेंज-लिंक्ड Premium पहुँच प्रदान नहीं कर सकते।"
   },
   "market": {
     "ariaOverview": "बाज़ार अवलोकन",

@@ -46,7 +46,7 @@ export function GoogleButton({
 }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
 
   const signIn = async () => {
     setError(null);
@@ -57,6 +57,9 @@ export function GoogleButton({
       // (localhost in dev, production domain in prod).
       const callback = new URL("/auth/callback", window.location.origin);
       callback.searchParams.set("next", next);
+      // Carry the active UI locale through OAuth so the callback can prefix its
+      // redirect destinations (the app routes live under /{locale}/).
+      callback.searchParams.set("locale", locale);
       if (consentGiven) callback.searchParams.set("consent", "1");
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",

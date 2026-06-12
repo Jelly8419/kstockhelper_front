@@ -1,25 +1,26 @@
 "use client";
 
-import { Link } from "@/lib/i18n/navigation";
 import { NewsDetailItem } from "@/types/news";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { NewsDetail } from "./NewsDetail";
 import { NewsPublicHeader } from "./NewsPublicHeader";
-import { Button } from "@/components/ui/Button";
+import { LockedSummary } from "./LockedSummary";
+import { LockedContentCard } from "./LockedContentCard";
 
 /**
  * Route-level access guard for news/disclosure detail (covers direct URL access).
  *
- * The public header (title, related stocks, published time, source, short
- * summary) is ALWAYS rendered — guests and crawlers must be able to read it
- * (SEO PRD §6, §13). Only the locked body below it is gated:
- * - premium → full detail (summary, key points, key figures)
- * - free    → connect-UID panel
- * - guest   → sign-up panel
+ * The public header (title, related stocks, type, published time, source) is
+ * ALWAYS rendered — guests and crawlers must read it (SEO). The body below is
+ * gated per tier:
+ * - premium → full detail (full summary, key points, key figures)
+ * - guest   → public preview + blurred summary tail + locked key-points card
+ *             (create an account: Sign Up / Log In)
+ * - free    → same, but the card says upgrade to Premium
  *
- * Defense in depth: if the DB returned no body (gated server-side), premium
- * users still fall through to the unlock panel instead of an empty body.
+ * Defense in depth: if the DB returned no body (gated server-side), a premium
+ * user still falls through to the locked view instead of an empty body.
  */
 export function NewsDetailGate({ item }: { item: NewsDetailItem }) {
   const { tier, isLoading } = useAuth();
@@ -52,47 +53,13 @@ function LockedBody({
     return <NewsDetail item={item} />;
   }
 
-  // Guest → sign up first.
-  if (tier === "guest") {
-    return (
-      <Panel
-        title={t("newsGate.signupTitle")}
-        description={t("newsGate.signupBody")}
-      >
-        <Link href="/signup">
-          <Button>{t("newsGate.signupCta")}</Button>
-        </Link>
-      </Panel>
-    );
-  }
-
-  // Free (or premium with gated/empty body) → connect UID to unlock premium.
+  // Non-premium: public preview + blurred summary tail, then the locked
+  // key-points card. Guest → create an account; free (or premium with a gated
+  // empty body) → upgrade to Premium.
   return (
-    <Panel
-      title={t("newsGate.premiumTitle")}
-      description={t("newsGate.premiumBody")}
-    >
-      <Link href="/settings">
-        <Button>{t("newsGate.premiumCta")}</Button>
-      </Link>
-    </Panel>
-  );
-}
-
-function Panel({
-  title,
-  description,
-  children,
-}: {
-  title: string;
-  description: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="flex flex-col items-center gap-4 rounded-2xl border border-border bg-surface px-6 py-16 text-center">
-      <h2 className="text-xl font-semibold text-foreground">{title}</h2>
-      <p className="max-w-sm text-sm text-muted">{description}</p>
-      {children}
-    </div>
+    <>
+      <LockedSummary preview={item.preview} />
+      <LockedContentCard tier={tier === "guest" ? "guest" : "free"} />
+    </>
   );
 }

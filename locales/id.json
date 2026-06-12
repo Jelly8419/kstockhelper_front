@@ -90,12 +90,13 @@
     "keyFigures": "Angka utama"
   },
   "newsGate": {
-    "signupTitle": "Daftar untuk membaca",
-    "signupBody": "Buat akun gratis untuk membaca berita dan keterbukaan informasi lengkap.",
-    "signupCta": "Daftar",
+    "guestTitle": "Konten ini memerlukan akun",
+    "guestBody": "Daftar atau masuk untuk membaca ringkasan lengkap, poin utama, dan analisis.",
+    "guestSignupCta": "Daftar gratis",
+    "guestLoginCta": "Masuk",
     "premiumTitle": "Buka akses Premium",
     "premiumBody": "Hubungkan UID Anda untuk mendapatkan akses penuh ke semua berita dan keterbukaan informasi.",
-    "premiumCta": "Hubungkan UID Anda"
+    "premiumUpgradeCta": "Upgrade ke Premium"
   },
   "market": {
     "ariaOverview": "Ikhtisar pasar",
@@ -188,6 +189,10 @@
   },
   "seo": {
     "title": "K-Stock Helper - Berita saham Korea dalam bahasa Inggris",
-    "description": "Berita dan keterbukaan informasi pasar saham Korea secara real-time dalam bahasa Inggris untuk investor global"
+    "description": "Berita dan keterbukaan informasi pasar saham Korea secara real-time dalam bahasa Inggris untuk investor global",
+    "newsTitleSuffix": "KstockHelper",
+    "newsDescription": "Baca ringkasan singkat berita pasar saham Korea. Analisis AI lengkap tersedia untuk anggota Premium.",
+    "disclosureDescription": "Baca ringkasan singkat keterbukaan informasi pasar saham Korea dan konteks terkait. Analisis AI lengkap tersedia untuk anggota Premium.",
+    "relatedStocks": "Saham terkait"
   }
 }

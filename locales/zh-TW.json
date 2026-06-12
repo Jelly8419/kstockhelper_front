@@ -90,12 +90,13 @@
     "keyFigures": "主要數據"
   },
   "newsGate": {
-    "signupTitle": "註冊以閱讀",
-    "signupBody": "建立免費帳號即可閱讀完整新聞與公告。",
-    "signupCta": "註冊",
+    "guestTitle": "此內容需要帳戶",
+    "guestBody": "註冊或登入以閱讀完整摘要、重點與分析。",
+    "guestSignupCta": "免費註冊",
+    "guestLoginCta": "登入",
     "premiumTitle": "解鎖 Premium 存取權",
     "premiumBody": "連接您的 UID 以完整存取所有新聞與公告。",
-    "premiumCta": "連接您的 UID"
+    "premiumUpgradeCta": "升級至 Premium"
   },
   "market": {
     "ariaOverview": "市場概覽",
@@ -188,6 +189,10 @@
   },
   "seo": {
     "title": "K-Stock Helper - 英文韓國股市新聞",
-    "description": "為全球投資者提供英文即時韓國股市新聞與公告"
+    "description": "為全球投資者提供英文即時韓國股市新聞與公告",
+    "newsTitleSuffix": "KstockHelper",
+    "newsDescription": "閱讀韓國股市新聞的簡短摘要。完整 AI 分析提供給 Premium 會員。",
+    "disclosureDescription": "閱讀韓國股市公告的簡短摘要與相關背景。完整 AI 分析提供給 Premium 會員。",
+    "relatedStocks": "相關股票"
   }
 }

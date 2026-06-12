@@ -90,12 +90,13 @@
     "keyFigures": "Key Figures"
   },
   "newsGate": {
-    "signupTitle": "Sign up to read",
-    "signupBody": "Create a free account to read full news and disclosures.",
-    "signupCta": "Sign Up",
-    "premiumTitle": "Unlock Premium Access",
-    "premiumBody": "Connect your UID to get full access to all news & disclosures.",
-    "premiumCta": "Connect Your UID"
+    "guestTitle": "This content requires an account",
+    "guestBody": "Sign up or log in to read the full summary, key points, and analysis.",
+    "guestSignupCta": "Sign Up for Free",
+    "guestLoginCta": "Log In",
+    "premiumTitle": "This is Premium content",
+    "premiumBody": "Upgrade to Premium to read the full summary, key points, and analysis.",
+    "premiumUpgradeCta": "Upgrade to Premium"
   },
   "market": {
     "ariaOverview": "Market overview",

@@ -6,10 +6,7 @@ import { NewsTypeTabs } from "./NewsTypeTabs";
 import { NewsFilterTabs } from "./NewsFilterTabs";
 import { NewsCard } from "./NewsCard";
 import { Pagination } from "@/components/ui/Pagination";
-import { useAuth } from "@/lib/hooks/useAuth";
 import { useTranslation } from "@/lib/i18n/useTranslation";
-import { SignupGateModal } from "@/components/access/SignupGateModal";
-import { BybitGateModal } from "@/components/access/BybitGateModal";
 import { NEWS_PAGE_SIZE } from "@/lib/constants/news";
 
 interface Props {
@@ -36,8 +33,6 @@ export function NewsList({
   const [page, setPage] = useState(0);
   const [total, setTotal] = useState(initialTotal);
   const [loading, setLoading] = useState(false);
-  const [gate, setGate] = useState<"none" | "signup" | "bybit">("none");
-  const { tier } = useAuth();
   const { t, locale } = useTranslation();
 
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -46,12 +41,6 @@ export function NewsList({
   // (a slow earlier fetch overwriting a newer result).
   const abortRef = useRef<AbortController | null>(null);
   const totalPages = Math.max(1, Math.ceil(total / NEWS_PAGE_SIZE));
-
-  // premium → navigate; free → Bybit modal; guest → sign-up modal.
-  const handleBlockedClick =
-    tier === "premium"
-      ? undefined
-      : () => setGate(tier === "guest" ? "signup" : "bybit");
 
   const fetchPage = useCallback(
     async (
@@ -142,11 +131,7 @@ export function NewsList({
       ) : (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {items.map((item) => (
-            <NewsCard
-              key={item.id}
-              item={item}
-              onBlockedClick={handleBlockedClick}
-            />
+            <NewsCard key={item.id} item={item} />
           ))}
         </div>
       )}
@@ -154,12 +139,6 @@ export function NewsList({
       <div className="pt-2">
         <Pagination page={page} totalPages={totalPages} onChange={changePage} />
       </div>
-
-      <SignupGateModal
-        open={gate === "signup"}
-        onClose={() => setGate("none")}
-      />
-      <BybitGateModal open={gate === "bybit"} onClose={() => setGate("none")} />
     </section>
   );
 }

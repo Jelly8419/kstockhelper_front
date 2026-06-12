@@ -14,9 +14,9 @@ import {
 } from "@/types/news";
 
 const PREVIEW_COLUMNS =
-  "id,category,subcategory,title,preview,source,url,is_premium,published_at,stock_ids";
+  "id,seq_id,category,slug,subcategory,title,preview,source,url,is_premium,published_at,stock_ids";
 const FULL_COLUMNS =
-  "id,category,subcategory,title,preview,source,url,is_premium,published_at,stock_ids,body,summary,key_points,key_figures";
+  "id,seq_id,category,slug,subcategory,title,preview,source,url,is_premium,published_at,stock_ids,body,summary,key_points,key_figures";
 
 /** Translated fields fetched from `news_translations` for a content locale. */
 const TRANSLATION_COLUMNS = "news_id,translated_title,summary,key_points";
@@ -32,7 +32,9 @@ export interface NewsPage {
 function mapPreview(row: NewsPreviewRow): NewsPreview {
   return {
     id: row.id,
+    seqId: row.seq_id,
     category: row.category,
+    slug: row.slug,
     subcategory: row.subcategory,
     title: row.title,
     preview: row.preview ?? "",
@@ -181,25 +183,30 @@ export async function getNewsPage(
 }
 
 /**
- * Fetch a single news item detail (full view). Returns null if not found.
+ * Fetch a single news item detail (full view) by its public `seq_id` — the
+ * integer carried in the URL (`/news/{seqId}-{slug}`). Returns null if not found
+ * or if `seqId` is not a valid positive integer (e.g. a malformed URL).
  *
- * When `contentLocale` is a translated locale, overlays the `news_translations`
- * row for (id, locale) — title/summary/key_points become in-language; body and
+ * The translation join uses the row's UUID (`item.id`), NOT the seq_id:
+ * `news_translations.news_id` is the UUID FK. When `contentLocale` is a
+ * translated locale, title/summary/key_points become in-language; body and
  * key_figures stay English. Missing translation → English content kept.
  */
-export async function getNewsById(
-  id: string,
+export async function getNewsBySeqId(
+  seqId: number,
   contentLocale: ContentLocale | null = null
 ): Promise<NewsDetailItem | null> {
+  if (!Number.isInteger(seqId) || seqId <= 0) return null;
+
   const supabase = createClient();
   const { data, error } = await supabase
     .from("news_full")
     .select(FULL_COLUMNS)
-    .eq("id", id)
+    .eq("seq_id", seqId)
     .maybeSingle();
 
   if (error) {
-    console.error("getNewsById error:", error.message);
+    console.error("getNewsBySeqId error:", error.message);
     return null;
   }
   if (!data) return null;
@@ -211,13 +218,13 @@ export async function getNewsById(
   const { data: trans, error: transError } = await supabase
     .from("news_translations")
     .select(TRANSLATION_COLUMNS)
-    .eq("news_id", id)
+    .eq("news_id", item.id)
     .eq("locale", contentLocale)
     .maybeSingle();
 
   if (transError) {
     // Missing translation must not break the page — keep English.
-    console.error("getNewsById translation error:", transError.message);
+    console.error("getNewsBySeqId translation error:", transError.message);
     return item;
   }
 
@@ -225,13 +232,17 @@ export async function getNewsById(
 }
 
 export interface NewsSitemapEntry {
-  id: string;
+  seqId: number;
+  category: NewsCategory;
+  slug: string | null;
   publishedAt: string;
 }
 
 /**
- * Fetch all published news ids + timestamps for the sitemap.
- * Capped to avoid an unbounded sitemap as data grows.
+ * Fetch all published news/disclosure rows for the sitemap (seq_id, category,
+ * slug, timestamp). `seq_id` is the public URL key; `category` routes each entry
+ * to `/news/` vs `/disclosures/`; `slug` builds the SEO URL. Capped to avoid an
+ * unbounded sitemap as data grows.
  */
 export async function getNewsSitemapEntries(
   limit = 5000
@@ -239,7 +250,7 @@ export async function getNewsSitemapEntries(
   const supabase = createClient();
   const { data, error } = await supabase
     .from("news_preview")
-    .select("id,published_at")
+    .select("seq_id,category,slug,published_at")
     .order("published_at", { ascending: false })
     .limit(limit);
 
@@ -247,8 +258,17 @@ export async function getNewsSitemapEntries(
     console.error("getNewsSitemapEntries error:", error?.message);
     return [];
   }
-  return (data as { id: string; published_at: string }[]).map((r) => ({
-    id: r.id,
+  return (
+    data as {
+      seq_id: number;
+      category: NewsCategory;
+      slug: string | null;
+      published_at: string;
+    }[]
+  ).map((r) => ({
+    seqId: r.seq_id,
+    category: r.category,
+    slug: r.slug,
     publishedAt: r.published_at,
   }));
 }

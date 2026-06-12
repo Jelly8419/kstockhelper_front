@@ -25,8 +25,20 @@ export interface KeyFigure {
  * No premium body content here.
  */
 export interface NewsPreview {
+  /** UUID primary key — used for translation joins and internal references. */
   id: string;
+  /**
+   * Short auto-increment integer used as the public URL key
+   * (`/news/{seqId}-{slug}`). Stable per item; detail routes resolve by this.
+   */
+  seqId: number;
   category: NewsCategory;
+  /**
+   * SEO/display slug fixed at publish time (English-title based). Null for
+   * legacy rows not yet backfilled — callers fall back to a runtime slugify of
+   * `title`. Decorative: detail routes match on `seqId`, not the slug.
+   */
+  slug: string | null;
   /** Backend subcategory (e.g. "CUSTOMER"); null for most disclosures. */
   subcategory: string | null;
   /** English title (translated_title, falls back to raw title). */
@@ -66,7 +78,9 @@ export interface NewsDetailItem extends NewsPreview {
 
 export interface NewsPreviewRow {
   id: string;
+  seq_id: number;
   category: NewsCategory;
+  slug: string | null;
   subcategory: string | null;
   title: string;
   preview: string | null;

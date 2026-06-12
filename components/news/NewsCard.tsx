@@ -6,6 +6,7 @@ import { TICKER_LABEL } from "@/lib/constants/tickers";
 import { Badge } from "@/components/ui/Badge";
 import { formatRegisteredTime } from "@/lib/utils/format";
 import { useTranslation } from "@/lib/i18n/useTranslation";
+import { buildDetailPath } from "@/lib/utils/slug";
 
 interface Props {
   item: NewsPreview;
@@ -55,9 +56,11 @@ export function NewsCard({ item, onBlockedClick }: Props) {
     );
   }
 
-  // Premium: navigate to detail.
+  // Premium: navigate to detail. Routes to /news/ or /disclosures/ by category,
+  // with the `{id}-{slug}` SEO path (slug falls back to the title at runtime).
+  const href = buildDetailPath(item.category, item.seqId, item.slug, item.title);
   return (
-    <Link href={`/news/${item.id}`} className={cardClass}>
+    <Link href={href} className={cardClass}>
       {content}
     </Link>
   );

@@ -19,8 +19,9 @@
         "lib/legal/**",
         "components/legal/**",
         "components/guide/**",
-        "app/privacy/**",
-        "app/terms/**",
+        "app/**/privacy/**",
+        "app/**/terms/**",
+        "app/**/guide/**",
         "lib/i18n/**",
         "locales/**"
       ],

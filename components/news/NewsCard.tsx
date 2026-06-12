@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/lib/i18n/navigation";
 import { NewsPreview } from "@/types/news";
 import { TICKER_LABEL } from "@/lib/constants/tickers";
 import { Badge } from "@/components/ui/Badge";

@@ -1,29 +1,22 @@
-import { headers } from "next/headers";
-import {
-  LOCALE_HEADER,
-  type ContentLocale,
-  type SupportedLocale,
-} from "./config";
+import { getLocale } from "next-intl/server";
+import { type ContentLocale, type SupportedLocale } from "./config";
 import { normalizeLocale, resolveContentLocale } from "./normalize";
 
 /**
  * Read the active UI locale in a Server Component / route handler.
  *
- * The middleware resolves the locale (5-step priority) and forwards it via the
- * `x-locale` request header; this reads it back and re-normalizes as a safety
- * gate. Defaults to `en` when the header is absent (e.g. requests that skip the
- * middleware).
+ * Sourced from next-intl's URL-based routing (`getLocale()`), normalized as a
+ * safety gate. Async because next-intl resolves the locale per request.
  */
-export function getServerLocale(): SupportedLocale {
-  const value = headers().get(LOCALE_HEADER);
-  return normalizeLocale(value);
+export async function getServerLocale(): Promise<SupportedLocale> {
+  return normalizeLocale(await getLocale());
 }
 
 /**
- * Read the active news/disclosure CONTENT locale in a Server Component / route
- * handler. Derived from the UI locale (`x-locale`): returns a `ContentLocale`
- * when content is translated for it, or `null` to use the English source.
+ * Read the active news/disclosure CONTENT locale. Derived from the UI locale:
+ * a `ContentLocale` when content is translated for it, or `null` to use the
+ * English source (covers `en` and UI-only locales like `es`/`id`).
  */
-export function getServerContentLocale(): ContentLocale | null {
-  return resolveContentLocale(getServerLocale());
+export async function getServerContentLocale(): Promise<ContentLocale | null> {
+  return resolveContentLocale(await getServerLocale());
 }

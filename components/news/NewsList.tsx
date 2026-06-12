@@ -38,7 +38,7 @@ export function NewsList({
   const [loading, setLoading] = useState(false);
   const [gate, setGate] = useState<"none" | "signup" | "bybit">("none");
   const { tier } = useAuth();
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
 
   const sectionRef = useRef<HTMLElement | null>(null);
   // Tracks the in-flight request so rapid tab/filter switches cancel the
@@ -68,7 +68,7 @@ export function NewsList({
       setLoading(true);
       try {
         const res = await fetch(
-          `/api/news?category=${nextCategory}&filter=${nextFilter}&page=${nextPage}`,
+          `/api/news?category=${nextCategory}&filter=${nextFilter}&page=${nextPage}&locale=${locale}`,
           { signal: controller.signal }
         );
         const data: NewsPageResponse = await res.json();
@@ -90,7 +90,7 @@ export function NewsList({
         if (abortRef.current === controller) setLoading(false);
       }
     },
-    []
+    [locale]
   );
 
   // Switching content type resets the ticker filter and pagination.

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/lib/i18n/navigation";
 import { Badge } from "@/components/ui/Badge";
 import { ExchangeConnectForm } from "@/components/connect/ExchangeConnectForm";
 import { useAuth } from "@/lib/hooks/useAuth";

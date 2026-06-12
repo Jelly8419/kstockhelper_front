@@ -1,9 +1,9 @@
-import Link from "next/link";
+import { Link } from "@/lib/i18n/navigation";
 import { Button } from "@/components/ui/Button";
-import { getTranslations } from "@/lib/i18n/getTranslations";
+import { getAppTranslations } from "@/lib/i18n/getTranslations";
 
-export function SignupBanner() {
-  const { t } = getTranslations();
+export async function SignupBanner() {
+  const { t } = await getAppTranslations();
   return (
     <section className="overflow-hidden rounded-2xl border border-border bg-gradient-to-r from-brand/15 via-surface to-surface p-6 sm:p-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

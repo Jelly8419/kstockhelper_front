@@ -1,27 +1,27 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState, useTransition } from "react";
+import { useParams } from "next/navigation";
 import {
-  LOCALE_COOKIE,
   localeDisplayNames,
   supportedUiLocales,
   type SupportedLocale,
 } from "@/lib/i18n/config";
+import { usePathname, useRouter } from "@/lib/i18n/navigation";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 
 /**
  * GNB language selector (PRD §9). Lists `supportedUiLocales` by their native
- * names. Selecting a locale persists it to both localStorage and the
- * `ksh_locale` cookie, then refreshes so the server re-renders in the new
- * locale (the middleware reads the cookie first, §8.1 step 1).
- *
- * Routing here is rewrite-based (the URL has no locale prefix), so we change the
- * locale via cookie + router.refresh() rather than navigation.
+ * names. Selecting a locale navigates to the same page under the new locale
+ * prefix (`/vi/...`); next-intl updates the URL and persists its `NEXT_LOCALE`
+ * cookie so the choice sticks on the next root visit.
  */
 export function LocaleSwitcher() {
   const { locale, t } = useTranslation();
   const router = useRouter();
+  const pathname = usePathname();
+  const params = useParams();
+  const [isPending, startTransition] = useTransition();
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -46,17 +46,16 @@ export function LocaleSwitcher() {
     setOpen(false);
     if (next === locale) return;
 
-    try {
-      localStorage.setItem(LOCALE_COOKIE, next);
-    } catch {
-      // localStorage unavailable (private mode) — cookie is the source of truth.
-    }
-    // 1-year cookie; the middleware reads this first on the next request.
-    document.cookie = `${LOCALE_COOKIE}=${next}; path=/; max-age=${
-      60 * 60 * 24 * 365
-    }; samesite=lax`;
-
-    router.refresh();
+    // Navigate to the same page under the new locale. Passing `params` keeps
+    // dynamic segments (e.g. /news/[id]) intact. next-intl updates the URL
+    // prefix and persists its NEXT_LOCALE cookie.
+    startTransition(() => {
+      router.replace(
+        // @ts-expect-error -- params shape is route-dependent; next-intl accepts it.
+        { pathname, params },
+        { locale: next }
+      );
+    });
   };
 
   return (
@@ -64,10 +63,11 @@ export function LocaleSwitcher() {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
+        disabled={isPending}
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label={t("gnb.languageLabel")}
-        className="flex h-8 items-center gap-1.5 rounded-lg px-2 text-sm text-muted transition-colors hover:bg-surface-hover hover:text-foreground"
+        className="flex h-8 items-center gap-1.5 rounded-lg px-2 text-sm text-muted transition-colors hover:bg-surface-hover hover:text-foreground disabled:opacity-50"
       >
         <GlobeIcon />
         <span className="hidden sm:inline">{localeDisplayNames[locale]}</span>

@@ -10,11 +10,9 @@ import { buildDetailPath } from "@/lib/utils/slug";
 
 interface Props {
   item: NewsPreview;
-  /** When provided, intercepts the click instead of navigating (for gating). */
-  onBlockedClick?: () => void;
 }
 
-export function NewsCard({ item, onBlockedClick }: Props) {
+export function NewsCard({ item }: Props) {
   const { t } = useTranslation();
   const cardClass =
     "flex flex-col gap-3 rounded-xl border border-border bg-surface p-5 text-left transition-colors hover:bg-surface-hover";
@@ -47,17 +45,9 @@ export function NewsCard({ item, onBlockedClick }: Props) {
     </>
   );
 
-  // Non-premium: intercept click to show a gate modal.
-  if (onBlockedClick) {
-    return (
-      <button type="button" onClick={onBlockedClick} className={cardClass}>
-        {content}
-      </button>
-    );
-  }
-
-  // Premium: navigate to detail. Routes to /news/ or /disclosures/ by category,
-  // with the `{id}-{slug}` SEO path (slug falls back to the title at runtime).
+  // Every tier navigates to detail — gating happens on the detail page, not here
+  // (guests/free see a public header + locked panel). Routes to /news/ or
+  // /disclosures/ by category with the `{seqId}-{slug}` SEO path.
   const href = buildDetailPath(item.category, item.seqId, item.slug, item.title);
   return (
     <Link href={href} className={cardClass}>

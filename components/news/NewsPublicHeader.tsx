@@ -8,9 +8,12 @@ import { useTranslation } from "@/lib/i18n/useTranslation";
 
 /**
  * Always-public detail header (SEO PRD §6, §13): title, related-stock labels,
- * published time, source, and the short summary (`preview`). Rendered for every
- * visitor — guest, free, and premium — so non-logged-in users and crawlers can
- * understand the page. The locked premium body lives separately in `NewsDetail`.
+ * published time, and source. Rendered for every visitor — guest, free, and
+ * premium — so non-logged-in users and crawlers can understand the page.
+ *
+ * The summary itself is rendered below the header by the gate: premium gets the
+ * full `NewsDetail`; non-premium gets `LockedSummary` (public preview + blurred
+ * tail). This component intentionally omits it to avoid a duplicate summary.
  *
  * Takes a `NewsPreview` (the public field set) so it never depends on gated
  * detail fields.
@@ -50,13 +53,6 @@ export function NewsPublicHeader({ item }: { item: NewsPreview }) {
           </span>
         )}
       </div>
-
-      {/* Short summary — always public so guests/crawlers get a real preview. */}
-      {item.preview && (
-        <p className="text-base leading-relaxed text-foreground">
-          {item.preview}
-        </p>
-      )}
     </header>
   );
 }

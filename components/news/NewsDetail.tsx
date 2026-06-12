@@ -1,36 +1,18 @@
 "use client";
 
 import { NewsDetailItem } from "@/types/news";
-import { TICKER_LABEL } from "@/lib/constants/tickers";
-import { Badge } from "@/components/ui/Badge";
-import { formatRegisteredTime } from "@/lib/utils/format";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 
+/**
+ * Locked/premium detail body: full summary, key points, key figures. The public
+ * header (title, time, source, related stocks, short summary) is rendered
+ * separately by `NewsPublicHeader`, so this component holds only the gated
+ * content shown to entitled (premium) users.
+ */
 export function NewsDetail({ item }: { item: NewsDetailItem }) {
   const { t } = useTranslation();
   return (
-    <article className="flex flex-col gap-6">
-      <header className="flex flex-col gap-3">
-        <div className="flex flex-wrap items-center gap-2">
-          {item.tickers.map((t) => (
-            <Badge key={t} tone="brand">
-              {TICKER_LABEL[t]}
-            </Badge>
-          ))}
-          <Badge tone="neutral">
-            {item.category === "disclosure"
-              ? t("news.badgeDisclosure")
-              : t("news.badgeNews")}
-          </Badge>
-          <span className="ml-auto text-xs text-muted">
-            {formatRegisteredTime(item.publishedAt)}
-          </span>
-        </div>
-        <h1 className="text-2xl font-semibold leading-tight text-foreground">
-          {item.title}
-        </h1>
-      </header>
-
+    <div className="flex flex-col gap-6">
       {/* Summary */}
       {item.summary && (
         <section className="flex flex-col gap-2">
@@ -92,6 +74,6 @@ export function NewsDetail({ item }: { item: NewsDetailItem }) {
           </div>
         </section>
       )}
-    </article>
+    </div>
   );
 }

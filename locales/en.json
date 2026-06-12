@@ -188,6 +188,10 @@
   },
   "seo": {
     "title": "K-Stock Helper - Korean Stock News in English",
-    "description": "Real-time Korean stock market news and disclosures in English for global investors"
+    "description": "Real-time Korean stock market news and disclosures in English for global investors",
+    "newsTitleSuffix": "KstockHelper",
+    "newsDescription": "Read a short summary of Korean stock market news. Full AI analysis is available for premium members.",
+    "disclosureDescription": "Read a short summary of a Korean stock market disclosure and related context. Full AI analysis is available for premium members.",
+    "relatedStocks": "Related stocks"
   }
 }

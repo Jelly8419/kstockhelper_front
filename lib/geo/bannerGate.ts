@@ -5,6 +5,13 @@ import { getCountryCode } from "./country";
 export const SHOW_BANNER_HEADER = "x-show-banner";
 
 /**
+ * Cookie the middleware sets so client components know whether the visitor is in
+ * a restricted region. Non-httpOnly on purpose: client JS reads it (see
+ * `useRestrictedRegion`). Value is "1" (restricted) or "0" (allowed).
+ */
+export const RESTRICTED_REGION_COOKIE = "x-restricted-region";
+
+/**
  * Countries where the "Trade Korea's Stock Market" banner is hidden.
  * (Regulatory / rollout reasons.)
  */
@@ -103,4 +110,15 @@ export function shouldShowBanner(request: NextRequest): boolean {
   }
 
   return false;
+}
+
+/**
+ * Whether this request originates from a region where exchange-linked Premium is
+ * unavailable (regulatory). Defined as the inverse of `shouldShowBanner`, so the
+ * "restricted region" set stays identical to the "banner hidden" set — including
+ * the KR IP whitelist exception and the unknown-country (local dev) case, which
+ * are treated as NOT restricted.
+ */
+export function isRestrictedRegion(request: NextRequest): boolean {
+  return !shouldShowBanner(request);
 }

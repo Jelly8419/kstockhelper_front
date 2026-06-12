@@ -2,7 +2,12 @@ import { NextResponse, type NextRequest } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { routing } from "@/lib/i18n/routing";
 import { updateSession } from "@/lib/supabase/middleware";
-import { shouldShowBanner, SHOW_BANNER_HEADER } from "@/lib/geo/bannerGate";
+import {
+  shouldShowBanner,
+  SHOW_BANNER_HEADER,
+  isRestrictedRegion,
+  RESTRICTED_REGION_COOKIE,
+} from "@/lib/geo/bannerGate";
 import { getCountryCode } from "@/lib/geo/country";
 import { resolveLocaleByCountry } from "@/lib/i18n/normalize";
 import { resolveBrowserLocale } from "@/lib/i18n/normalize";
@@ -16,6 +21,26 @@ import {
 } from "@/lib/admin/constants";
 
 const handleI18nRouting = createMiddleware(routing);
+
+/**
+ * Whether `pathname` targets the Start-Trading guide page (`/guide` or
+ * `/{locale}/guide`). Used to block direct access from restricted regions.
+ */
+function isGuidePath(pathname: string): boolean {
+  const segments = pathname.split("/").filter(Boolean);
+  // `/guide` or `/{locale}/guide`
+  if (segments[0] === "guide" && segments.length === 1) return true;
+  if (segments[1] === "guide" && segments.length === 2) return true;
+  return false;
+}
+
+/** Locale prefix of the request, or the default locale when none is present. */
+function localeFromPath(pathname: string): string {
+  const first = pathname.split("/").filter(Boolean)[0];
+  return first && (routing.locales as readonly string[]).includes(first)
+    ? first
+    : routing.defaultLocale;
+}
 
 /**
  * Layer the geo/IP country into locale detection (PRD §3 priority:
@@ -82,13 +107,40 @@ export async function middleware(request: NextRequest) {
   const showBanner = shouldShowBanner(request);
   request.headers.set(SHOW_BANNER_HEADER, showBanner ? "true" : "false");
 
+  const restricted = isRestrictedRegion(request);
+
+  // Restricted regions cannot access the Start-Trading guide directly — send
+  // them home (`/{locale}/`). Server-side (IP-based) so it can't be bypassed by
+  // tampering with the client-readable cookie below.
+  if (restricted && isGuidePath(pathname)) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${localeFromPath(pathname)}/`;
+    url.search = "";
+    const redirect = NextResponse.redirect(url);
+    redirect.cookies.set(RESTRICTED_REGION_COOKIE, "1", {
+      httpOnly: false,
+      sameSite: "lax",
+      path: "/",
+    });
+    return await updateSession(request, redirect);
+  }
+
   applyCountryLocaleHint(request);
 
   const intlResponse = handleI18nRouting(request);
 
   // A redirect (e.g. `/` → `/en`) is terminal — return it (still refresh the
   // session cookies onto it so an in-flight session isn't dropped on redirect).
-  return await updateSession(request, intlResponse);
+  const response = await updateSession(request, intlResponse);
+
+  // Expose the restricted-region decision to client components (non-httpOnly).
+  response.cookies.set(RESTRICTED_REGION_COOKIE, restricted ? "1" : "0", {
+    httpOnly: false,
+    sameSite: "lax",
+    path: "/",
+  });
+
+  return response;
 }
 
 export const config = {

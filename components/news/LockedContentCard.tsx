@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { Link } from "@/lib/i18n/navigation";
 import { Button } from "@/components/ui/Button";
 import { useTranslation } from "@/lib/i18n/useTranslation";
+import { useRestrictedRegion } from "@/lib/hooks/useRestrictedRegion";
+import { RestrictedPremiumModal } from "@/components/premium/RestrictedPremiumModal";
 
 /**
  * Locked premium-content region for non-entitled viewers (guest / free).
@@ -67,15 +70,34 @@ function GuestCta() {
 
 function FreeCta() {
   const { t } = useTranslation();
+  const restricted = useRestrictedRegion();
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <>
       <h2 className="text-base font-semibold text-foreground">
         {t("newsGate.premiumTitle")}
       </h2>
       <p className="text-sm text-muted">{t("newsGate.premiumBody")}</p>
-      <Link href="/settings" className="mt-1 w-full">
-        <Button className="w-full">{t("newsGate.premiumUpgradeCta")}</Button>
-      </Link>
+      {restricted ? (
+        // Restricted regions: intercept the upgrade flow with the limitation
+        // modal instead of routing to /settings (PRD §3). FreeCta only renders
+        // for logged-in (free) users, so Join Waitlist is always available.
+        <>
+          <Button className="mt-1 w-full" onClick={() => setModalOpen(true)}>
+            {t("newsGate.premiumUpgradeCta")}
+          </Button>
+          <RestrictedPremiumModal
+            open={modalOpen}
+            onClose={() => setModalOpen(false)}
+            isLoggedIn
+          />
+        </>
+      ) : (
+        <Link href="/settings" className="mt-1 w-full">
+          <Button className="w-full">{t("newsGate.premiumUpgradeCta")}</Button>
+        </Link>
+      )}
     </>
   );
 }

@@ -1,24 +1,25 @@
 "use client";
 
-import { NewsCategory } from "@/types/news";
+import { ContentTypeFilter } from "@/types/news";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 
 interface Tab {
-  id: NewsCategory;
+  id: ContentTypeFilter;
   labelKey: string;
 }
 
 const TABS: Tab[] = [
+  { id: "all", labelKey: "news.filterAll" },
   { id: "news", labelKey: "news.typeNews" },
   { id: "disclosure", labelKey: "news.typeDisclosures" },
 ];
 
 interface Props {
-  active: NewsCategory;
-  onChange: (category: NewsCategory) => void;
+  active: ContentTypeFilter;
+  onChange: (category: ContentTypeFilter) => void;
 }
 
-/** Top-level content-type tabs: News vs Disclosures. */
+/** Top-level content-type tabs: All / News / Disclosures (single-select). */
 export function NewsTypeTabs({ active, onChange }: Props) {
   const { t } = useTranslation();
   return (

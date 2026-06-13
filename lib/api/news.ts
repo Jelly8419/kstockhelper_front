@@ -9,8 +9,8 @@ import {
   NewsDetailItem,
   NewsFullRow,
   NewsTranslationRow,
-  NewsFilter,
   NewsCategory,
+  TickerLabel,
 } from "@/types/news";
 
 const PREVIEW_COLUMNS =
@@ -125,14 +125,17 @@ async function fetchTranslations(
 
 /**
  * Fetch one page of the published news list (preview view).
- * Two independent filters: content type (`category`) and ticker (`filter`,
- * "all" = no ticker filter). Server-side pagination + filtering.
+ * Two independent filters, applied AND:
+ *  - content type (`category`, omit for "all" = both news and disclosures)
+ *  - companies (`tickers`, empty = no company filter). Multi-select with OR
+ *    matching: an item shows if it carries *any* of the selected tickers.
+ * Server-side pagination + filtering.
  *
  * Pages are ordered by (published_at desc, id desc) for stable pagination —
  * a single timestamp key alone can drop/duplicate rows at page boundaries.
  */
 export async function getNewsPage(
-  filter: NewsFilter = "all",
+  tickers: TickerLabel[] = [],
   page = 0,
   pageSize = NEWS_PAGE_SIZE,
   category?: NewsCategory,
@@ -154,9 +157,9 @@ export async function getNewsPage(
     query = query.eq("category", category);
   }
 
-  // PostgREST array containment filter on stock_ids.
-  if (filter !== "all") {
-    query = query.contains("stock_ids", [filter]);
+  // Company filter: OR match — keep rows whose stock_ids overlap the selection.
+  if (tickers.length > 0) {
+    query = query.overlaps("stock_ids", tickers);
   }
 
   const { data, error, count } = await query;

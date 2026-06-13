@@ -86,8 +86,8 @@
     "typeDisclosures": "Divulgações",
     "badgeNews": "Notícias",
     "badgeDisclosure": "Divulgação",
-    "empty": "Nenhuma notícia ou divulgação encontrada.",
-    "emptyHint": "Tente alterar o filtro de tipo de conteúdo ou de empresa.",
+    "empty": "Nenhuma notícia ou divulgação encontrada",
+    "emptyHint": "Tente alterar o tipo de conteúdo ou o filtro de empresa",
     "summary": "Resumo",
     "keyPoints": "Pontos principais",
     "keyFigures": "Principais números"

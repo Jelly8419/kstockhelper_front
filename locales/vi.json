@@ -86,8 +86,8 @@
     "typeDisclosures": "Công bố thông tin",
     "badgeNews": "Tin tức",
     "badgeDisclosure": "Công bố thông tin",
-    "empty": "Không tìm thấy tin tức hoặc công bố thông tin.",
-    "emptyHint": "Hãy thử thay đổi bộ lọc loại nội dung hoặc công ty.",
+    "empty": "Không tìm thấy tin tức hoặc công bố nào",
+    "emptyHint": "Hãy thử thay đổi loại nội dung hoặc bộ lọc công ty.",
     "summary": "Tóm tắt",
     "keyPoints": "Điểm chính",
     "keyFigures": "Số liệu chính"

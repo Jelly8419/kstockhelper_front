@@ -86,8 +86,8 @@
     "typeDisclosures": "Keterbukaan informasi",
     "badgeNews": "Berita",
     "badgeDisclosure": "Keterbukaan informasi",
-    "empty": "Tidak ada berita atau keterbukaan informasi yang ditemukan.",
-    "emptyHint": "Coba ubah filter jenis konten atau perusahaan.",
+    "empty": "Tidak ada berita atau pengungkapan yang ditemukan",
+    "emptyHint": "Coba ubah jenis konten atau filter perusahaan",
     "summary": "Ringkasan",
     "keyPoints": "Poin utama",
     "keyFigures": "Angka utama"

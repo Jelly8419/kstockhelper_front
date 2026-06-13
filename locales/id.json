@@ -98,6 +98,11 @@
     "premiumBody": "Hubungkan UID Anda untuk mendapatkan akses penuh ke semua berita dan keterbukaan informasi.",
     "premiumUpgradeCta": "Upgrade ke Premium"
   },
+  "hotNews": {
+    "sectionTitle": "Trending di Korea",
+    "sectionDescription": "Berita utama yang sedang tren di pasar Korea saat ini.",
+    "carouselAria": "Trending di Korea"
+  },
   "restrictedPremium": {
     "title": "Akses Premium tidak tersedia",
     "body": "Maaf. Karena regulasi keuangan di beberapa wilayah, akses Premium saat ini belum tersedia di negara Anda.",

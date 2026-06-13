@@ -98,6 +98,11 @@
     "premiumBody": "Conecta tu UID para tener acceso completo a todas las noticias y divulgaciones.",
     "premiumUpgradeCta": "Mejorar a Premium"
   },
+  "hotNews": {
+    "sectionTitle": "Tendencias en Corea",
+    "sectionDescription": "Las principales historias destacadas del mercado coreano ahora.",
+    "carouselAria": "Tendencias en Corea"
+  },
   "restrictedPremium": {
     "title": "Acceso Premium no disponible",
     "body": "Lo sentimos. Debido a regulaciones financieras en ciertas regiones, el acceso Premium no está disponible actualmente en tu país.",

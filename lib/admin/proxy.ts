@@ -14,7 +14,7 @@ const SESSION_EXPIRED = "세션이 만료되었습니다. 다시 로그인해 �
 
 interface AuthedCall {
   path: string;
-  method?: "GET" | "POST" | "PATCH";
+  method?: "GET" | "POST" | "PATCH" | "DELETE";
   body?: unknown;
 }
 

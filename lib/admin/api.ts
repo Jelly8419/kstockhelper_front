@@ -21,7 +21,7 @@ export interface AdminApiResult<T> {
 }
 
 interface CallOptions {
-  method?: "GET" | "POST" | "PATCH";
+  method?: "GET" | "POST" | "PATCH" | "DELETE";
   /** Admin JWT to send as `Authorization: Bearer <token>`. Omit for login. */
   token?: string | null;
   body?: unknown;

@@ -1,52 +1,61 @@
 "use client";
 
-import { NewsFilter } from "@/types/news";
+import { TickerLabel } from "@/types/news";
 import { TICKERS } from "@/lib/constants/tickers";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 
-interface Tab {
-  id: NewsFilter;
-  /** Ticker label (a data value, not translated). "all" uses an i18n key instead. */
-  label: string;
-}
-
-// Ticker labels are stock symbols (data), so they are NOT translated. Only the
-// leading "All" tab is a UI string, resolved via i18n in render.
-const TICKER_TABS: Tab[] = TICKERS.map((t) => ({ id: t.id, label: t.label }));
-
 interface Props {
-  active: NewsFilter;
-  onChange: (filter: NewsFilter) => void;
+  /** Selected companies. Empty array = "All" (no company filter). */
+  active: TickerLabel[];
+  /** Toggle a single company. */
+  onToggle: (ticker: TickerLabel) => void;
+  /** Reset to "All" (clears the selection). */
+  onReset: () => void;
 }
 
-export function NewsFilterTabs({ active, onChange }: Props) {
+/**
+ * Company filter — multi-select with OR matching. "All" (empty selection)
+ * clears the filter; clicking it again does nothing (no deselect). Toggling a
+ * company adds/removes it; clearing the last one falls back to "All".
+ */
+export function NewsFilterTabs({ active, onToggle, onReset }: Props) {
   const { t } = useTranslation();
-  const tabs: { id: NewsFilter; label: string }[] = [
-    { id: "all", label: t("news.filterAll") },
-    ...TICKER_TABS,
-  ];
+  const allActive = active.length === 0;
+
+  const btn = "h-9 rounded-lg px-4 text-sm font-medium transition-colors";
+  const activeCls = "bg-brand text-white";
+  const idleCls =
+    "border border-border bg-surface text-muted hover:bg-surface-hover";
 
   return (
-    <div
-      className="flex flex-wrap gap-2"
-      role="tablist"
-      aria-label={t("news.ariaFilter")}
-    >
-      {tabs.map((tab) => {
-        const isActive = tab.id === active;
+    <div className="flex flex-wrap items-center gap-2">
+      <span className="mr-1 text-sm font-medium text-muted">
+        {t("news.filterCompany")}
+      </span>
+
+      <button
+        type="button"
+        role="tab"
+        aria-selected={allActive}
+        onClick={onReset}
+        className={`${btn} ${allActive ? activeCls : idleCls}`}
+      >
+        {t("news.filterAll")}
+      </button>
+
+      {TICKERS.map((ticker) => {
+        const isActive = active.includes(ticker.id);
         return (
           <button
-            key={tab.id}
+            key={ticker.id}
+            type="button"
             role="tab"
             aria-selected={isActive}
-            onClick={() => onChange(tab.id)}
-            className={`h-9 rounded-lg px-4 text-sm font-medium transition-colors ${
-              isActive
-                ? "bg-brand text-white"
-                : "border border-border bg-surface text-muted hover:bg-surface-hover"
-            }`}
+            aria-pressed={isActive}
+            onClick={() => onToggle(ticker.id)}
+            className={`${btn} ${isActive ? activeCls : idleCls}`}
           >
-            {tab.label}
+            {ticker.label}
           </button>
         );
       })}

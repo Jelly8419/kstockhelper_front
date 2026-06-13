@@ -4,8 +4,12 @@ export type TickerLabel = "samsung" | "skhynix" | "hyundai";
 /** Source category of a content item. */
 export type NewsCategory = "news" | "disclosure";
 
-/** Filter values used by the news filter tabs. */
-export type NewsFilter = "all" | TickerLabel;
+/**
+ * Content-type selection in the News and Disclosures section. Single-select:
+ * "all" = both news and disclosures, else a specific category. Distinct from
+ * `NewsCategory` (which has no "all") because the section's first tab is All.
+ */
+export type ContentTypeFilter = "all" | NewsCategory;
 
 /** Display metadata for a ticker label. */
 export interface TickerMeta {

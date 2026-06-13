@@ -5,15 +5,15 @@ import { NewsList } from "@/components/news/NewsList";
 import { HotInKoreaCarousel } from "@/components/hotNews/HotInKoreaCarousel";
 import { getNewsPage } from "@/lib/api/news";
 import { getHotNewsList } from "@/lib/api/hotNews";
-import { NewsCategory } from "@/types/news";
+import { ContentTypeFilter } from "@/types/news";
 import { SHOW_BANNER_HEADER } from "@/lib/geo/bannerGate";
 import { resolveContentLocale } from "@/lib/i18n/normalize";
 
 // Real-time content — always fetch fresh.
 export const dynamic = "force-dynamic";
 
-// Default content type shown on first load.
-const INITIAL_CATEGORY: NewsCategory = "news";
+// Default content type shown on first load: All (news + disclosures).
+const INITIAL_CATEGORY: ContentTypeFilter = "all";
 
 export default async function Home({
   params,
@@ -27,8 +27,16 @@ export default async function Home({
   // First page is fetched on the server for a fast initial render;
   // subsequent pages (and tab/filter changes) load client-side via /api/news.
   // Hot in Korea curated list is fetched in parallel (empty → section hidden).
+  // First load: All companies (no ticker filter) + All content types
+  // ("all" → undefined category, includes both news and disclosures).
   const [{ items, total }, hotItems] = await Promise.all([
-    getNewsPage("all", 0, undefined, INITIAL_CATEGORY, contentLocale),
+    getNewsPage(
+      [],
+      0,
+      undefined,
+      INITIAL_CATEGORY === "all" ? undefined : INITIAL_CATEGORY,
+      contentLocale
+    ),
     getHotNewsList(contentLocale),
   ]);
 

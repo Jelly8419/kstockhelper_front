@@ -21,16 +21,16 @@
     "languageLabel": "Language"
   },
   "footer": {
-    "tagline": "Korean stock news & market data for global investors.",
+    "tagline": "Korean stock market information platform for global investors",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
     "copyright": "© {year} kstockhelper.com"
   },
   "banner": {
     "title": "Trade Korea's Stock Market",
-    "subtitle": "Open access to Korean markets through your global broker.",
+    "subtitle": "Find the information you need for Korean stock market investing.",
     "cta": "Start Trading",
-    "connectPrompt": "Already have an account? Connect your UID →"
+    "connectPrompt": "How to start trading"
   },
   "auth": {
     "loginHeading": "Log In",
@@ -97,13 +97,13 @@
     "guestBody": "Sign up or log in to read the full summary, key points, and analysis.",
     "guestSignupCta": "Sign Up for Free",
     "guestLoginCta": "Log In",
-    "premiumTitle": "This is Premium content",
-    "premiumBody": "Upgrade to Premium to read the full summary, key points, and analysis.",
+    "premiumTitle": "Unlock Premium Access",
+    "premiumBody": "Connect your UID to get full access to all news & disclosures.",
     "premiumUpgradeCta": "Upgrade to Premium"
   },
   "hotNews": {
     "sectionTitle": "Hot in Korea",
-    "sectionDescription": "Top trending stories in the Korean market right now.",
+    "sectionDescription": "Top trending stories in the Korean market right now",
     "carouselAria": "Hot in Korea",
     "prevAria": "Previous",
     "nextAria": "Next"
@@ -140,7 +140,7 @@
     "logOut": "Log Out",
     "premium": "Premium",
     "connected": "Connected",
-    "fullAccess": "You have full access to all news & disclosures.",
+    "fullAccess": "You have full access to all contents.",
     "changeUid": "Change UID",
     "bybitConnection": "Bybit Connection",
     "binanceConnection": "Binance Connection",

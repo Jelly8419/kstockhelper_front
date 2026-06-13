@@ -98,6 +98,13 @@
     "premiumBody": "Upgrade to Premium to read the full summary, key points, and analysis.",
     "premiumUpgradeCta": "Upgrade to Premium"
   },
+  "hotNews": {
+    "sectionTitle": "Hot in Korea",
+    "sectionDescription": "Top trending stories in the Korean market right now.",
+    "carouselAria": "Hot in Korea",
+    "prevAria": "Previous",
+    "nextAria": "Next"
+  },
   "restrictedPremium": {
     "title": "Premium Access Not Available",
     "body": "We’re sorry. Due to financial regulations in certain regions, Premium access is not currently available in your country.",

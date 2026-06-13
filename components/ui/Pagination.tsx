@@ -1,13 +1,21 @@
 "use client";
 
-import { useTranslation } from "@/lib/i18n/useTranslation";
-
 interface Props {
   /** 0-based current page. */
   page: number;
   /** Total number of pages. */
   totalPages: number;
   onChange: (page: number) => void;
+  /**
+   * Optional aria labels. Defaults to English so this primitive works outside a
+   * next-intl provider too (e.g. the admin console, which is not under the
+   * `[locale]` segment). i18n callers pass translated labels.
+   */
+  labels?: {
+    aria?: string;
+    previous?: string;
+    next?: string;
+  };
 }
 
 /** Build a windowed list of page numbers (0-based) with ellipsis gaps (-1). */
@@ -33,9 +41,12 @@ function buildPages(page: number, totalPages: number): number[] {
   return withGaps;
 }
 
-export function Pagination({ page, totalPages, onChange }: Props) {
-  const { t } = useTranslation();
+export function Pagination({ page, totalPages, onChange, labels }: Props) {
   if (totalPages <= 1) return null;
+
+  const ariaLabel = labels?.aria ?? "Pagination";
+  const prevLabel = labels?.previous ?? "Previous page";
+  const nextLabel = labels?.next ?? "Next page";
 
   const pages = buildPages(page, totalPages);
   const btn =
@@ -44,13 +55,13 @@ export function Pagination({ page, totalPages, onChange }: Props) {
   return (
     <nav
       className="flex flex-wrap items-center justify-center gap-1.5"
-      aria-label={t("pagination.aria")}
+      aria-label={ariaLabel}
     >
       <button
         type="button"
         onClick={() => onChange(page - 1)}
         disabled={page === 0}
-        aria-label={t("pagination.previous")}
+        aria-label={prevLabel}
         className={`${btn} border border-border bg-surface text-muted hover:bg-surface-hover disabled:cursor-not-allowed disabled:opacity-40`}
       >
         «
@@ -82,7 +93,7 @@ export function Pagination({ page, totalPages, onChange }: Props) {
         type="button"
         onClick={() => onChange(page + 1)}
         disabled={page >= totalPages - 1}
-        aria-label={t("pagination.next")}
+        aria-label={nextLabel}
         className={`${btn} border border-border bg-surface text-muted hover:bg-surface-hover disabled:cursor-not-allowed disabled:opacity-40`}
       >
         »

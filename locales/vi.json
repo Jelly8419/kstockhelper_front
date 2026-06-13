@@ -98,6 +98,11 @@
     "premiumBody": "Kết nối UID của bạn để có toàn quyền truy cập vào mọi tin tức và công bố thông tin.",
     "premiumUpgradeCta": "Nâng cấp lên Premium"
   },
+  "hotNews": {
+    "sectionTitle": "Đang hot ở Hàn Quốc",
+    "sectionDescription": "Những câu chuyện nổi bật nhất trên thị trường Hàn Quốc hiện nay.",
+    "carouselAria": "Đang hot ở Hàn Quốc"
+  },
   "restrictedPremium": {
     "title": "Không thể truy cập Premium",
     "body": "Rất tiếc. Do quy định tài chính tại một số khu vực, quyền truy cập Premium hiện chưa khả dụng ở quốc gia của bạn.",

@@ -98,6 +98,11 @@
     "premiumBody": "連接您的 UID 以完整存取所有新聞與公告。",
     "premiumUpgradeCta": "升級至 Premium"
   },
+  "hotNews": {
+    "sectionTitle": "韓國熱門",
+    "sectionDescription": "目前韓國市場最熱門的焦點消息。",
+    "carouselAria": "韓國熱門"
+  },
   "restrictedPremium": {
     "title": "Premium 存取權目前無法使用",
     "body": "很抱歉。由於部分地區的金融相關規範，Premium 存取權目前在你的國家/地區尚不可用。",

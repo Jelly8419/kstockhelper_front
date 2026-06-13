@@ -98,6 +98,11 @@
     "premiumBody": "Conecte seu UID para ter acesso completo a todas as notícias e divulgações.",
     "premiumUpgradeCta": "Fazer upgrade para Premium"
   },
+  "hotNews": {
+    "sectionTitle": "Em alta na Coreia",
+    "sectionDescription": "Principais destaques do mercado coreano agora.",
+    "carouselAria": "Em alta na Coreia"
+  },
   "restrictedPremium": {
     "title": "Acesso Premium indisponível",
     "body": "Sentimos muito. Devido a regulamentações financeiras em certas regiões, o acesso Premium não está disponível no seu país no momento.",

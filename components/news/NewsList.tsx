@@ -137,7 +137,16 @@ export function NewsList({
       )}
 
       <div className="pt-2">
-        <Pagination page={page} totalPages={totalPages} onChange={changePage} />
+        <Pagination
+          page={page}
+          totalPages={totalPages}
+          onChange={changePage}
+          labels={{
+            aria: t("pagination.aria"),
+            previous: t("pagination.previous"),
+            next: t("pagination.next"),
+          }}
+        />
       </div>
     </section>
   );

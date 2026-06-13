@@ -60,6 +60,23 @@ export function buildDetailPath(
 }
 
 /**
+ * Build the un-prefixed Hot in Korea detail path (no locale):
+ *   `/hot-news/{seqId}-{slug}`.
+ *
+ * Same `{seqId}-{slug}` shape as news/disclosures so `parseDetailParam` recovers
+ * the id, but a dedicated segment — hot_news has its own seq_id space and route.
+ */
+export function buildHotNewsPath(
+  seqId: number,
+  slug: string | null | undefined,
+  title?: string | null
+): string {
+  const resolved = (slug && slug.trim()) || slugify(title);
+  const tail = resolved ? `${seqId}-${resolved}` : String(seqId);
+  return `/hot-news/${tail}`;
+}
+
+/**
  * Recover the integer `seqId` from a `{seqId}-{slug}` route param.
  *
  * The seq_id is a positive-integer prefix; the slug (if any) follows the first

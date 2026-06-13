@@ -2,7 +2,9 @@ import { headers } from "next/headers";
 import { MarketTicker } from "@/components/market/MarketTicker";
 import { SignupBanner } from "@/components/banner/SignupBanner";
 import { NewsList } from "@/components/news/NewsList";
+import { HotInKoreaCarousel } from "@/components/hotNews/HotInKoreaCarousel";
 import { getNewsPage } from "@/lib/api/news";
+import { getHotNewsList } from "@/lib/api/hotNews";
 import { NewsCategory } from "@/types/news";
 import { SHOW_BANNER_HEADER } from "@/lib/geo/bannerGate";
 import { resolveContentLocale } from "@/lib/i18n/normalize";
@@ -24,13 +26,11 @@ export default async function Home({
 
   // First page is fetched on the server for a fast initial render;
   // subsequent pages (and tab/filter changes) load client-side via /api/news.
-  const { items, total } = await getNewsPage(
-    "all",
-    0,
-    undefined,
-    INITIAL_CATEGORY,
-    contentLocale
-  );
+  // Hot in Korea curated list is fetched in parallel (empty → section hidden).
+  const [{ items, total }, hotItems] = await Promise.all([
+    getNewsPage("all", 0, undefined, INITIAL_CATEGORY, contentLocale),
+    getHotNewsList(contentLocale),
+  ]);
 
   // Geo gate (set by middleware). Hidden only on explicit "false".
   const showBanner = headers().get(SHOW_BANNER_HEADER) !== "false";
@@ -39,6 +39,7 @@ export default async function Home({
     <div className="mx-auto flex max-w-container flex-col gap-10 px-4 py-8 sm:px-6">
       <MarketTicker />
       {showBanner && <SignupBanner />}
+      <HotInKoreaCarousel items={hotItems} />
       <NewsList
         initialItems={items}
         initialTotal={total}

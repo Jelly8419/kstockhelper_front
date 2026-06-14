@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 import { MarketTicker } from "@/components/market/MarketTicker";
 import { SignupBanner } from "@/components/banner/SignupBanner";
+import { PriceGapHomeCard } from "@/components/priceGap/PriceGapHomeCard";
 import { NewsList } from "@/components/news/NewsList";
 import { HotInKoreaCarousel } from "@/components/hotNews/HotInKoreaCarousel";
 import { getNewsPage } from "@/lib/api/news";
@@ -47,6 +48,7 @@ export default async function Home({
     <div className="mx-auto flex max-w-container flex-col gap-10 px-4 py-8 sm:px-6">
       <MarketTicker />
       {showBanner && <SignupBanner />}
+      <PriceGapHomeCard />
       <HotInKoreaCarousel items={hotItems} />
       <NewsList
         initialItems={items}

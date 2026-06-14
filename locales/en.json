@@ -215,5 +215,80 @@
     "newsDescription": "Read a short summary of Korean stock market news. Full AI analysis is available for premium members.",
     "disclosureDescription": "Read a short summary of a Korean stock market disclosure and related context. Full AI analysis is available for premium members.",
     "relatedStocks": "Related stocks"
+  },
+  "home": {
+    "priceGapCard": {
+      "title": "Price Gap Monitor",
+      "subtitle": "Compare Korean stock prices with Binance & Bybit futures in real time.",
+      "cta": "Open Price Gap Monitor"
+    }
+  },
+  "priceGap": {
+    "title": "Price Gap Monitor",
+    "status": {
+      "koreaMarket": "Korea Market",
+      "open": "Open",
+      "closed": "Closed",
+      "hours": "09:00 – 15:35 KST",
+      "usdtKrw": "USDT/KRW",
+      "fxDelayed": "FX delayed",
+      "lastUpdated": "Last updated:",
+      "updated": {
+        "delayed": "10 min delayed"
+      }
+    },
+    "state": {
+      "closed": "Korea Market is closed.",
+      "warmingUp": "Preparing data…"
+    },
+    "delay": {
+      "banner": "You are viewing 10-minute delayed data because you are on a Basic plan.",
+      "cta": "View real-time data"
+    },
+    "guest": {
+      "cta": "Log in to view delayed Price Gap data. Premium members can access real-time Price Gap data."
+    },
+    "restricted": {
+      "body": "Price Gap Monitor is not available in your region."
+    },
+    "table": {
+      "stock": "Stock",
+      "krPrice": "KR Price",
+      "referencePrice": "Reference Price",
+      "binance": "Binance",
+      "bybit": "Bybit",
+      "price": "Price",
+      "gap": "Gap vs Ref (%)"
+    },
+    "chart": {
+      "title": "Gap vs Reference (USDT) (%)",
+      "empty": "No chart data to display."
+    },
+    "filters": {
+      "exchange": "Exchange",
+      "stocks": "Stocks"
+    },
+    "pip": {
+      "button": "PIP",
+      "unsupported": "PIP is not supported in this browser.",
+      "premiumOnly": "PIP is available for Premium members only.",
+      "premiumHint": "Upgrade to Premium to monitor real-time price gaps while working in another window.",
+      "live": "Live",
+      "ref": "Ref",
+      "gap": "Gap",
+      "binanceShort": "B",
+      "bybitShort": "Y"
+    },
+    "footer": {
+      "aboutTitle": "About Price Gap",
+      "formulaRef": "Reference Price (USDT) = KR Price / USDT-KRW",
+      "formulaGap": "Price gap = (Exchange Price - Reference Price) / Reference Price × 100",
+      "causes": "Price gaps may occur due to exchange liquidity, market hours, product structure, funding & fees, and FX movement.",
+      "notesTitle": "Notes",
+      "noteDelay": "You are viewing 10-minute delayed data.",
+      "noteRefresh": "Delayed data is refreshed every 5 seconds.",
+      "noteAdvice": "This information is for market comparison only and does not constitute investment advice.",
+      "noteKst": "All times in KST."
+    }
   }
 }

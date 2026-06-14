@@ -54,6 +54,12 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             >
               Korean&apos;s Hot News
             </Link>
+            <Link
+              href={`${ADMIN_BASE_PATH}/feature-flags`}
+              className="text-sm text-muted hover:text-foreground"
+            >
+              Feature Flags
+            </Link>
             <LogoutButton />
           </nav>
         </div>

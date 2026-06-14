@@ -1,7 +1,7 @@
 "use client";
 
 import type { Exchange, StockCode, PriceGapRow } from "@/types/priceGap";
-import { PRICE_GAP_STOCK_ORDER } from "@/types/priceGap";
+import { PRICE_GAP_STOCK_ORDER, PRICE_GAP_STOCKS } from "@/types/priceGap";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { usePriceGapLatest } from "@/lib/hooks/usePriceGapLatest";
 import { formatNumber } from "@/lib/utils/format";
@@ -9,16 +9,20 @@ import { kstTime } from "@/lib/utils/kst";
 import { STOCK_COLORS } from "./colors";
 import { PriceGapChart } from "./PriceGapChart";
 
+/** code → frontend display name (ignore backend's localized stockName). */
+const STOCK_NAME: Record<StockCode, string> = Object.fromEntries(
+  PRICE_GAP_STOCKS.map((s) => [s.code, s.name])
+) as Record<StockCode, string>;
+
 /** Group the 6 latest rows by stock, keeping display order. */
 function pivot(rows: PriceGapRow[]) {
-  const by: Record<string, { name: string; binance?: PriceGapRow; bybit?: PriceGapRow }> =
-    {};
+  const by: Record<string, { binance?: PriceGapRow; bybit?: PriceGapRow }> = {};
   for (const r of rows) {
-    (by[r.stockCode] ??= { name: r.stockName })[r.exchange] = r;
+    (by[r.stockCode] ??= {})[r.exchange] = r;
   }
   return PRICE_GAP_STOCK_ORDER.filter((c) => by[c]).map((code) => ({
     code: code as StockCode,
-    name: by[code].name,
+    name: STOCK_NAME[code],
     binance: by[code].binance,
     bybit: by[code].bybit,
   }));

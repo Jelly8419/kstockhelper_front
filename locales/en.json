@@ -261,7 +261,8 @@
       "gap": "Gap vs Ref (%)"
     },
     "chart": {
-      "title": "Gap vs Reference (USDT) (%)"
+      "title": "Gap vs Reference (USDT) (%)",
+      "empty": "No chart data to display."
     },
     "filters": {
       "exchange": "Exchange",

@@ -1,23 +1,28 @@
 "use client";
 
 import type { PriceGapLatest, PriceGapRow, StockCode } from "@/types/priceGap";
-import { PRICE_GAP_STOCK_ORDER } from "@/types/priceGap";
+import { PRICE_GAP_STOCK_ORDER, PRICE_GAP_STOCKS } from "@/types/priceGap";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { formatNumber, changeDirection } from "@/lib/utils/format";
 import { STOCK_COLORS } from "./colors";
+
+/** Stable code → display name from the frontend constant (ignore backend's localized stockName). */
+const STOCK_NAME: Record<StockCode, string> = Object.fromEntries(
+  PRICE_GAP_STOCKS.map((s) => [s.code, s.name])
+) as Record<StockCode, string>;
 
 /** Group the 6 flat rows into { binance, bybit } per stock, in display order. */
 function pivot(rows: PriceGapRow[]) {
   const by: Record<
     string,
-    { name: string; binance?: PriceGapRow; bybit?: PriceGapRow }
+    { binance?: PriceGapRow; bybit?: PriceGapRow }
   > = {};
   for (const r of rows) {
-    (by[r.stockCode] ??= { name: r.stockName })[r.exchange] = r;
+    (by[r.stockCode] ??= {})[r.exchange] = r;
   }
   return PRICE_GAP_STOCK_ORDER.filter((code) => by[code]).map((code) => ({
     code: code as StockCode,
-    name: by[code].name,
+    name: STOCK_NAME[code],
     binance: by[code].binance,
     bybit: by[code].bybit,
   }));

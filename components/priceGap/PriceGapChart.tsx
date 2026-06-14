@@ -71,12 +71,15 @@ export function PriceGapChart({
   const { series, isLoading } = usePriceGapChart(exchange, stocks, tier);
   const { points, ohlc } = mergeSeries(series, stocks);
 
-  if (isLoading && points.length === 0) {
+  if (points.length === 0) {
+    // Loading vs. genuinely empty (e.g. market closed → backend returns []).
     return (
       <div
         className={`flex ${heightClass} items-center justify-center rounded-xl border border-border`}
       >
-        <p className="text-sm text-muted">{t("common.loading")}</p>
+        <p className="text-sm text-muted">
+          {isLoading ? t("common.loading") : t("priceGap.chart.empty")}
+        </p>
       </div>
     );
   }

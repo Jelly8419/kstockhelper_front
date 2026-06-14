@@ -103,15 +103,22 @@ export interface NewsFullRow extends NewsPreviewRow {
 }
 
 /**
- * A row from `news_translations` (anon-readable; PK (news_id, locale)).
- * Only translated fields: `key_figures`/`body` are never translated.
- * Backend stores the translated title under `translated_title`; we map it onto
- * our `title` field at the data layer.
+ * A row from the `news_translations_full` view (premium-gated; PK
+ * (news_id, locale)). Only translated fields: `key_figures`/`body` are never
+ * translated. Backend stores the translated title under `translated_title`; we
+ * map it onto our `title` field at the data layer.
+ *
+ * `summary_preview` (40% cut) is always present; `summary` / `key_points` are
+ * the FULL translated values and arrive only for premium callers (NULL
+ * otherwise — gating enforced in the view, mirroring news_full).
  */
 export interface NewsTranslationRow {
   news_id: string;
   translated_title: string | null;
+  /** Public in-language preview: first 40% of the translated summary. */
+  summary_preview: string | null;
+  /** Full translated summary. NULL for non-premium callers. */
   summary: string | null;
-  /** jsonb string[] from the backend. */
+  /** jsonb string[] from the backend. Full value; NULL for non-premium. */
   key_points: string[] | null;
 }

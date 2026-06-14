@@ -1,7 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { toTickerLabels } from "@/lib/constants/tickers";
 import { NEWS_PAGE_SIZE } from "@/lib/constants/news";
-import { previewWords } from "@/lib/utils/truncate";
 import type { ContentLocale } from "@/lib/i18n/config";
 import {
   NewsPreview,
@@ -18,8 +17,15 @@ const PREVIEW_COLUMNS =
 const FULL_COLUMNS =
   "id,seq_id,category,slug,subcategory,title,preview,source,url,is_premium,published_at,stock_ids,body,summary,key_points,key_figures";
 
-/** Translated fields fetched from `news_translations` for a content locale. */
-const TRANSLATION_COLUMNS = "news_id,translated_title,summary,key_points";
+/**
+ * Translated fields fetched from `news_translations_full` (the premium-gated
+ * view) for a content locale. `summary_preview` (40% cut) is always present;
+ * full `summary` / `key_points` are NULL for non-premium callers — the gate is
+ * enforced in the DB view, matching news_full. Never read the base
+ * `news_translations` table directly: it exposes full premium content to anon.
+ */
+const TRANSLATION_COLUMNS =
+  "news_id,translated_title,summary_preview,summary,key_points";
 
 export interface NewsPage {
   items: NewsPreview[];
@@ -65,8 +71,12 @@ function mapFull(row: NewsFullRow): NewsDetailItem {
  * key_figures, source, url, dates) are kept as-is. Any missing translated field
  * falls back to the English value already on `item`.
  *
- * `preview` (list cards) is NOT a translated field; per policy we derive it from
- * the translated `summary` (first N words) so list previews read in-language.
+ * `preview` (list cards / gate UI) is NOT translated directly; the DB view
+ * supplies `summary_preview` — the translated summary already cut to 40% — so
+ * the public preview reads in-language without ever shipping the full summary.
+ * Full `summary` / `key_points` arrive only for premium callers (NULL otherwise,
+ * gated in news_translations_full); we overlay them only when present so a gated
+ * NULL never wipes the content the page would otherwise show.
  */
 function applyTranslation<T extends NewsPreview>(
   item: T,
@@ -75,12 +85,12 @@ function applyTranslation<T extends NewsPreview>(
   if (!t) return item;
   const next: T = { ...item };
   if (t.translated_title) next.title = t.translated_title;
-  // `preview` (list cards) isn't translated directly — derive it from the
-  // translated summary (policy: A-plan).
-  if (t.summary) next.preview = previewWords(t.summary);
+  // In-language public preview — already 40%-cut in the DB view.
+  if (t.summary_preview) next.preview = t.summary_preview;
 
   // Detail-only fields: only present on NewsDetailItem. Narrow via a property
   // probe so the same helper serves both list (NewsPreview) and detail items.
+  // These are premium-gated in the view (NULL for non-premium callers).
   if (isDetailItem(next)) {
     if (t.summary) next.summary = t.summary;
     if (t.key_points) next.keyPoints = t.key_points;
@@ -107,7 +117,7 @@ async function fetchTranslations(
 
   const supabase = createClient();
   const { data, error } = await supabase
-    .from("news_translations")
+    .from("news_translations_full")
     .select(TRANSLATION_COLUMNS)
     .in("news_id", ids)
     .eq("locale", locale);
@@ -219,7 +229,7 @@ export async function getNewsBySeqId(
   if (!contentLocale) return item;
 
   const { data: trans, error: transError } = await supabase
-    .from("news_translations")
+    .from("news_translations_full")
     .select(TRANSLATION_COLUMNS)
     .eq("news_id", item.id)
     .eq("locale", contentLocale)

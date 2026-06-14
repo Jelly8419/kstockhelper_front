@@ -1,8 +1,10 @@
 /**
  * Access tier used to gate content (3 levels):
  *  - guest:   not logged in
- *  - free:    logged in, no active connection → preview only
- *  - premium: logged in + Bybit connected OR Binance approved → full access
+ *  - free:    logged in, tier != 'premium' → preview only
+ *  - premium: DB tier = 'premium' → full access. The backend promotes a user to
+ *             'premium' on Bybit link or Binance UID approval; the frontend and
+ *             the DB is_premium() gate both check tier='premium' only.
  */
 export type UserTier = "guest" | "free" | "premium";
 

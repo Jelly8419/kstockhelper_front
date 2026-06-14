@@ -6,7 +6,8 @@ import type { ApiTier } from "@/types/priceGap";
  * place that decides premium vs basic. The BFF routes attach this to the
  * backend call so the browser cannot forge `?tier=` (frontend-guide §"BFF").
  *
- * Mirrors `useAuth`: premium = DB tier 'premium' (Bybit) OR Binance approved.
+ * Mirrors `useAuth` and the DB is_premium() gate: premium = DB tier 'premium'
+ * (the backend promotes a user to 'premium' on Bybit link or Binance approval).
  * Returns `null` for guests (no session) so the route can refuse the call.
  */
 export async function resolveServerTier(): Promise<ApiTier | null> {
@@ -18,11 +19,9 @@ export async function resolveServerTier(): Promise<ApiTier | null> {
 
   const { data } = await supabase
     .from("users")
-    .select("tier, binance_uid_status")
+    .select("tier")
     .eq("id", user.id)
     .maybeSingle();
 
-  const isPremium =
-    data?.tier === "premium" || data?.binance_uid_status === "approved";
-  return isPremium ? "premium" : "basic";
+  return data?.tier === "premium" ? "premium" : "basic";
 }

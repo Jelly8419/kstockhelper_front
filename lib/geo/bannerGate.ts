@@ -83,6 +83,21 @@ function isWhitelistedKrIp(ip: string): boolean {
   return KR_WHITELIST_CIDRS.some((cidr) => ipInCidr(ip, cidr));
 }
 
+/** The requester's first client IP (`request.ip` on Vercel, else x-forwarded-for). */
+export function requestIp(request: NextRequest): string {
+  const ip = request.ip ?? request.headers.get("x-forwarded-for") ?? "";
+  return ip.split(",")[0].trim();
+}
+
+/**
+ * Whether the request comes from a whitelisted internal IP (developer / PM),
+ * regardless of country. Used by the Price Gap feature-flag gate so internal
+ * users can preview it before public rollout (feature-flag-plan §1).
+ */
+export function isWhitelistedRequest(request: NextRequest): boolean {
+  return isWhitelistedKrIp(requestIp(request));
+}
+
 /**
  * Decide whether the banner should be shown for this request.
  *
@@ -104,9 +119,7 @@ export function shouldShowBanner(request: NextRequest): boolean {
 
   // Blocked. KR has an IP whitelist exception.
   if (country === "KR") {
-    const ip = request.ip ?? request.headers.get("x-forwarded-for") ?? "";
-    const firstIp = ip.split(",")[0].trim();
-    if (isWhitelistedKrIp(firstIp)) return true;
+    if (isWhitelistedKrIp(requestIp(request))) return true;
   }
 
   return false;

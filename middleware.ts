@@ -7,7 +7,13 @@ import {
   SHOW_BANNER_HEADER,
   isRestrictedRegion,
   RESTRICTED_REGION_COOKIE,
+  isWhitelistedRequest,
 } from "@/lib/geo/bannerGate";
+import { fetchFeatureFlags } from "@/lib/featureFlags/flags";
+import {
+  PRICE_GAP_VISIBLE_COOKIE,
+  PRICE_GAP_VISIBLE_HEADER,
+} from "@/lib/featureFlags/constants";
 import { getCountryCode } from "@/lib/geo/country";
 import { resolveLocaleByCountry } from "@/lib/i18n/normalize";
 import { resolveBrowserLocale } from "@/lib/i18n/normalize";
@@ -31,6 +37,17 @@ function isGuidePath(pathname: string): boolean {
   // `/guide` or `/{locale}/guide`
   if (segments[0] === "guide" && segments.length === 1) return true;
   if (segments[1] === "guide" && segments.length === 2) return true;
+  return false;
+}
+
+/**
+ * Whether `pathname` targets the Price Gap Monitor (`/price-gap` or
+ * `/{locale}/price-gap`). Gated by the `priceGapPublic` feature flag.
+ */
+function isPriceGapPath(pathname: string): boolean {
+  const segments = pathname.split("/").filter(Boolean);
+  if (segments[0] === "price-gap" && segments.length === 1) return true;
+  if (segments[1] === "price-gap" && segments.length === 2) return true;
   return false;
 }
 
@@ -125,6 +142,29 @@ export async function middleware(request: NextRequest) {
     return await updateSession(request, redirect);
   }
 
+  // Price Gap Monitor visibility: public when the flag is ON, otherwise only
+  // whitelisted internal IPs (developer / PM) for pre-launch verification.
+  const { priceGapPublic } = await fetchFeatureFlags();
+  const priceGapVisible = priceGapPublic || isWhitelistedRequest(request);
+  // Header so the SAME request's server components (home card) can read it
+  // (the cookie below only arrives on the next request).
+  request.headers.set(PRICE_GAP_VISIBLE_HEADER, priceGapVisible ? "true" : "false");
+
+  // Hidden visitors hitting the page directly → send home (can't be bypassed by
+  // tampering with the client cookie below).
+  if (!priceGapVisible && isPriceGapPath(pathname)) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${localeFromPath(pathname)}/`;
+    url.search = "";
+    const redirect = NextResponse.redirect(url);
+    redirect.cookies.set(PRICE_GAP_VISIBLE_COOKIE, "0", {
+      httpOnly: false,
+      sameSite: "lax",
+      path: "/",
+    });
+    return await updateSession(request, redirect);
+  }
+
   applyCountryLocaleHint(request);
 
   const intlResponse = handleI18nRouting(request);
@@ -135,6 +175,13 @@ export async function middleware(request: NextRequest) {
 
   // Expose the restricted-region decision to client components (non-httpOnly).
   response.cookies.set(RESTRICTED_REGION_COOKIE, restricted ? "1" : "0", {
+    httpOnly: false,
+    sameSite: "lax",
+    path: "/",
+  });
+
+  // Expose Price Gap visibility (for the home card).
+  response.cookies.set(PRICE_GAP_VISIBLE_COOKIE, priceGapVisible ? "1" : "0", {
     httpOnly: false,
     sameSite: "lax",
     path: "/",

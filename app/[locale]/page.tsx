@@ -8,6 +8,7 @@ import { getNewsPage } from "@/lib/api/news";
 import { getHotNewsList } from "@/lib/api/hotNews";
 import { ContentTypeFilter } from "@/types/news";
 import { SHOW_BANNER_HEADER } from "@/lib/geo/bannerGate";
+import { PRICE_GAP_VISIBLE_HEADER } from "@/lib/featureFlags/constants";
 import { resolveContentLocale } from "@/lib/i18n/normalize";
 
 // Real-time content — always fetch fresh.
@@ -43,12 +44,14 @@ export default async function Home({
 
   // Geo gate (set by middleware). Hidden only on explicit "false".
   const showBanner = headers().get(SHOW_BANNER_HEADER) !== "false";
+  // Price Gap feature flag visibility (set by middleware). Shown only on "true".
+  const showPriceGap = headers().get(PRICE_GAP_VISIBLE_HEADER) === "true";
 
   return (
     <div className="mx-auto flex max-w-container flex-col gap-10 px-4 py-8 sm:px-6">
       <MarketTicker />
       {showBanner && <SignupBanner />}
-      <PriceGapHomeCard />
+      {showPriceGap && <PriceGapHomeCard />}
       <HotInKoreaCarousel items={hotItems} />
       <NewsList
         initialItems={items}

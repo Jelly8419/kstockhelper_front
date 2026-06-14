@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { resolveServerTier } from "@/lib/priceGap/serverTier";
 import { mockPriceGapLatest } from "@/lib/api/priceGap.mock";
 
@@ -15,7 +15,7 @@ const BASE = process.env.PRICE_GAP_API_BASE ?? "";
  * PRICE_GAP_API_BASE is unset, the in-repo mock is served so the UI works
  * before the backend is wired.
  */
-export async function GET(_req: NextRequest) {
+export async function GET() {
   const tier = await resolveServerTier();
   if (!tier) {
     return NextResponse.json(

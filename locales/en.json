@@ -273,7 +273,11 @@
       "unsupported": "PIP is not supported in this browser.",
       "premiumOnly": "PIP is available for Premium members only.",
       "premiumHint": "Upgrade to Premium to monitor real-time price gaps while working in another window.",
-      "live": "Live"
+      "live": "Live",
+      "ref": "Ref",
+      "gap": "Gap",
+      "binanceShort": "B",
+      "bybitShort": "Y"
     },
     "footer": {
       "aboutTitle": "About Price Gap",

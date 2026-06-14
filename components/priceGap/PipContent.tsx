@@ -74,11 +74,11 @@ export function PipContent({
         <thead>
           <tr className="text-left text-[10px] text-muted">
             <th className="py-1 font-medium">{t("priceGap.table.stock")}</th>
-            <th className="py-1 text-right font-medium">Ref</th>
-            <th className="py-1 text-right font-medium">B</th>
-            <th className="py-1 text-right font-medium">Gap</th>
-            <th className="py-1 text-right font-medium">Y</th>
-            <th className="py-1 text-right font-medium">Gap</th>
+            <th className="py-1 text-right font-medium">{t("priceGap.pip.ref")}</th>
+            <th className="py-1 text-right font-medium">{t("priceGap.pip.binanceShort")}</th>
+            <th className="py-1 text-right font-medium">{t("priceGap.pip.gap")}</th>
+            <th className="py-1 text-right font-medium">{t("priceGap.pip.bybitShort")}</th>
+            <th className="py-1 text-right font-medium">{t("priceGap.pip.gap")}</th>
           </tr>
         </thead>
         <tbody>

@@ -90,7 +90,7 @@ export function PriceGapTable({
             <th className="px-4 py-3 font-medium">{t("priceGap.table.stock")}</th>
             <th className="px-4 py-3 text-right font-medium">
               {t("priceGap.table.krPrice")}
-              <span className="block text-[10px] font-normal">(KRW)</span>
+              <span className="block text-[10px] font-normal">{"(KRW)"}</span>
             </th>
             <th className="px-4 py-3 text-right font-medium">
               {t("priceGap.table.referencePrice")}
@@ -105,14 +105,14 @@ export function PriceGapTable({
               colSpan={2}
             >
               {t("priceGap.table.binance")}{" "}
-              <span className="text-[10px] font-normal">(USDT)</span>
+              <span className="text-[10px] font-normal">{"(USDT)"}</span>
             </th>
             <th
               className="px-4 py-3 text-right font-medium"
               colSpan={2}
             >
               {t("priceGap.table.bybit")}{" "}
-              <span className="text-[10px] font-normal">(USDT)</span>
+              <span className="text-[10px] font-normal">{"(USDT)"}</span>
             </th>
           </tr>
           <tr className="border-b border-border text-right text-[10px] text-muted">

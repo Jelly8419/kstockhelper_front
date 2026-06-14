@@ -151,8 +151,11 @@ function OhlcTooltip({
             />
             <span className="text-foreground">{name}</span>
             <span className="ml-2 text-muted">
-              O {candle.open_gap.toFixed(2)} · H {candle.high_gap.toFixed(2)} · L{" "}
-              {candle.low_gap.toFixed(2)} · C {candle.close_gap.toFixed(2)}
+              {`O ${candle.open_gap.toFixed(2)} · H ${candle.high_gap.toFixed(
+                2
+              )} · L ${candle.low_gap.toFixed(2)} · C ${candle.close_gap.toFixed(
+                2
+              )}`}
             </span>
           </div>
         );

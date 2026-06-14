@@ -161,15 +161,23 @@ begin
 end;
 $$;
 
--- Content access gate: any logged-in user has access.
--- (Future: tighten to tier = 'premium' for paid gating.)
+-- Content access gate: premium tier only (NOT merely "logged in").
+-- premium ⇔ users.tier = 'premium' (Bybit-linked users are promoted there by
+-- the backend). See migrations/0005_is_premium_tier_gate.sql.
 create or replace function public.is_premium()
 returns boolean
 language sql
 stable
 security definer
 set search_path = public
-as $$ select auth.uid() is not null; $$;
+as $$
+  select exists (
+    select 1
+    from public.users u
+    where u.id = auth.uid()
+      and u.tier = 'premium'
+  );
+$$;
 
 
 -- =============================================================================

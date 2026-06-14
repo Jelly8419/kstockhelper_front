@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 import { BinanceStatus, UserTier } from "@/types/user";
 
 interface AuthState {
-  /** guest (logged out) | free (logged in, no access) | premium (Bybit or Binance-approved). */
+  /** guest (logged out) | free (logged in, tier!='premium') | premium (tier='premium'). */
   tier: UserTier;
   email: string | null;
   bybitUid: string | null;
@@ -32,7 +32,9 @@ const GUEST: AuthState = {
 /**
  * Real Supabase-backed auth state with 3-tier access.
  * Content access itself is enforced in the DB (news_full view via is_premium());
- * this hook drives the UI. premium = DB tier 'premium' (Bybit) OR Binance approved.
+ * this hook drives the UI. premium = DB tier 'premium' (the backend promotes a
+ * user to 'premium' on Bybit link or Binance UID approval — kept in sync with
+ * the DB is_premium() gate, which also checks tier='premium' only).
  */
 export function useAuth(): UseAuth {
   const [state, setState] = useState<AuthState>({ ...GUEST, isLoading: true });
@@ -50,7 +52,10 @@ export function useAuth(): UseAuth {
 
     const dbTier = data?.tier as "free" | "premium" | undefined;
     const binanceStatus = (data?.binance_uid_status as BinanceStatus) ?? "not_applied";
-    const isPremium = dbTier === "premium" || binanceStatus === "approved";
+    // Premium is decided solely by tier: the backend promotes a user to
+    // tier='premium' when their Bybit links or their Binance UID is approved.
+    // (binanceStatus is still surfaced below for the Settings UI.)
+    const isPremium = dbTier === "premium";
 
     return {
       tier: (isPremium ? "premium" : "free") as UserTier,

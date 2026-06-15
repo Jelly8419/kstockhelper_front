@@ -32,11 +32,25 @@ export async function GET() {
     });
   }
 
+  const url = `${BASE}/latest?tier=${tier}`;
   try {
-    const r = await fetch(`${BASE}/latest?tier=${tier}`, { cache: "no-store" });
-    const json = await r.json();
-    return NextResponse.json(json, { status: r.status });
-  } catch {
+    const r = await fetch(url, { cache: "no-store" });
+    const text = await r.text();
+    try {
+      return NextResponse.json(JSON.parse(text), { status: r.status });
+    } catch {
+      // Upstream replied non-JSON (HTML error page, empty body, proxy error…).
+      console.error(
+        `[price-gap/latest] non-JSON upstream ${r.status} from ${url}: ${text.slice(0, 300)}`
+      );
+      return NextResponse.json(
+        { success: false, code: "PRICE_GAP_ERROR", message: "Upstream error." },
+        { status: 502 }
+      );
+    }
+  } catch (err) {
+    // Network-level failure: DNS, connection refused, timeout…
+    console.error(`[price-gap/latest] fetch failed for ${url}:`, err);
     return NextResponse.json(
       { success: false, code: "PRICE_GAP_ERROR", message: "Upstream error." },
       { status: 502 }

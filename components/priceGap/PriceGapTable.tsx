@@ -28,9 +28,9 @@ function pivot(rows: PriceGapRow[]) {
   }));
 }
 
-/** Korean market convention: rise/positive = up (red), fall/negative = down (blue). */
+/** Price-gap convention: positive = green (gain), negative = red. */
 function dirClass(dir: "up" | "down" | "flat"): string {
-  return dir === "up" ? "text-up" : dir === "down" ? "text-down" : "";
+  return dir === "up" ? "text-gain" : dir === "down" ? "text-up" : "";
 }
 
 /** Color a price by direction vs the previous poll's matching row (no % shown). */

@@ -15,6 +15,8 @@
   /* Korean market convention: red = up, blue = down */
   --up: #f0616d;
   --down: #4d8df6;
+  /* Price-gap table convention: green = positive/gain, blue (--down) = negative */
+  --gain: #22c55e;
 }
 
 body {

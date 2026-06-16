@@ -5,7 +5,6 @@ import type { AveragePeriod, Exchange, StockCode } from "@/types/priceGap";
 import { DEFAULT_AVERAGE_PERIOD } from "@/types/priceGap";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { usePriceGapLatest } from "@/lib/hooks/usePriceGapLatest";
-import { kstDateTime } from "@/lib/utils/kst";
 import { StatusCards } from "./StatusCards";
 import { PriceGapTable } from "./PriceGapTable";
 import { DelayBadge } from "./DelayBadge";
@@ -36,27 +35,26 @@ export function PriceGapMonitor({ tier }: { tier: "free" | "premium" }) {
   const [showAvg, setShowAvg] = useState(true);
 
   const delayed = tier === "free";
-  const marketClosed = data != null && !data.marketOpen;
   const warming = data?.warmingUp === true;
 
   return (
     <section className="flex flex-col gap-6">
-      <div className="flex items-center gap-2">
+      <div className="flex flex-col gap-2">
         <h1 className="text-xl font-semibold text-foreground">
           {t("priceGap.title")}
         </h1>
+        <div className="text-sm text-muted">
+          <p className="font-bold text-foreground">
+            {t("priceGap.subtitle.line1")}
+          </p>
+          <p>{t("priceGap.subtitle.line2")}</p>
+        </div>
       </div>
 
       {delayed && <DelayBadge />}
 
       <StatusCards data={data} tier={tier} />
 
-      {marketClosed && (
-        <p className="rounded-lg border border-border bg-surface px-4 py-2 text-sm text-muted">
-          {t("priceGap.state.closed")}
-          {data && ` · ${kstDateTime(data.serverTime)}`}
-        </p>
-      )}
       {warming && (
         <p className="rounded-lg border border-border bg-surface px-4 py-2 text-sm text-muted">
           {t("priceGap.state.warmingUp")}

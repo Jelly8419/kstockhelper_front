@@ -225,6 +225,10 @@
   },
   "priceGap": {
     "title": "Price Gap Monitor",
+    "subtitle": {
+      "line1": "See whether the current price is higher or lower than the market reference.",
+      "line2": "Track exchange prices against Korea's USDT reference price and past average gap during Korean market hours."
+    },
     "status": {
       "koreaMarket": "Korea Market",
       "open": "Open",

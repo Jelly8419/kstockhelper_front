@@ -11,7 +11,6 @@ import { useTranslation } from "@/lib/i18n/useTranslation";
 import { usePriceGapLatest } from "@/lib/hooks/usePriceGapLatest";
 import { formatNumber } from "@/lib/utils/format";
 import { kstTime } from "@/lib/utils/kst";
-import { STOCK_COLORS } from "./colors";
 import { PriceGapChart } from "./PriceGapChart";
 
 /** code → frontend display name (ignore backend's localized stockName). */
@@ -96,13 +95,7 @@ export function PipContent({
             return (
               <tr key={row.code} className="border-t border-border">
                 <td className="py-1">
-                  <span className="flex items-center gap-1">
-                    <span
-                      className="h-1.5 w-1.5 rounded-full"
-                      style={{ backgroundColor: STOCK_COLORS[row.code] }}
-                    />
-                    {row.name}
-                  </span>
+                  <span>{row.name}</span>
                 </td>
                 <td className="py-1 text-right">
                   {ref != null ? formatNumber(ref, 2) : "—"}

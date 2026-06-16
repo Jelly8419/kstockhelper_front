@@ -16,12 +16,14 @@ const LOCAL_DATE = new Intl.DateTimeFormat("en-CA", {
   day: "2-digit",
 });
 
-const LOCAL_DATETIME = new Intl.DateTimeFormat(undefined, {
-  month: "short",
-  day: "numeric",
-  hour: "2-digit",
-  minute: "2-digit",
-  hour12: false,
+/**
+ * Tooltip header parts. We build "MM/DD HH:mm" by hand (Price Gap revisions §9):
+ * Intl has no portable numeric "MM/DD" without a year, so format date and time
+ * separately and join them.
+ */
+const LOCAL_MD = new Intl.DateTimeFormat("en-US", {
+  month: "2-digit",
+  day: "2-digit",
 });
 
 /** "11:07" in the viewer's local timezone (chart x-axis tick). */
@@ -34,7 +36,14 @@ export function localDate(input: string | number): string {
   return LOCAL_DATE.format(new Date(input));
 }
 
-/** "Jun 6, 11:07" in the viewer's local timezone (tooltip header). */
+/** "06/16 11:07" (MM/DD HH:mm) in the viewer's local timezone (tooltip header). */
 export function localDateTime(input: string | number): string {
-  return LOCAL_DATETIME.format(new Date(input));
+  const d = new Date(input);
+  return `${LOCAL_MD.format(d)} ${LOCAL_HM.format(d)}`;
+}
+
+/** "2026-06-16 17:03" in the viewer's local timezone ("Last updated"). */
+export function localDateTimeFull(input: string | number): string {
+  const d = new Date(input);
+  return `${LOCAL_DATE.format(d)} ${LOCAL_HM.format(d)}`;
 }

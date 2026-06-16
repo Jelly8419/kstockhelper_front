@@ -4,7 +4,6 @@ import type { PriceGapLatest, PriceGapRow, StockCode } from "@/types/priceGap";
 import { PRICE_GAP_STOCK_ORDER, PRICE_GAP_STOCKS } from "@/types/priceGap";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { formatNumber, changeDirection } from "@/lib/utils/format";
-import { STOCK_COLORS } from "./colors";
 
 /** Stable code → display name from the frontend constant (ignore backend's localized stockName). */
 const STOCK_NAME: Record<StockCode, string> = Object.fromEntries(
@@ -158,8 +157,20 @@ export function PriceGapTable({
   };
 
   return (
-    <div className="overflow-x-auto rounded-xl border border-border">
+    <div className="scrollbar-always overflow-x-scroll rounded-xl border border-border">
       <table className="w-full min-w-[860px] text-sm">
+        {/*
+          Fixed widths for the identity/price columns so they stay snug on the
+          left; Binance/Bybit (auto) absorb the remaining width instead of the
+          gap landing between Stock and KR Price (Price Gap revisions §6).
+        */}
+        <colgroup>
+          <col className="w-[180px]" />
+          <col className="w-[120px]" />
+          <col className="w-[150px]" />
+          <col />
+          <col />
+        </colgroup>
         <thead>
           <tr className="border-b border-border text-left text-xs text-muted">
             <th className="px-4 py-3 font-medium">{t("priceGap.table.stock")}</th>
@@ -187,13 +198,7 @@ export function PriceGapTable({
           {rows.map((row) => (
             <tr key={row.code} className="border-b border-border last:border-0">
               <td className="px-4 py-3 align-top">
-                <span className="flex items-center gap-2">
-                  <span
-                    className="h-2 w-2 rounded-full"
-                    style={{ backgroundColor: STOCK_COLORS[row.code] }}
-                  />
-                  {row.name}
-                </span>
+                <span>{row.name}</span>
               </td>
               <td className="px-4 py-3 text-right align-top">
                 {krCell(

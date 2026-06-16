@@ -50,8 +50,14 @@ export function PriceGapChart({
   stock,
   period,
   showAvg,
-  /** Override the default fixed height (e.g. "h-full" inside the PiP window). */
+  /**
+   * Fixed chart height for the page (default). When `fill` is set the chart
+   * instead grows to fill its parent (used inside the PiP window), so this is
+   * ignored.
+   */
   heightClass = "h-[320px]",
+  /** Fill the parent's height instead of using a fixed height (PiP). */
+  fill = false,
 }: {
   tier: Exclude<UserTier, "guest">;
   exchange: Exchange;
@@ -59,6 +65,7 @@ export function PriceGapChart({
   period: AveragePeriod;
   showAvg: boolean;
   heightClass?: string;
+  fill?: boolean;
 }) {
   const { t } = useTranslation();
   const { candles, isLoading } = usePriceGapChart(exchange, stock, period, tier);
@@ -136,7 +143,9 @@ export function PriceGapChart({
   if (n === 0) {
     return (
       <div
-        className={`flex ${heightClass} items-center justify-center rounded-xl border border-border`}
+        className={`flex ${
+          fill ? "h-full" : heightClass
+        } items-center justify-center rounded-xl border border-border`}
       >
         <p className="text-sm text-muted">
           {isLoading ? t("common.loading") : t("priceGap.chart.empty")}
@@ -149,7 +158,7 @@ export function PriceGapChart({
   const todayLocal = localDate(points[n - 1].t);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className={`flex flex-col gap-2 ${fill ? "h-full" : ""}`}>
       {/* Legend + today's local date */}
       <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
         <div className="flex items-center gap-4">
@@ -178,7 +187,9 @@ export function PriceGapChart({
       </div>
 
       <div
-        className={`${heightClass} w-full touch-none rounded-xl border border-border p-2`}
+        className={`${
+          fill ? "min-h-0 flex-1" : heightClass
+        } w-full touch-none rounded-xl border border-border p-2`}
         onWheel={onWheel}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}

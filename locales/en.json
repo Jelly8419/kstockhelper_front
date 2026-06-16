@@ -258,15 +258,27 @@
       "binance": "Binance",
       "bybit": "Bybit",
       "price": "Price",
-      "gap": "Gap vs Ref (%)"
+      "currentGap": "Current Gap",
+      "pastAvgGap": "Past Avg Gap",
+      "gapVsPastAvg": "Gap vs Past Avg",
+      "pastAvgGapTip": "Average gap at the same minute of the trading day, from all available history.",
+      "gapVsPastAvgTip": "Current Gap − Past Avg Gap."
     },
     "chart": {
-      "title": "Gap vs Reference (USDT) (%)",
-      "empty": "No chart data to display."
+      "title": "Gap Tracker",
+      "empty": "No chart data to display.",
+      "currentGapLine": "Current Gap",
+      "avgGapLine": "{n}D Avg Gap",
+      "gapVsPastAvg": "Gap vs Past Avg",
+      "date": "Date:",
+      "localTime": "Local Time"
     },
     "filters": {
       "exchange": "Exchange",
-      "stocks": "Stocks"
+      "stock": "Stock",
+      "averagePeriod": "Average Period",
+      "dayAvg": "{n} Day Avg",
+      "showAvgGap": "Show Avg Gap"
     },
     "pip": {
       "button": "PIP",
@@ -280,15 +292,20 @@
       "bybitShort": "Y"
     },
     "footer": {
-      "aboutTitle": "About Price Gap",
+      "aboutTitle": "About Gap",
       "formulaRef": "Reference Price (USDT) = KR Price / USDT-KRW",
-      "formulaGap": "Price gap = (Exchange Price - Reference Price) / Reference Price × 100",
+      "formulaGap": "Gap = Exchange Price − Reference Price",
+      "formulaGapPct": "Gap (%) = Gap / Reference Price × 100",
       "causes": "Price gaps may occur due to exchange liquidity, market hours, product structure, funding & fees, and FX movement.",
+      "avgTitle": "Past Avg Gap & Gap vs Past Avg",
+      "pastAvgGap": "Past Avg Gap is the average gap at the same minute of the trading day, calculated from available historical data.",
+      "gapVsPastAvg": "Gap vs Past Avg = Current Gap − Past Avg Gap.",
+      "availableData": "Historical average uses available data only.",
       "notesTitle": "Notes",
       "noteDelay": "You are viewing 10-minute delayed data.",
       "noteRefresh": "Delayed data is refreshed every 5 seconds.",
-      "noteAdvice": "This information is for market comparison only and does not constitute investment advice.",
-      "noteKst": "All times in KST."
+      "noteLocalTime": "Market data is based on KST. Chart time is shown in your local time.",
+      "noteAdvice": "This information is for market comparison only and does not constitute investment advice."
     }
   }
 }

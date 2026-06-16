@@ -1,13 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import { resolveServerTier } from "@/lib/priceGap/serverTier";
 import { mockPriceGapChart } from "@/lib/api/priceGap.mock";
-import { PRICE_GAP_STOCK_ORDER } from "@/types/priceGap";
-import type { Exchange, StockCode } from "@/types/priceGap";
+import {
+  AVERAGE_PERIODS,
+  DEFAULT_AVERAGE_PERIOD,
+  PRICE_GAP_STOCK_ORDER,
+} from "@/types/priceGap";
+import type { AveragePeriod, Exchange, StockCode } from "@/types/priceGap";
 
 export const dynamic = "force-dynamic";
 
 const BASE = process.env.PRICE_GAP_API_BASE ?? "";
 const EXCHANGES: Exchange[] = ["binance", "bybit"];
+
+/** Parse/validate ?period=, falling back to the default (PRD §7.6). */
+function resolvePeriod(raw: string | null): AveragePeriod {
+  const n = Number(raw);
+  return (AVERAGE_PERIODS as number[]).includes(n)
+    ? (n as AveragePeriod)
+    : DEFAULT_AVERAGE_PERIOD;
+}
 
 /**
  * BFF for the Price Gap 1-minute OHLC chart (one stock × one exchange).
@@ -26,6 +38,7 @@ export async function GET(req: NextRequest) {
 
   const exchange = req.nextUrl.searchParams.get("exchange") as Exchange | null;
   const stock = req.nextUrl.searchParams.get("stock") as StockCode | null;
+  const period = resolvePeriod(req.nextUrl.searchParams.get("period"));
 
   if (!exchange || !EXCHANGES.includes(exchange)) {
     return NextResponse.json(
@@ -44,11 +57,11 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({
       success: true,
       code: "PRICE_GAP_CHART",
-      data: mockPriceGapChart(exchange, stock, tier),
+      data: mockPriceGapChart(exchange, stock, tier, period),
     });
   }
 
-  const url = `${BASE}/chart?exchange=${exchange}&stock=${stock}&tier=${tier}`;
+  const url = `${BASE}/chart?exchange=${exchange}&stock=${stock}&period=${period}&tier=${tier}`;
   try {
     const r = await fetch(url, { cache: "no-store" });
     const text = await r.text();

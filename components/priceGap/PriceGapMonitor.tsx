@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import type { Exchange, StockCode } from "@/types/priceGap";
-import { PRICE_GAP_STOCK_ORDER } from "@/types/priceGap";
+import type { AveragePeriod, Exchange, StockCode } from "@/types/priceGap";
+import { DEFAULT_AVERAGE_PERIOD } from "@/types/priceGap";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { usePriceGapLatest } from "@/lib/hooks/usePriceGapLatest";
 import { kstDateTime } from "@/lib/utils/kst";
@@ -28,10 +28,12 @@ export function PriceGapMonitor({ tier }: { tier: "free" | "premium" }) {
   const { t } = useTranslation();
   const { data, prev, isLoading } = usePriceGapLatest(tier);
 
+  // Chart-only controls (PRD §7): single stock, single exchange, avg period,
+  // and the Avg Gap line toggle. Defaults: Samsung / Binance / 10D / ON.
+  const [stock, setStock] = useState<StockCode>("005930");
   const [exchange, setExchange] = useState<Exchange>("binance");
-  const [stocks, setStocks] = useState<StockCode[]>([
-    ...PRICE_GAP_STOCK_ORDER,
-  ]);
+  const [period, setPeriod] = useState<AveragePeriod>(DEFAULT_AVERAGE_PERIOD);
+  const [showAvg, setShowAvg] = useState(true);
 
   const delayed = tier === "free";
   const marketClosed = data != null && !data.marketOpen;
@@ -64,22 +66,39 @@ export function PriceGapMonitor({ tier }: { tier: "free" | "premium" }) {
       {/* 1) Table — not affected by filters; always all 6 rows (pivoted to 3). */}
       <PriceGapTable data={data} prev={prev} isLoading={isLoading} />
 
-      {/* 2) Chart — header row holds title + Exchange/Stocks filters + PIP. */}
+      {/* 2) Chart — header row holds title + chart controls + PIP. */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h2 className="text-base font-semibold text-foreground">
           {t("priceGap.chart.title")}
         </h2>
         <div className="flex flex-wrap items-center gap-3">
           <ChartFilters
+            stock={stock}
+            onStock={setStock}
             exchange={exchange}
             onExchange={setExchange}
-            stocks={stocks}
-            onStocks={setStocks}
+            period={period}
+            onPeriod={setPeriod}
+            showAvg={showAvg}
+            onShowAvg={setShowAvg}
           />
-          <PipButton tier={tier} data={data} exchange={exchange} stocks={stocks} />
+          <PipButton
+            tier={tier}
+            data={data}
+            exchange={exchange}
+            stock={stock}
+            period={period}
+            showAvg={showAvg}
+          />
         </div>
       </div>
-      <PriceGapChart tier={tier} exchange={exchange} stocks={stocks} />
+      <PriceGapChart
+        tier={tier}
+        exchange={exchange}
+        stock={stock}
+        period={period}
+        showAvg={showAvg}
+      />
 
       <PriceGapFooter tier={tier} />
     </section>

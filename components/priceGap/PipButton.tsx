@@ -3,7 +3,12 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "@/lib/i18n/navigation";
-import type { Exchange, StockCode, PriceGapLatest } from "@/types/priceGap";
+import type {
+  AveragePeriod,
+  Exchange,
+  StockCode,
+  PriceGapLatest,
+} from "@/types/priceGap";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
@@ -23,13 +28,17 @@ import { PipContent } from "./PipContent";
 export function PipButton({
   tier,
   exchange,
-  stocks,
+  stock,
+  period,
+  showAvg,
 }: {
   tier: "free" | "premium";
   /** Reserved for future use (table reads its own realtime poll). */
   data: PriceGapLatest | null;
   exchange: Exchange;
-  stocks: StockCode[];
+  stock: StockCode;
+  period: AveragePeriod;
+  showAvg: boolean;
 }) {
   const { t } = useTranslation();
   const router = useRouter();
@@ -124,7 +133,12 @@ export function PipButton({
       </Button>
       {pipWindow &&
         createPortal(
-          <PipContent exchange={exchange} stocks={stocks} />,
+          <PipContent
+            exchange={exchange}
+            stock={stock}
+            period={period}
+            showAvg={showAvg}
+          />,
           pipWindow.document.body
         )}
     </>

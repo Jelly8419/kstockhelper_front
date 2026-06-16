@@ -16,6 +16,15 @@ export type StockCode = "005930" | "000660" | "005380";
 /** Tier the frontend declares to the backend via `?tier=`. */
 export type ApiTier = "premium" | "basic";
 
+/** Chart Avg Gap window in trading days (PRD §7.6). 0 (All) is table-only. */
+export type AveragePeriod = 3 | 5 | 10 | 20 | 30;
+
+/** Selectable Avg Gap periods, in display order. */
+export const AVERAGE_PERIODS: AveragePeriod[] = [3, 5, 10, 20, 30];
+
+/** Default chart Avg Gap period (PRD §7.6). */
+export const DEFAULT_AVERAGE_PERIOD: AveragePeriod = 10;
+
 /** Standard API envelope shared with the rest of the app's `/api/*`. */
 export interface ApiEnvelope<T> {
   success: boolean;
@@ -42,6 +51,16 @@ export interface PriceGapRow {
   exPrice: number | null;
   /** Gap % = (exPrice - usdRef) / usdRef × 100. */
   gap: number | null;
+  /**
+   * Past Avg Gap (%): mean close_gap at the current KST minute across ALL
+   * available history (PRD §6.6). null when no history for this minute.
+   */
+  pastAvgGap: number | null;
+  /**
+   * Gap vs Past Avg (percentage point) = gap − pastAvgGap (PRD §6.7).
+   * null when either operand is null.
+   */
+  gapVsPastAvg: number | null;
   /** When this row was computed (epoch ms). */
   ts: number;
 }
@@ -70,15 +89,26 @@ export interface PriceGapCandle {
   high_gap: number;
   low_gap: number;
   close_gap: number;
-  /** Reserved for future stats; unused in MVP. */
+  /** 1-minute accumulated avg (stored); the chart line uses close_gap. */
   avg_gap: number | null;
+  /** KST hour*60+min — the key matching this candle to its avg-series point. */
+  minuteOfDay: number;
+  /**
+   * Selected-period Avg Gap (%): mean close_gap at the same minute over the
+   * last N trading days (PRD §12.2). null when no history for this minute.
+   */
+  avgGap: number | null;
+  /** Distinct trading days used for avgGap; < period → "available data only". */
+  availableDays: number | null;
 }
 
 export interface PriceGapChart {
   tier: ApiTier;
   exchange: Exchange;
   stock: StockCode;
-  /** Ascending by time, up to 600 candles (~10h). */
+  /** Avg Gap window (trading days) this response was computed for. */
+  period: AveragePeriod;
+  /** Ascending by time; today's session only (09:00 KST cut). */
   candles: PriceGapCandle[];
 }
 

@@ -1,5 +1,6 @@
 import type {
   ApiEnvelope,
+  AveragePeriod,
   Exchange,
   StockCode,
   PriceGapLatest,
@@ -27,12 +28,13 @@ export function fetchPriceGapLatest(): Promise<PriceGapLatest> {
   return getData<PriceGapLatest>(`/api/price-gap/latest`);
 }
 
-/** 1-minute OHLC for ONE stock × ONE exchange; multi-stock = N calls merged client-side. */
+/** 1-minute OHLC + selected-period Avg Gap for ONE stock × ONE exchange. */
 export function fetchPriceGapChart(
   exchange: Exchange,
-  stock: StockCode
+  stock: StockCode,
+  period: AveragePeriod
 ): Promise<PriceGapChart> {
   return getData<PriceGapChart>(
-    `/api/price-gap/chart?exchange=${exchange}&stock=${stock}`
+    `/api/price-gap/chart?exchange=${exchange}&stock=${stock}&period=${period}`
   );
 }

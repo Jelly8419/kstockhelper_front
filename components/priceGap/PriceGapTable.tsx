@@ -36,8 +36,7 @@ function dirClass(dir: "up" | "down" | "flat"): string {
 /** Color a price by direction vs the previous poll's matching row (no % shown). */
 function priceCell(cur: number | null, prevVal: number | null | undefined) {
   if (cur == null) return <span className="text-muted">—</span>;
-  const dir =
-    prevVal == null ? "flat" : changeDirection(cur - prevVal);
+  const dir = prevVal == null ? "flat" : changeDirection(cur - prevVal);
   return <span className={dirClass(dir)}>{formatNumber(cur, 2)}</span>;
 }
 
@@ -47,16 +46,86 @@ function krCell(cur: number | null, prevVal: number | null | undefined) {
   return <span className={dirClass(dir)}>{formatNumber(cur, 0)}</span>;
 }
 
-/** Gap %: signed, colored by sign (positive red, negative blue). */
-function gapCell(gap: number | null) {
+/** Signed gap %, colored by sign (positive green, negative red). */
+function gapPct(gap: number | null) {
   if (gap == null) return <span className="text-muted">—</span>;
   const dir = gap > 0 ? "up" : gap < 0 ? "down" : "flat";
-  const sign = gap > 0 ? "+" : "";
   return (
     <span className={`font-semibold ${dirClass(dir)}`}>
-      {sign}
+      {gap > 0 ? "+" : ""}
       {gap.toFixed(2)}%
     </span>
+  );
+}
+
+/** Signed percentage-point delta (Gap vs Past Avg), colored by sign. */
+function ppCell(v: number | null) {
+  if (v == null) return <span className="text-muted">—</span>;
+  const dir = v > 0 ? "up" : v < 0 ? "down" : "flat";
+  return (
+    <span className={dirClass(dir)}>{`${v > 0 ? "+" : ""}${v.toFixed(2)}%p`}</span>
+  );
+}
+
+/** Plain Past Avg Gap %, no coloring (it's a baseline, not a live move). */
+function pastAvgCell(gap: number | null) {
+  if (gap == null) return <span className="text-muted">—</span>;
+  return (
+    <span className="text-foreground">
+      {gap > 0 ? "+" : ""}
+      {gap.toFixed(2)}%
+    </span>
+  );
+}
+
+/** One label/value row inside an exchange cell. */
+function MetricLine({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-3">
+      <span className="text-[11px] text-muted">{label}</span>
+      <span className="tabular-nums">{children}</span>
+    </div>
+  );
+}
+
+/** The 4 stacked metrics inside one exchange cell (PRD §6.3). */
+function ExchangeCell({
+  row,
+  prevRow,
+  labels,
+}: {
+  row: PriceGapRow | undefined;
+  prevRow: PriceGapRow | undefined;
+  labels: {
+    price: string;
+    currentGap: string;
+    pastAvgGap: string;
+    gapVsPastAvg: string;
+  };
+}) {
+  return (
+    <td className="px-4 py-3 align-top">
+      <div className="flex flex-col gap-0.5">
+        <MetricLine label={labels.price}>
+          {priceCell(row?.exPrice ?? null, prevRow?.exPrice)}
+        </MetricLine>
+        <MetricLine label={labels.currentGap}>
+          {gapPct(row?.gap ?? null)}
+        </MetricLine>
+        <MetricLine label={labels.pastAvgGap}>
+          {pastAvgCell(row?.pastAvgGap ?? null)}
+        </MetricLine>
+        <MetricLine label={labels.gapVsPastAvg}>
+          {ppCell(row?.gapVsPastAvg ?? null)}
+        </MetricLine>
+      </div>
+    </td>
   );
 }
 
@@ -76,11 +145,17 @@ export function PriceGapTable({
   }
 
   const rows = data ? pivot(data.rows) : [];
-  // Look up the previous matching row (same stock+exchange) for coloring.
   const prevOf = (code: StockCode, exchange: "binance" | "bybit") =>
     prev?.rows.find((r) => r.stockCode === code && r.exchange === exchange);
 
   const usdtKrw = data?.usdtKrw?.price;
+
+  const labels = {
+    price: t("priceGap.table.price"),
+    currentGap: t("priceGap.table.currentGap"),
+    pastAvgGap: t("priceGap.table.pastAvgGap"),
+    gapVsPastAvg: t("priceGap.table.gapVsPastAvg"),
+  };
 
   return (
     <div className="overflow-x-auto rounded-xl border border-border">
@@ -95,44 +170,23 @@ export function PriceGapTable({
             <th className="px-4 py-3 text-right font-medium">
               {t("priceGap.table.referencePrice")}
               <span className="block text-[10px] font-normal">
-                {usdtKrw
-                  ? `(USDT/KRW ${formatNumber(usdtKrw, 2)})`
-                  : "(USDT)"}
+                {usdtKrw ? `(USDT/KRW ${formatNumber(usdtKrw, 2)})` : "(USDT)"}
               </span>
             </th>
-            <th
-              className="px-4 py-3 text-right font-medium"
-              colSpan={2}
-            >
+            <th className="px-4 py-3 text-left font-medium">
               {t("priceGap.table.binance")}{" "}
               <span className="text-[10px] font-normal">{"(USDT)"}</span>
             </th>
-            <th
-              className="px-4 py-3 text-right font-medium"
-              colSpan={2}
-            >
+            <th className="px-4 py-3 text-left font-medium">
               {t("priceGap.table.bybit")}{" "}
               <span className="text-[10px] font-normal">{"(USDT)"}</span>
             </th>
-          </tr>
-          <tr className="border-b border-border text-right text-[10px] text-muted">
-            <th />
-            <th />
-            <th />
-            <th className="px-4 py-2 font-normal">
-              {t("priceGap.table.price")}
-            </th>
-            <th className="px-4 py-2 font-normal">{t("priceGap.table.gap")}</th>
-            <th className="px-4 py-2 font-normal">
-              {t("priceGap.table.price")}
-            </th>
-            <th className="px-4 py-2 font-normal">{t("priceGap.table.gap")}</th>
           </tr>
         </thead>
         <tbody>
           {rows.map((row) => (
             <tr key={row.code} className="border-b border-border last:border-0">
-              <td className="px-4 py-3">
+              <td className="px-4 py-3 align-top">
                 <span className="flex items-center gap-2">
                   <span
                     className="h-2 w-2 rounded-full"
@@ -141,13 +195,13 @@ export function PriceGapTable({
                   {row.name}
                 </span>
               </td>
-              <td className="px-4 py-3 text-right">
+              <td className="px-4 py-3 text-right align-top">
                 {krCell(
                   row.binance?.krPrice ?? row.bybit?.krPrice ?? null,
                   prevOf(row.code, "binance")?.krPrice
                 )}
               </td>
-              <td className="px-4 py-3 text-right">
+              <td className="px-4 py-3 text-right align-top">
                 {row.binance?.usdRef != null || row.bybit?.usdRef != null ? (
                   formatNumber(
                     (row.binance?.usdRef ?? row.bybit?.usdRef) as number,
@@ -157,28 +211,38 @@ export function PriceGapTable({
                   <span className="text-muted">—</span>
                 )}
               </td>
-              <td className="px-4 py-3 text-right">
-                {priceCell(
-                  row.binance?.exPrice ?? null,
-                  prevOf(row.code, "binance")?.exPrice
-                )}
-              </td>
-              <td className="px-4 py-3 text-right">
-                {gapCell(row.binance?.gap ?? null)}
-              </td>
-              <td className="px-4 py-3 text-right">
-                {priceCell(
-                  row.bybit?.exPrice ?? null,
-                  prevOf(row.code, "bybit")?.exPrice
-                )}
-              </td>
-              <td className="px-4 py-3 text-right">
-                {gapCell(row.bybit?.gap ?? null)}
-              </td>
+              <ExchangeCell
+                row={row.binance}
+                prevRow={prevOf(row.code, "binance")}
+                labels={labels}
+              />
+              <ExchangeCell
+                row={row.bybit}
+                prevRow={prevOf(row.code, "bybit")}
+                labels={labels}
+              />
             </tr>
           ))}
         </tbody>
       </table>
+
+      {/* Info note for the two average-based metrics (PRD §6.8). */}
+      <div className="flex flex-wrap gap-x-6 gap-y-1 border-t border-border px-4 py-2 text-[11px] text-muted">
+        <span>
+          <span className="text-foreground">
+            {t("priceGap.table.pastAvgGap")}
+          </span>
+          {" — "}
+          {t("priceGap.table.pastAvgGapTip")}
+        </span>
+        <span>
+          <span className="text-foreground">
+            {t("priceGap.table.gapVsPastAvg")}
+          </span>
+          {" — "}
+          {t("priceGap.table.gapVsPastAvgTip")}
+        </span>
+      </div>
     </div>
   );
 }

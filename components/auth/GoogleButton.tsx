@@ -36,19 +36,27 @@ function GoogleMark() {
  * When `consentGiven` is true (the user already accepted the Terms on this
  * page), we pass it through the OAuth round-trip so the callback can record
  * consent and skip the /consent gate.
+ *
+ * `onBeforeSignIn` runs on click before OAuth starts; returning false aborts
+ * (e.g. signup keeps the button enabled but blocks until the Terms checkbox is
+ * ticked, surfacing an inline validation message instead of a dead button).
  */
 export function GoogleButton({
   next = "/",
   consentGiven = false,
+  onBeforeSignIn,
 }: {
   next?: string;
   consentGiven?: boolean;
+  onBeforeSignIn?: () => boolean;
 }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { t, locale } = useTranslation();
 
   const signIn = async () => {
+    // Pre-flight validation (e.g. Terms consent). Abort without starting OAuth.
+    if (onBeforeSignIn && !onBeforeSignIn()) return;
     setError(null);
     setLoading(true);
     try {
@@ -87,7 +95,7 @@ export function GoogleButton({
         <GoogleMark />
         {loading ? t("auth.connecting") : t("auth.continueWithGoogle")}
       </button>
-      {error && <p className="text-xs text-down">{error}</p>}
+      {error && <p className="text-xs text-danger">{error}</p>}
     </div>
   );
 }

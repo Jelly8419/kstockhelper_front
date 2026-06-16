@@ -27,6 +27,8 @@ const config: Config = {
         down: "var(--down)",
         // Price-gap table: green = positive/gain
         gain: "var(--gain)",
+        // Form/validation error color (red, distinct from market --up/--down)
+        danger: "var(--danger)",
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],

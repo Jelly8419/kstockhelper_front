@@ -17,6 +17,9 @@
   --down: #4d8df6;
   /* Price-gap table convention: green = positive/gain, blue (--down) = negative */
   --gain: #22c55e;
+  /* Form/validation errors. Distinct from --up (market) and --brand (links,
+     also blue) so an error always reads as a clear red. */
+  --danger: #ef4444;
 }
 
 body {

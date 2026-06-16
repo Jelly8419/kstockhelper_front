@@ -24,13 +24,26 @@ export function SignupForm() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [agreed, setAgreed] = useState(false);
+  // Consent is no longer enforced by disabling the buttons (users mistook the
+  // greyed-out Google button for "signup unavailable"). Instead both buttons
+  // stay active and we validate on click, flagging the checkbox inline.
+  const [consentError, setConsentError] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  // Shared consent gate for both sign-up methods. Returns false (and surfaces
+  // the inline checkbox error) when the Terms haven't been accepted yet.
+  const requireConsent = (): boolean => {
+    if (agreed) return true;
+    setConsentError(true);
+    return false;
+  };
+
   // Step 1: send a 6-digit email verification code (OTP).
   const sendCode = async (e: FormEvent) => {
     e.preventDefault();
+    if (!requireConsent()) return;
     setError(null);
     setNotice(null);
     setLoading(true);
@@ -169,40 +182,55 @@ export function SignupForm() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder={t("auth.emailPlaceholder")}
           />
-          {/* Legal consent — collected up front, gates both sign-up methods. */}
-          <label className="flex items-start gap-2">
-            <input
-              type="checkbox"
-              checked={agreed}
-              onChange={(e) => setAgreed(e.target.checked)}
-              className="mt-0.5 h-4 w-4 shrink-0 accent-brand"
-            />
-            <span className="text-xs text-foreground">
-              {t("auth.agreePrefix")}{" "}
-              <a
-                href="/terms"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-brand hover:underline"
-              >
-                {t("footer.terms")}
-              </a>{" "}
-              {t("auth.agreeMiddle")}{" "}
-              <a
-                href="/privacy"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-brand hover:underline"
-              >
-                {t("footer.privacy")}
-              </a>
-              .
-            </span>
-          </label>
+          {/* Legal consent — collected up front, gates both sign-up methods.
+              Both buttons stay enabled; we validate on click and flag the
+              checkbox inline when it's unchecked. */}
+          <div className="flex flex-col gap-1">
+            <label className="flex items-start gap-2">
+              <input
+                type="checkbox"
+                checked={agreed}
+                onChange={(e) => {
+                  setAgreed(e.target.checked);
+                  if (e.target.checked) setConsentError(false);
+                }}
+                className={`mt-0.5 h-4 w-4 shrink-0 accent-brand ${
+                  consentError ? "ring-2 ring-danger rounded-sm" : ""
+                }`}
+              />
+              <span className="text-xs text-foreground">
+                {t("auth.agreePrefix")}{" "}
+                <a
+                  href="/terms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-brand hover:underline"
+                >
+                  {t("footer.terms")}
+                </a>{" "}
+                {t("auth.agreeMiddle")}{" "}
+                <a
+                  href="/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-brand hover:underline"
+                >
+                  {t("footer.privacy")}
+                </a>
+                .
+              </span>
+            </label>
+            {consentError && (
+              <p className="flex items-center gap-1 text-xs text-danger">
+                <span aria-hidden>⚠</span>
+                {t("auth.errorAgreeRequired")}
+              </p>
+            )}
+          </div>
 
           {notice && <p className="text-xs text-muted">{notice}</p>}
-          {error && <p className="text-xs text-down">{error}</p>}
-          <Button type="submit" size="lg" disabled={loading || !agreed}>
+          {error && <p className="text-xs text-danger">{error}</p>}
+          <Button type="submit" size="lg" disabled={loading}>
             {loading ? t("auth.sending") : t("auth.sendCode")}
           </Button>
 
@@ -213,11 +241,14 @@ export function SignupForm() {
             <span className="h-px flex-1 bg-border" />
           </div>
 
-          {/* Google sign-up. Disabled until consent is given; the consent flag
+          {/* Google sign-up stays enabled; consent is validated on click via
+              onBeforeSignIn (flags the checkbox if unchecked). The consent flag
               is carried through OAuth so the callback skips the /consent gate. */}
-          <div className={agreed ? "" : "pointer-events-none opacity-50"}>
-            <GoogleButton next="/" consentGiven={agreed} />
-          </div>
+          <GoogleButton
+            next="/"
+            consentGiven={agreed}
+            onBeforeSignIn={requireConsent}
+          />
         </form>
       )}
 
@@ -234,7 +265,7 @@ export function SignupForm() {
             placeholder={t("auth.verificationCodePlaceholder")}
           />
           {notice && <p className="text-xs text-muted">{notice}</p>}
-          {error && <p className="text-xs text-down">{error}</p>}
+          {error && <p className="text-xs text-danger">{error}</p>}
           <Button type="submit" size="lg" disabled={loading}>
             {loading ? t("auth.verifying") : t("auth.verifyCode")}
           </Button>
@@ -290,7 +321,7 @@ export function SignupForm() {
             placeholder={t("auth.passwordPlaceholder")}
           />
           {/* Consent was already collected in step 1. */}
-          {error && <p className="text-xs text-down">{error}</p>}
+          {error && <p className="text-xs text-danger">{error}</p>}
           <Button type="submit" size="lg" disabled={loading}>
             {loading ? t("auth.creatingAccount") : t("auth.createAccount")}
           </Button>

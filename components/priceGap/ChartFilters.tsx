@@ -114,8 +114,8 @@ export function ChartFilters({
           }`}
         >
           <span
-            className={`absolute inset-y-0 my-auto h-4 w-4 rounded-full bg-white transition-transform ${
-              showAvg ? "translate-x-[18px]" : "translate-x-0.5"
+            className={`absolute left-0.5 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-white transition-transform ${
+              showAvg ? "translate-x-4" : "translate-x-0"
             }`}
           />
         </button>

@@ -218,6 +218,7 @@
   },
   "home": {
     "priceGapCard": {
+      "liveNow": "Live Now",
       "title": "Price Gap Monitor",
       "subtitle": "Compare Korean stock prices with Binance & Bybit futures in real time.",
       "cta": "Open Price Gap Monitor"

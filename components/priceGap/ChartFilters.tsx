@@ -3,7 +3,6 @@
 import type { AveragePeriod, Exchange, StockCode } from "@/types/priceGap";
 import { AVERAGE_PERIODS, PRICE_GAP_STOCKS } from "@/types/priceGap";
 import { useTranslation } from "@/lib/i18n/useTranslation";
-import { STOCK_COLORS } from "./colors";
 
 const EXCHANGES: Exchange[] = ["binance", "bybit"];
 
@@ -47,16 +46,12 @@ export function ChartFilters({
               key={code}
               type="button"
               onClick={() => onStock(code)}
-              className={`flex items-center gap-1.5 px-3 py-1 text-sm transition-colors ${
+              className={`px-3 py-1 text-sm transition-colors ${
                 stock === code
                   ? "bg-brand text-white"
                   : "bg-transparent text-muted hover:bg-surface-hover"
               }`}
             >
-              <span
-                className="h-2 w-2 rounded-full"
-                style={{ backgroundColor: STOCK_COLORS[code] }}
-              />
               {name}
             </button>
           ))}
@@ -114,13 +109,13 @@ export function ChartFilters({
           role="switch"
           aria-checked={showAvg}
           onClick={() => onShowAvg(!showAvg)}
-          className={`relative h-5 w-9 rounded-full transition-colors ${
+          className={`relative h-5 w-9 shrink-0 rounded-full transition-colors ${
             showAvg ? "bg-brand" : "bg-border"
           }`}
         >
           <span
-            className={`absolute top-0.5 h-4 w-4 rounded-full bg-white transition-transform ${
-              showAvg ? "translate-x-4" : "translate-x-0.5"
+            className={`absolute inset-y-0 my-auto h-4 w-4 rounded-full bg-white transition-transform ${
+              showAvg ? "translate-x-[18px]" : "translate-x-0.5"
             }`}
           />
         </button>

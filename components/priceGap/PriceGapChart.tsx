@@ -88,6 +88,17 @@ export function PriceGapChart({
   // Visible window as an index range into `points`. null = full range (auto).
   const [window, setWindow] = useState<[number, number] | null>(null);
   const dragRef = useRef<{ x: number; range: [number, number] } | null>(null);
+  const [grabbing, setGrabbing] = useState(false);
+
+  // The interaction container, used to register a non-passive wheel listener and
+  // to size pan deltas against the chart width.
+  const boxRef = useRef<HTMLDivElement | null>(null);
+
+  // Mirror the latest count and window into refs so the imperative wheel/touch
+  // handlers (registered once) always read current values without re-binding.
+  const nRef = useRef(0);
+  const windowRef = useRef<[number, number] | null>(null);
+  windowRef.current = window;
 
   // Reset the window whenever the underlying series identity changes (stock/
   // exchange/period switch), so a new series always starts fully zoomed-out.
@@ -96,48 +107,149 @@ export function PriceGapChart({
   }, [stock, exchange, period]);
 
   const n = points.length;
+  nRef.current = n;
   const range: [number, number] = window ?? [0, Math.max(0, n - 1)];
   const visible = n > 0 ? points.slice(range[0], range[1] + 1) : [];
 
   // anchored at the latest point (PRD §9.2): zoom keeps the right edge fixed.
+  // Reads the live count/window from refs so it is safe to call from the
+  // imperatively-bound wheel and touch handlers.
   const zoom = (factor: number) => {
-    if (n === 0) return;
-    const [start, end] = window ?? [0, n - 1];
+    const count = nRef.current;
+    if (count === 0) return;
+    const [start, end] = windowRef.current ?? [0, count - 1];
     const span = end - start + 1;
     const nextSpan = Math.round(span * factor);
-    const clamped = Math.min(Math.max(nextSpan, MIN_WINDOW), n);
+    const clamped = Math.min(Math.max(nextSpan, MIN_WINDOW), count);
     const nextStart = Math.max(0, end - clamped + 1);
-    setWindow(nextStart === 0 && clamped === n ? null : [nextStart, end]);
+    setWindow(nextStart === 0 && clamped === count ? null : [nextStart, end]);
   };
 
-  const onWheel = (e: React.WheelEvent) => {
-    if (n === 0) return;
-    e.preventDefault();
-    // Wheel up (deltaY < 0) = zoom in (smaller window); down = zoom out.
-    zoom(e.deltaY < 0 ? 0.8 : 1.25);
+  // Shift the visible window by a fraction of its span (drag/swipe pan). Positive
+  // `frac` (drag right) moves earlier in time; negative moves later.
+  const pan = (
+    frac: number,
+    base: [number, number] = windowRef.current ?? [0, nRef.current - 1]
+  ) => {
+    const count = nRef.current;
+    const [start, end] = base;
+    const span = end - start + 1;
+    if (span >= count) return; // fully zoomed out → nothing to pan
+    const deltaMin = Math.round(frac * span);
+    let nextStart = start - deltaMin;
+    nextStart = Math.min(Math.max(nextStart, 0), count - span);
+    setWindow([nextStart, nextStart + span - 1]);
   };
 
+  // Wheel zoom via a non-passive native listener: React's onWheel is passive, so
+  // its preventDefault is ignored and the page would scroll while zooming
+  // (Price Gap revisions §9 PC). Bind once; the handler reads live refs.
+  useEffect(() => {
+    const box = boxRef.current;
+    if (!box) return;
+    const onWheel = (e: WheelEvent) => {
+      if (nRef.current === 0) return;
+      e.preventDefault(); // keep the page fixed while the cursor is over the chart
+      zoom(e.deltaY < 0 ? 0.8 : 1.25); // up = zoom in, down = zoom out
+    };
+    box.addEventListener("wheel", onWheel, { passive: false });
+    return () => box.removeEventListener("wheel", onWheel);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // --- Mouse drag pan (PC). Touch is handled separately (pinch + swipe). ---
   const onPointerDown = (e: React.PointerEvent) => {
-    if (n === 0) return;
+    if (n === 0 || e.pointerType === "touch") return;
     dragRef.current = { x: e.clientX, range };
+    setGrabbing(true);
     (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
   };
   const onPointerMove = (e: React.PointerEvent) => {
     const drag = dragRef.current;
     if (!drag || n === 0) return;
-    const [start, end] = drag.range;
-    const span = end - start + 1;
-    if (span >= n) return; // fully zoomed out → nothing to pan
-    const width = (e.currentTarget as HTMLElement).clientWidth || 1;
-    // Drag right → move window earlier in time (show older data).
-    const deltaMin = Math.round(((e.clientX - drag.x) / width) * span);
-    let nextStart = start - deltaMin;
-    nextStart = Math.min(Math.max(nextStart, 0), n - span);
-    setWindow([nextStart, nextStart + span - 1]);
+    const width = boxRef.current?.clientWidth || 1;
+    pan((e.clientX - drag.x) / width, drag.range);
   };
   const onPointerUp = (e: React.PointerEvent) => {
     dragRef.current = null;
+    setGrabbing(false);
     (e.target as HTMLElement).releasePointerCapture?.(e.pointerId);
+  };
+
+  // --- Touch: 1 finger = horizontal swipe pan, 2 fingers = pinch zoom (mobile,
+  // Price Gap revisions §9). Vertical drags fall through to page scroll because
+  // the container uses touch-action: pan-y. ---
+  const touchRef = useRef<{
+    mode: "swipe" | "pinch";
+    startX: number;
+    range: [number, number];
+    pinchDist: number;
+    axisLocked: boolean;
+    startY: number;
+  } | null>(null);
+
+  const touchDist = (a: React.Touch, b: React.Touch) =>
+    Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    if (n === 0) return;
+    if (e.touches.length === 2) {
+      touchRef.current = {
+        mode: "pinch",
+        startX: 0,
+        range,
+        pinchDist: touchDist(e.touches[0], e.touches[1]),
+        axisLocked: true,
+        startY: 0,
+      };
+    } else if (e.touches.length === 1) {
+      touchRef.current = {
+        mode: "swipe",
+        startX: e.touches[0].clientX,
+        startY: e.touches[0].clientY,
+        range,
+        pinchDist: 0,
+        axisLocked: false,
+      };
+    }
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    const tc = touchRef.current;
+    if (!tc || n === 0) return;
+
+    if (tc.mode === "pinch" && e.touches.length >= 2) {
+      const dist = touchDist(e.touches[0], e.touches[1]);
+      if (tc.pinchDist > 0) {
+        // Pinch out (fingers apart) = zoom in (narrower window); pinch in = out.
+        zoom(tc.pinchDist / dist);
+      }
+      tc.pinchDist = dist;
+      e.preventDefault();
+      return;
+    }
+
+    if (tc.mode === "swipe" && e.touches.length === 1) {
+      const dx = e.touches[0].clientX - tc.startX;
+      const dy = e.touches[0].clientY - tc.startY;
+      // Lock to the horizontal axis on first decisive move; vertical swipes are
+      // left to the browser (page scroll) and never pan the chart.
+      if (!tc.axisLocked) {
+        if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return; // below threshold
+        if (Math.abs(dy) > Math.abs(dx)) {
+          touchRef.current = null; // vertical → release to page scroll
+          return;
+        }
+        tc.axisLocked = true;
+      }
+      const width = boxRef.current?.clientWidth || 1;
+      pan(dx / width, tc.range);
+      e.preventDefault(); // we own this horizontal gesture
+    }
+  };
+
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (e.touches.length === 0) touchRef.current = null;
   };
 
   if (n === 0) {
@@ -187,15 +299,18 @@ export function PriceGapChart({
       </div>
 
       <div
+        ref={boxRef}
         className={`${
           fill ? "min-h-0 flex-1" : heightClass
-        } w-full touch-none rounded-xl border border-border p-2`}
-        onWheel={onWheel}
+        } w-full touch-pan-y rounded-xl border border-border p-2`}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onPointerLeave={onPointerUp}
-        style={{ cursor: dragRef.current ? "grabbing" : "grab" }}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+        style={{ cursor: grabbing ? "grabbing" : "grab" }}
       >
         <ResponsiveContainer width="100%" height="100%">
           <LineChart

@@ -3,7 +3,7 @@
 import type { PriceGapLatest } from "@/types/priceGap";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { formatNumber } from "@/lib/utils/format";
-import { kstDateTime } from "@/lib/utils/kst";
+import { localDateTimeFull } from "@/lib/utils/localTime";
 
 /**
  * Top status bar (mockup): Korea Market open/closed + hours, USDT/KRW rate,
@@ -52,7 +52,7 @@ export function StatusCards({
       <div className="text-right">
         <p className="text-xs text-muted">
           {t("priceGap.status.lastUpdated")}{" "}
-          {data ? kstDateTime(data.serverTime) : "—"}
+          {data ? localDateTimeFull(data.serverTime) : "—"}
         </p>
         {tier === "free" && (
           <p className="text-xs text-muted">

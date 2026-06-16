@@ -15,6 +15,40 @@ import { Button } from "@/components/ui/Button";
 import { PipContent } from "./PipContent";
 
 /**
+ * Picture-in-Picture glyph: a screen frame with an arrow. When `active` the
+ * arrow points inward (↘, "popped into" the mini window); otherwise it points
+ * outward (↖, "pop out"). Inherits `currentColor` so the button controls color.
+ */
+function PipIcon({ active }: { active?: boolean }) {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="3" y="4" width="18" height="14" rx="2" />
+      {active ? (
+        <>
+          <path d="M16 14v-3h-3" />
+          <path d="M16 11l-4 4" />
+        </>
+      ) : (
+        <>
+          <path d="M8 10v3h3" />
+          <path d="M8 13l4-4" />
+        </>
+      )}
+    </svg>
+  );
+}
+
+/**
  * PIP control (PRD §15). Premium-only.
  *  - premium + supported browser → opens a Document Picture-in-Picture window
  *    that renders {@link PipContent} (summary table + mini chart) via a portal.
@@ -70,6 +104,7 @@ export function PipButton({
     return (
       <>
         <Button variant="secondary" size="sm" onClick={() => setLockedOpen(true)}>
+          <PipIcon />
           🔒 {t("priceGap.pip.button")}
         </Button>
         <Modal
@@ -99,6 +134,7 @@ export function PipButton({
         disabled
         title={t("priceGap.pip.unsupported")}
       >
+        <PipIcon />
         {t("priceGap.pip.button")}
       </Button>
     );
@@ -126,11 +162,24 @@ export function PipButton({
     }
   };
 
+  const active = pipWindow != null;
   return (
     <>
-      <Button variant="secondary" size="sm" onClick={openPip}>
+      <button
+        type="button"
+        onClick={openPip}
+        aria-pressed={active}
+        className={`inline-flex h-8 items-center justify-center gap-2 rounded-lg px-3 text-sm font-medium transition-colors ${
+          active
+            ? "bg-brand text-white hover:bg-brand-hover"
+            : "border border-border bg-surface text-foreground hover:bg-surface-hover"
+        }`}
+      >
+        <span className={active ? "text-white" : "text-brand"}>
+          <PipIcon active={active} />
+        </span>
         {t("priceGap.pip.button")}
-      </Button>
+      </button>
       {pipWindow &&
         createPortal(
           <PipContent

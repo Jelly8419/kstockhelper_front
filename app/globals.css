@@ -31,4 +31,25 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+
+  /*
+   * Always-visible horizontal scrollbar for the Price Gap table on mobile, with
+   * a white thumb so it stands out on the dark surface (Price Gap revisions §5).
+   * Default overlay scrollbars hide until a swipe; this forces a persistent bar.
+   */
+  .scrollbar-always {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.7) transparent;
+  }
+  .scrollbar-always::-webkit-scrollbar {
+    height: 8px;
+    -webkit-appearance: none;
+  }
+  .scrollbar-always::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-always::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 9999px;
+  }
 }

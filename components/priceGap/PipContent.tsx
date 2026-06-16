@@ -132,7 +132,7 @@ export function PipContent({
           stock={stock}
           period={period}
           showAvg={showAvg}
-          heightClass="h-full"
+          fill
         />
       </div>
     </div>

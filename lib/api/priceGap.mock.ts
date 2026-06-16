@@ -1,5 +1,6 @@
 import type {
   ApiTier,
+  AveragePeriod,
   Exchange,
   StockCode,
   PriceGapLatest,
@@ -7,7 +8,13 @@ import type {
   PriceGapChart,
   PriceGapCandle,
 } from "@/types/priceGap";
-import { PRICE_GAP_STOCKS } from "@/types/priceGap";
+import { DEFAULT_AVERAGE_PERIOD, PRICE_GAP_STOCKS } from "@/types/priceGap";
+
+/** KST minute-of-day (hour*60+min) for an epoch-ms instant. */
+function kstMinuteOfDay(t: number): number {
+  const kst = new Date(t + 9 * 60 * 60 * 1000); // shift to KST, read UTC parts
+  return kst.getUTCHours() * 60 + kst.getUTCMinutes();
+}
 
 /**
  * In-repo mock for the Price Gap backend, used until
@@ -45,6 +52,9 @@ function buildRow(
   const bias = code === "000660" ? -0.4 : code === "005380" ? 0.6 : 1.1;
   const gap = bias + wobble(seed * 1.3) * 0.3;
   const exPrice = usdRef * (1 + gap / 100);
+  // Past Avg Gap drifts slowly around the bias (stands in for "all-history mean").
+  const pastAvgGap = Number((bias + wobble(t / 600000 + code.charCodeAt(5)) * 0.15).toFixed(2));
+  const gapNum = Number(gap.toFixed(2));
   return {
     stockCode: code,
     stockName: name,
@@ -52,7 +62,9 @@ function buildRow(
     krPrice,
     usdRef: Number(usdRef.toFixed(2)),
     exPrice: Number(exPrice.toFixed(2)),
-    gap: Number(gap.toFixed(2)),
+    gap: gapNum,
+    pastAvgGap,
+    gapVsPastAvg: Number((gapNum - pastAvgGap).toFixed(2)),
     ts: t,
   };
 }
@@ -81,7 +93,8 @@ export function mockPriceGapLatest(tier: ApiTier): PriceGapLatest {
 export function mockPriceGapChart(
   exchange: Exchange,
   stock: StockCode,
-  tier: ApiTier
+  tier: ApiTier,
+  period: AveragePeriod = DEFAULT_AVERAGE_PERIOD
 ): PriceGapChart {
   const now = Date.now();
   const end = tier === "premium" ? now : now - 10 * 60 * 1000;
@@ -89,6 +102,8 @@ export function mockPriceGapChart(
   const candles: PriceGapCandle[] = [];
   const name = PRICE_GAP_STOCKS.find((s) => s.code === stock)?.name ?? stock;
   const bias = stock === "000660" ? -0.4 : stock === "005380" ? 0.6 : 1.1;
+  // Shorter periods sit closer to the live line; longer periods smooth toward bias.
+  const avgPull = 1 - Math.min(period, 30) / 40; // 3D≈0.93 … 30D≈0.25
 
   // Last ~120 minutes of 1m candles. Slow drift (sin over ~40min) + tiny noise
   // so the line reads as a trend, not a sawtooth.
@@ -101,6 +116,8 @@ export function mockPriceGapChart(
     const o = bias + wobble((m - 1) / 40 + phase) * 0.6;
     const hi = Math.max(o, c) + 0.05;
     const lo = Math.min(o, c) - 0.05;
+    // Avg line: a smoothed version of the live gap, pulled toward bias by period.
+    const avg = bias + drift * avgPull * 0.5;
     candles.push({
       timestamp_minute: new Date(ts).toISOString(),
       stock_code: stock,
@@ -111,8 +128,11 @@ export function mockPriceGapChart(
       low_gap: Number(lo.toFixed(2)),
       close_gap: Number(c.toFixed(2)),
       avg_gap: null,
+      minuteOfDay: kstMinuteOfDay(ts),
+      avgGap: Number(avg.toFixed(2)),
+      availableDays: period,
     });
   }
 
-  return { tier, exchange, stock, candles };
+  return { tier, exchange, stock, period, candles };
 }

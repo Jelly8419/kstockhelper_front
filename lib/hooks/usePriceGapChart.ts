@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import type { UserTier } from "@/types/user";
-import type { Exchange, StockCode, PriceGapCandle } from "@/types/priceGap";
+import type { AveragePeriod, Exchange, StockCode, PriceGapCandle } from "@/types/priceGap";
 import { fetchPriceGapChart } from "@/lib/api/priceGap";
 
 /** Chart polls slower than the table (frontend-prd §2). */
@@ -12,47 +12,35 @@ const INTERVAL_MS: Record<"premium" | "basic", number> = {
 };
 
 interface UsePriceGapChart {
-  /** candles keyed by stock code (only selected stocks). */
-  series: Partial<Record<StockCode, PriceGapCandle[]>>;
+  /** Ascending 1-minute OHLC + Avg Gap candles for the selected stock. */
+  candles: PriceGapCandle[];
   isLoading: boolean;
 }
 
 /**
- * Polls 1-minute OHLC candles for the selected exchange × stocks. The contract
- * is one call per stock×exchange, so multi-stock selection fans out into N
- * parallel calls merged by stock code. Refetches when the exchange, the set of
- * selected stocks, or the tier changes.
+ * Polls 1-minute OHLC + selected-period Avg Gap for ONE stock × ONE exchange
+ * (PRD §7: the chart is single-stock). Refetches when the exchange, stock,
+ * period, or tier changes.
  */
 export function usePriceGapChart(
   exchange: Exchange,
-  stocks: StockCode[],
+  stock: StockCode,
+  period: AveragePeriod,
   tier: Exclude<UserTier, "guest">
 ): UsePriceGapChart {
   const apiTier = tier === "premium" ? "premium" : "basic";
-  const [series, setSeries] = useState<
-    Partial<Record<StockCode, PriceGapCandle[]>>
-  >({});
+  const [candles, setCandles] = useState<PriceGapCandle[]>([]);
   const [isLoading, setLoading] = useState(true);
-  const key = stocks.join(",");
-  const stocksRef = useRef(stocks);
-  stocksRef.current = stocks;
 
   useEffect(() => {
     let active = true;
 
     const load = async () => {
-      const current = stocksRef.current;
-      const results = await Promise.all(
-        current.map((s) =>
-          fetchPriceGapChart(exchange, s).catch(() => null)
-        )
+      const res = await fetchPriceGapChart(exchange, stock, period).catch(
+        () => null
       );
       if (!active) return;
-      const next: Partial<Record<StockCode, PriceGapCandle[]>> = {};
-      results.forEach((r) => {
-        if (r) next[r.stock] = r.candles;
-      });
-      setSeries(next);
+      if (res) setCandles(res.candles);
       setLoading(false);
     };
 
@@ -63,9 +51,7 @@ export function usePriceGapChart(
       active = false;
       clearInterval(timer);
     };
-    // key captures the selected-stock set; stocksRef reads the live value.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [exchange, key, apiTier]);
+  }, [exchange, stock, period, apiTier]);
 
-  return { series, isLoading };
+  return { candles, isLoading };
 }

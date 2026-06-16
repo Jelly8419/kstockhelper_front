@@ -1,6 +1,11 @@
 "use client";
 
-import type { Exchange, StockCode, PriceGapRow } from "@/types/priceGap";
+import type {
+  AveragePeriod,
+  Exchange,
+  StockCode,
+  PriceGapRow,
+} from "@/types/priceGap";
 import { PRICE_GAP_STOCK_ORDER, PRICE_GAP_STOCKS } from "@/types/priceGap";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { usePriceGapLatest } from "@/lib/hooks/usePriceGapLatest";
@@ -46,10 +51,14 @@ function gapText(gap: number | null) {
  */
 export function PipContent({
   exchange,
-  stocks,
+  stock,
+  period,
+  showAvg,
 }: {
   exchange: Exchange;
-  stocks: StockCode[];
+  stock: StockCode;
+  period: AveragePeriod;
+  showAvg: boolean;
 }) {
   const { t } = useTranslation();
   const { data } = usePriceGapLatest("premium");
@@ -120,7 +129,9 @@ export function PipContent({
         <PriceGapChart
           tier="premium"
           exchange={exchange}
-          stocks={stocks}
+          stock={stock}
+          period={period}
+          showAvg={showAvg}
           heightClass="h-full"
         />
       </div>

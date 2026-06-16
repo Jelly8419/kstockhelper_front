@@ -240,6 +240,12 @@ function ppText(v: number): string {
   return `${v > 0 ? "+" : ""}${v.toFixed(2)}%p`;
 }
 
+/** Price-gap convention (matches the table): positive = green, negative = red. */
+function gapColorClass(v: number | null): string {
+  if (v == null) return "text-muted";
+  return v > 0 ? "text-gain" : v < 0 ? "text-up" : "text-muted";
+}
+
 /**
  * Unified tooltip for the hovered minute (PRD §8): local date/time, Current Gap
  * OHLC, the selected-period Avg Gap, and Gap vs Past Avg (= close_gap − avgGap).
@@ -303,17 +309,7 @@ function GapTooltip({
         <span className="text-foreground">
           {t("priceGap.chart.gapVsPastAvg")}
         </span>
-        <span
-          className={
-            vsAvg == null
-              ? "text-muted"
-              : vsAvg > 0
-                ? "text-up"
-                : vsAvg < 0
-                  ? "text-down"
-                  : "text-muted"
-          }
-        >
+        <span className={gapColorClass(vsAvg)}>
           {vsAvg != null ? ppText(vsAvg) : "—"}
         </span>
       </p>

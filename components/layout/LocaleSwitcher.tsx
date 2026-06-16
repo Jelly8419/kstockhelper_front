@@ -67,7 +67,7 @@ export function LocaleSwitcher() {
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label={t("gnb.languageLabel")}
-        className="flex h-8 items-center gap-1.5 rounded-lg px-2 text-sm text-muted transition-colors hover:bg-surface-hover hover:text-foreground disabled:opacity-50"
+        className="flex h-8 items-center gap-1.5 rounded-lg px-2 text-sm text-foreground transition-colors hover:bg-surface-hover hover:text-foreground disabled:opacity-50"
       >
         <GlobeIcon />
         <span className="hidden sm:inline">{localeDisplayNames[locale]}</span>

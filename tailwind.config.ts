@@ -25,6 +25,8 @@ const config: Config = {
         // Market direction (Korean market convention: red=up, blue=down)
         up: "var(--up)",
         down: "var(--down)",
+        // Price-gap table: green = positive/gain
+        gain: "var(--gain)",
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],

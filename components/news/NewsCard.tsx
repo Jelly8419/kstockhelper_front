@@ -4,7 +4,7 @@ import { Link } from "@/lib/i18n/navigation";
 import { NewsPreview } from "@/types/news";
 import { TICKER_LABEL } from "@/lib/constants/tickers";
 import { Badge } from "@/components/ui/Badge";
-import { formatRegisteredTime } from "@/lib/utils/format";
+import { formatRegisteredTime, withEllipsis } from "@/lib/utils/format";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { buildDetailPath } from "@/lib/utils/slug";
 
@@ -40,7 +40,7 @@ export function NewsCard({ item }: Props) {
       </h3>
 
       <p className="line-clamp-3 text-sm leading-relaxed text-muted">
-        {item.preview}
+        {withEllipsis(item.preview)}
       </p>
     </>
   );

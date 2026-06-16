@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslation } from "@/lib/i18n/useTranslation";
+import { withEllipsis } from "@/lib/utils/format";
 
 /**
  * Summary section for non-entitled viewers (guest / free).
@@ -21,7 +22,9 @@ export function LockedSummary({ preview }: { preview: string | null }) {
       <h2 className="text-sm font-semibold text-muted">{t("news.summary")}</h2>
 
       {preview && (
-        <p className="text-base leading-relaxed text-foreground">{preview}</p>
+        <p className="text-base leading-relaxed text-foreground">
+          {withEllipsis(preview)}
+        </p>
       )}
 
       {/* Blurred dummy tail — mimics the hidden remainder of the summary. */}

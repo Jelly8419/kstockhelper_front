@@ -35,6 +35,20 @@ export function changeDirection(value: number): "up" | "down" | "flat" {
 }
 
 /**
+ * Append an ellipsis (…) to a truncated preview/summary string.
+ *
+ * `preview` / `summary_preview` arrive already cut by the DB view, so they end
+ * mid-sentence (sometimes with a trailing space or a raw "..."). We strip any
+ * trailing whitespace and existing dot/ellipsis runs first, then append a single
+ * "…" so the cut reads cleanly (avoids "to set ..." / "… …" artifacts). Empty or
+ * whitespace-only input is returned untouched (no lone ellipsis).
+ */
+export function withEllipsis(text: string | null | undefined): string {
+  const trimmed = (text ?? "").replace(/[\s.…]+$/, "");
+  return trimmed ? `${trimmed}…` : "";
+}
+
+/**
  * Format an ISO timestamp as "YYYY-MM-DD, HH:mm" in the user's local timezone.
  * PRD: registered time shown per user timezone.
  */

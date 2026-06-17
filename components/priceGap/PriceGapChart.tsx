@@ -143,7 +143,11 @@ export function PriceGapChart({
 
   // Wheel zoom via a non-passive native listener: React's onWheel is passive, so
   // its preventDefault is ignored and the page would scroll while zooming
-  // (Price Gap revisions §9 PC). Bind once; the handler reads live refs.
+  // (Price Gap revisions §9 PC). The handler reads live refs, but the listener
+  // must (re)bind once the chart box actually mounts — the box only renders once
+  // data arrives (n > 0), so we depend on `hasData` to attach it then, not on
+  // the first (empty) render when boxRef is still null.
+  const hasData = n > 0;
   useEffect(() => {
     const box = boxRef.current;
     if (!box) return;
@@ -155,7 +159,7 @@ export function PriceGapChart({
     box.addEventListener("wheel", onWheel, { passive: false });
     return () => box.removeEventListener("wheel", onWheel);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [hasData]);
 
   // --- Mouse drag pan (PC). Touch is handled separately (pinch + swipe). ---
   const onPointerDown = (e: React.PointerEvent) => {

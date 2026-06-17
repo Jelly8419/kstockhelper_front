@@ -31,9 +31,7 @@ export type GuideContent = {
     bybitHelp2: string;
     notice: {
       sameDayApproval: string;
-      premium30Days: string;
       monthlyTradingRequired: string;
-      returnToBasic: string;
     };
   };
   step3: {
@@ -85,12 +83,8 @@ const GUIDE_CONTENT: Partial<Record<SupportedLocale, GuideContent>> = {
       notice: {
         sameDayApproval:
           "UID applications are usually approved on the same day.",
-        premium30Days:
-          "Once your UID is approved, your account gets 30 days of Premium access.",
         monthlyTradingRequired:
           "Monthly trading activity is required to keep Premium.",
-        returnToBasic:
-          "If monthly trading activity is not confirmed, your account will return to Basic.",
       },
     },
     step3: {
@@ -157,12 +151,8 @@ const GUIDE_CONTENT: Partial<Record<SupportedLocale, GuideContent>> = {
       notice: {
         sameDayApproval:
           "Đơn UID thường được phê duyệt trong cùng ngày.",
-        premium30Days:
-          "Sau khi UID được phê duyệt, tài khoản của bạn sẽ có 30 ngày truy cập Premium.",
         monthlyTradingRequired:
           "Cần có hoạt động giao dịch hằng tháng để duy trì Premium.",
-        returnToBasic:
-          "Nếu không xác nhận được hoạt động giao dịch hằng tháng, tài khoản của bạn sẽ trở về Basic.",
       },
     },
     step3: {
@@ -230,12 +220,8 @@ const GUIDE_CONTENT: Partial<Record<SupportedLocale, GuideContent>> = {
       notice: {
         sameDayApproval:
           "As solicitações de UID geralmente são aprovadas no mesmo dia.",
-        premium30Days:
-          "Após a aprovação do seu UID, sua conta recebe 30 dias de acesso Premium.",
         monthlyTradingRequired:
           "É necessário ter atividade de negociação mensal para manter o Premium.",
-        returnToBasic:
-          "Se a atividade de negociação mensal não for confirmada, sua conta voltará para Basic.",
       },
     },
     step3: {
@@ -303,12 +289,8 @@ const GUIDE_CONTENT: Partial<Record<SupportedLocale, GuideContent>> = {
       notice: {
         sameDayApproval:
           "Las solicitudes de UID suelen aprobarse el mismo día.",
-        premium30Days:
-          "Una vez aprobado tu UID, tu cuenta obtiene 30 días de acceso Premium.",
         monthlyTradingRequired:
           "Se requiere actividad de trading mensual para mantener Premium.",
-        returnToBasic:
-          "Si no se confirma actividad de trading mensual, tu cuenta volverá a Basic.",
       },
     },
     step3: {
@@ -375,12 +357,8 @@ const GUIDE_CONTENT: Partial<Record<SupportedLocale, GuideContent>> = {
       notice: {
         sameDayApproval:
           "Pengajuan UID biasanya disetujui pada hari yang sama.",
-        premium30Days:
-          "Setelah UID Anda disetujui, akun Anda mendapatkan akses Premium selama 30 hari.",
         monthlyTradingRequired:
           "Aktivitas trading bulanan diperlukan untuk mempertahankan Premium.",
-        returnToBasic:
-          "Jika aktivitas trading bulanan tidak terkonfirmasi, akun Anda akan kembali ke Basic.",
       },
     },
     step3: {
@@ -447,12 +425,8 @@ const GUIDE_CONTENT: Partial<Record<SupportedLocale, GuideContent>> = {
       notice: {
         sameDayApproval:
           "UID आवेदन आमतौर पर उसी दिन स्वीकृत हो जाते हैं.",
-        premium30Days:
-          "आपका UID स्वीकृत होने के बाद, आपके खाते को 30 दिनों का Premium एक्सेस मिलेगा.",
         monthlyTradingRequired:
           "Premium बनाए रखने के लिए मासिक ट्रेडिंग गतिविधि आवश्यक है.",
-        returnToBasic:
-          "यदि मासिक ट्रेडिंग गतिविधि की पुष्टि नहीं होती है, तो आपका खाता Basic पर वापस चला जाएगा.",
       },
     },
     step3: {
@@ -520,12 +494,8 @@ const GUIDE_CONTENT: Partial<Record<SupportedLocale, GuideContent>> = {
       notice: {
         sameDayApproval:
           "Заявки по UID обычно одобряются в тот же день.",
-        premium30Days:
-          "После одобрения UID ваш аккаунт получит доступ Premium на 30 дней.",
         monthlyTradingRequired:
           "Для сохранения Premium требуется ежемесячная торговая активность.",
-        returnToBasic:
-          "Если ежемесячная торговая активность не подтверждена, ваш аккаунт вернется на Basic.",
       },
     },
     step3: {
@@ -593,12 +563,8 @@ const GUIDE_CONTENT: Partial<Record<SupportedLocale, GuideContent>> = {
       notice: {
         sameDayApproval:
           "Заявки UID зазвичай схвалюються того ж дня.",
-        premium30Days:
-          "Після схвалення UID ваш акаунт отримає 30 днів доступу Premium.",
         monthlyTradingRequired:
           "Для збереження Premium потрібна щомісячна торгова активність.",
-        returnToBasic:
-          "Якщо щомісячну торгову активність не підтверджено, ваш акаунт повернеться до Basic.",
       },
     },
     step3: {
@@ -664,9 +630,7 @@ const GUIDE_CONTENT: Partial<Record<SupportedLocale, GuideContent>> = {
       bybitHelp2: "僅複製 UID 數字。",
       notice: {
         sameDayApproval: "UID 申請通常會在同日完成核准。",
-        premium30Days: "UID 核准後，您的帳戶將獲得 30 天 Premium 存取權。",
         monthlyTradingRequired: "若要維持 Premium，需要每月有交易活動。",
-        returnToBasic: "如果未確認每月交易活動，您的帳戶將回到 Basic。",
       },
     },
     step3: {

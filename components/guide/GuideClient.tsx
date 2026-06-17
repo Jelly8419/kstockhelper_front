@@ -91,9 +91,7 @@ export function GuideClient() {
         </div>
         <div className="mt-4 flex flex-col gap-2">
           <Notice>{c.step2.notice.sameDayApproval}</Notice>
-          <Notice>{c.step2.notice.premium30Days}</Notice>
           <Notice>{c.step2.notice.monthlyTradingRequired}</Notice>
-          <Notice>{c.step2.notice.returnToBasic}</Notice>
         </div>
       </StepCard>
 

@@ -4,6 +4,7 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale, getMessages } from "next-intl/server";
 import { Gnb } from "@/components/layout/Gnb";
 import { Footer } from "@/components/layout/Footer";
+import { SiteJsonLd } from "@/components/seo/SiteJsonLd";
 import { routing } from "@/lib/i18n/routing";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { translate } from "@/lib/i18n/translate";
@@ -68,6 +69,7 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
+      <SiteJsonLd locale={locale} />
       <Gnb />
       <main className="flex-1">{children}</main>
       <Footer />

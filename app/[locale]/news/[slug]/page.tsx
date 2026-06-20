@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getNewsBySeqId } from "@/lib/api/news";
 import { NewsDetailGate } from "@/components/news/NewsDetailGate";
+import { NewsJsonLd } from "@/components/news/NewsJsonLd";
 import { getAppTranslations } from "@/lib/i18n/getTranslations";
 import { resolveContentLocale } from "@/lib/i18n/normalize";
 import { buildDetailMetadata } from "@/lib/seo/detailMeta";
@@ -54,6 +55,7 @@ export default async function NewsDetailPage({
       >
         {t("common.back")}
       </Link>
+      <NewsJsonLd item={item} locale={params.locale} />
       <NewsDetailGate item={item} />
     </div>
   );

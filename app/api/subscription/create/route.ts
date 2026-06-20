@@ -1,6 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { backendUrl } from "@/lib/env/backend";
+import { isRestrictedForSubscription } from "@/lib/geo/bannerGate";
 
 export const dynamic = "force-dynamic";
 
@@ -21,7 +22,7 @@ const BACKEND_CREATE_URL = backendUrl(
  * Returns the backend's { success, code, message, approvalUrl } envelope. The
  * frontend maps `code` → i18n key; `message` is a fallback only.
  */
-export async function POST() {
+export async function POST(request: NextRequest) {
   const supabase = createClient();
   const {
     data: { user },
@@ -42,12 +43,17 @@ export async function POST() {
   }
 
   try {
-    // Forward the trusted session userId. The backend re-validates the region
-    // (the client cookie is non-httpOnly / tamperable — see backend doc §5).
+    // Resolve the restricted-region decision HERE (Vercel edge has the real geo).
+    // The backend can't trust its own socket IP — that's this BFF (Vercel) IP, not
+    // the user's. So we send the authoritative decision and the backend trusts it
+    // (same trust model as bybit/binance verify forwarding the session userId).
+    const restricted = isRestrictedForSubscription(request);
+
+    // Forward the trusted session userId + region decision.
     const res = await fetch(BACKEND_CREATE_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: user.id }),
+      body: JSON.stringify({ userId: user.id, restricted }),
     });
 
     const data = (await res.json().catch(() => null)) as {

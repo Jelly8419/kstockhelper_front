@@ -204,7 +204,14 @@
     "binanceUidRequired": "Vui lòng nhập UID Binance của bạn.",
     "binanceUidAlreadyLinked": "UID Binance này đã được liên kết với tài khoản khác.",
     "binanceUserNotFound": "Không tìm thấy người dùng Binance. Kiểm tra UID và thử lại.",
-    "binanceConnectError": "Kết nối Binance thất bại. Vui lòng thử lại sau."
+    "binanceConnectError": "Kết nối Binance thất bại. Vui lòng thử lại sau.",
+    "subscriptionCreateOk": "Đã tạo gói đăng ký. Đang chuyển đến PayPal…",
+    "subscriptionAlreadyActive": "Bạn đã có một gói đăng ký đang hoạt động.",
+    "subscriptionRegionBlocked": "Gói đăng ký không khả dụng tại khu vực của bạn.",
+    "subscriptionCreateError": "Không thể bắt đầu gói đăng ký. Vui lòng thử lại.",
+    "subscriptionCancelOk": "Gói đăng ký của bạn đã bị hủy.",
+    "subscriptionNotActive": "Bạn không có gói đăng ký đang hoạt động.",
+    "subscriptionCancelError": "Không thể hủy gói đăng ký của bạn. Vui lòng thử lại."
   },
   "seo": {
     "title": "K-Stock Helper - Tin tức chứng khoán Hàn Quốc bằng tiếng Anh",
@@ -213,5 +220,44 @@
     "newsDescription": "Đọc bản tóm tắt ngắn về tin tức thị trường chứng khoán Hàn Quốc. Phân tích AI đầy đủ dành cho thành viên Premium.",
     "disclosureDescription": "Đọc bản tóm tắt công bố của thị trường chứng khoán Hàn Quốc và bối cảnh liên quan. Phân tích AI đầy đủ dành cho thành viên Premium.",
     "relatedStocks": "Cổ phiếu liên quan"
+  },
+  "subscription": {
+    "title": "Đăng ký Premium",
+    "subtitle": "Mở khóa toàn quyền truy cập các tính năng Premium của K-Stock Helper.",
+    "priceLine": "$1 cho tháng đầu tiên, sau đó $4.90 / tháng",
+    "cancelAnytime": "Hủy bất cứ lúc nào",
+    "benefitsTitle": "Lợi ích Premium",
+    "benefit1": "Price Gap Tracker & dữ liệu thị trường theo thời gian thực",
+    "benefit2": "Công cụ dữ liệu nâng cao",
+    "benefit3": "Tin tức thị trường Hàn Quốc theo thời gian thực, được tóm tắt thành các điểm chính",
+    "refundPolicy": "Khoản hoàn tiền có thể được xem xét trong các trường hợp như lỗi dịch vụ, tính phí trùng lặp hoặc sự cố xử lý thanh toán.",
+    "cta": "Tiếp tục với PayPal",
+    "processing": "Đang chuyển đến PayPal…",
+    "unavailable": "Trang này không khả dụng.",
+    "alreadyPremium": "Bạn đã có quyền truy cập Premium. Quản lý gói đăng ký trong Cài đặt.",
+    "error": "Đã xảy ra sự cố. Vui lòng thử lại.",
+    "activating": "Đang xác nhận thanh toán của bạn… Premium sẽ sớm được kích hoạt.",
+    "successTitle": "Cảm ơn bạn đã đăng ký!",
+    "activated": "Quyền truy cập Premium của bạn hiện đã được kích hoạt.",
+    "stillActivating": "Thanh toán của bạn đang được xác nhận. Việc này có thể mất một chút thời gian — vui lòng làm mới sau vài giây.",
+    "goToMonitor": "Đi đến Price Gap Monitor",
+    "goToSettings": "Xem gói đăng ký trong Cài đặt",
+    "cardTitle": "Gói đăng ký",
+    "statusBadge": {
+      "basic": "Basic",
+      "premium": "Premium"
+    },
+    "active": "Gói đăng ký Premium của bạn đang hoạt động.",
+    "nextBilling": "Thanh toán tiếp theo: {date}",
+    "cancelButton": "Hủy gói đăng ký",
+    "canceling": "Đang hủy…",
+    "cancelPending": "Premium có hiệu lực đến {date}. Gói đăng ký của bạn đã bị hủy và sẽ không gia hạn.",
+    "paymentFailed": "Không thể hoàn tất thanh toán của bạn.",
+    "subscribeCta": "Đăng ký Premium",
+    "modal": {
+      "title": "Cần đăng ký Premium",
+      "body": "Đăng ký Premium để truy cập dữ liệu Price Gap theo thời gian thực và các tính năng Premium.",
+      "cta": "Xem gói đăng ký"
+    }
   }
 }

@@ -204,7 +204,14 @@
     "binanceUidRequired": "Masukkan UID Binance Anda.",
     "binanceUidAlreadyLinked": "UID Binance ini sudah tertaut ke akun lain.",
     "binanceUserNotFound": "Pengguna Binance tidak ditemukan. Periksa UID Anda dan coba lagi.",
-    "binanceConnectError": "Koneksi Binance gagal. Silakan coba lagi nanti."
+    "binanceConnectError": "Koneksi Binance gagal. Silakan coba lagi nanti.",
+    "subscriptionCreateOk": "Langganan dibuat. Mengalihkan ke PayPal…",
+    "subscriptionAlreadyActive": "Anda sudah memiliki langganan aktif.",
+    "subscriptionRegionBlocked": "Langganan tidak tersedia di wilayah Anda.",
+    "subscriptionCreateError": "Tidak dapat memulai langganan. Silakan coba lagi.",
+    "subscriptionCancelOk": "Langganan Anda telah dibatalkan.",
+    "subscriptionNotActive": "Anda tidak memiliki langganan aktif.",
+    "subscriptionCancelError": "Tidak dapat membatalkan langganan Anda. Silakan coba lagi."
   },
   "seo": {
     "title": "K-Stock Helper - Berita saham Korea dalam bahasa Inggris",
@@ -213,5 +220,44 @@
     "newsDescription": "Baca ringkasan singkat berita pasar saham Korea. Analisis AI lengkap tersedia untuk anggota Premium.",
     "disclosureDescription": "Baca ringkasan singkat keterbukaan informasi pasar saham Korea dan konteks terkait. Analisis AI lengkap tersedia untuk anggota Premium.",
     "relatedStocks": "Saham terkait"
+  },
+  "subscription": {
+    "title": "Langganan Premium",
+    "subtitle": "Buka akses penuh ke fitur Premium K-Stock Helper.",
+    "priceLine": "$1 untuk bulan pertama, lalu $4.90 / bulan",
+    "cancelAnytime": "Batalkan kapan saja",
+    "benefitsTitle": "Manfaat Premium",
+    "benefit1": "Price Gap Tracker & data pasar real-time",
+    "benefit2": "Alat data lanjutan",
+    "benefit3": "Berita pasar Korea real-time, diringkas menjadi poin utama",
+    "refundPolicy": "Pengembalian dana dapat ditinjau untuk kasus seperti kesalahan layanan, tagihan ganda, atau masalah pemrosesan pembayaran.",
+    "cta": "Lanjutkan dengan PayPal",
+    "processing": "Mengalihkan ke PayPal…",
+    "unavailable": "Halaman ini tidak tersedia.",
+    "alreadyPremium": "Anda sudah memiliki akses Premium. Kelola langganan Anda di Pengaturan.",
+    "error": "Terjadi kesalahan. Silakan coba lagi.",
+    "activating": "Mengonfirmasi pembayaran Anda… Premium akan segera diaktifkan.",
+    "successTitle": "Terima kasih telah berlangganan!",
+    "activated": "Akses Premium Anda sekarang aktif.",
+    "stillActivating": "Pembayaran Anda sedang dikonfirmasi. Ini mungkin perlu beberapa saat — silakan segarkan dalam beberapa detik.",
+    "goToMonitor": "Buka Price Gap Monitor",
+    "goToSettings": "Lihat langganan di Pengaturan",
+    "cardTitle": "Langganan",
+    "statusBadge": {
+      "basic": "Basic",
+      "premium": "Premium"
+    },
+    "active": "Langganan Premium Anda aktif.",
+    "nextBilling": "Tagihan berikutnya: {date}",
+    "cancelButton": "Batalkan langganan",
+    "canceling": "Membatalkan…",
+    "cancelPending": "Premium aktif hingga {date}. Langganan Anda telah dibatalkan dan tidak akan diperpanjang.",
+    "paymentFailed": "Pembayaran Anda tidak dapat diselesaikan.",
+    "subscribeCta": "Berlangganan Premium",
+    "modal": {
+      "title": "Langganan Premium diperlukan",
+      "body": "Berlangganan Premium untuk mengakses data Price Gap real-time dan fitur Premium.",
+      "cta": "Lihat langganan"
+    }
   }
 }

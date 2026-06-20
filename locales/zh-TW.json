@@ -204,7 +204,14 @@
     "binanceUidRequired": "請輸入您的 Binance UID。",
     "binanceUidAlreadyLinked": "此 Binance UID 已連結至其他帳號。",
     "binanceUserNotFound": "找不到 Binance 使用者。請檢查您的 UID 並重試。",
-    "binanceConnectError": "Binance 連接失敗。請稍後再試。"
+    "binanceConnectError": "Binance 連接失敗。請稍後再試。",
+    "subscriptionCreateOk": "訂閱已建立。正在前往 PayPal…",
+    "subscriptionAlreadyActive": "你已擁有有效訂閱。",
+    "subscriptionRegionBlocked": "你所在的地區無法使用訂閱。",
+    "subscriptionCreateError": "無法開始訂閱。請再試一次。",
+    "subscriptionCancelOk": "你的訂閱已取消。",
+    "subscriptionNotActive": "你沒有有效訂閱。",
+    "subscriptionCancelError": "無法取消你的訂閱。請再試一次。"
   },
   "seo": {
     "title": "K-Stock Helper - 英文韓國股市新聞",
@@ -213,5 +220,44 @@
     "newsDescription": "閱讀韓國股市新聞的簡短摘要。完整 AI 分析提供給 Premium 會員。",
     "disclosureDescription": "閱讀韓國股市公告的簡短摘要與相關背景。完整 AI 分析提供給 Premium 會員。",
     "relatedStocks": "相關股票"
+  },
+  "subscription": {
+    "title": "Premium 訂閱",
+    "subtitle": "解鎖 K-Stock Helper Premium 功能的完整使用權限。",
+    "priceLine": "首月 $1，之後每月 $4.90",
+    "cancelAnytime": "可隨時取消",
+    "benefitsTitle": "Premium 權益",
+    "benefit1": "即時 Price Gap Tracker 與市場資料",
+    "benefit2": "進階資料工具",
+    "benefit3": "即時韓國市場新聞，濃縮為重點摘要",
+    "refundPolicy": "如遇服務錯誤、重複扣款或付款處理問題，可能會審核退款。",
+    "cta": "使用 PayPal 繼續",
+    "processing": "正在前往 PayPal…",
+    "unavailable": "此頁面無法使用。",
+    "alreadyPremium": "你已擁有 Premium 使用權限。請在設定中管理訂閱。",
+    "error": "發生錯誤。請再試一次。",
+    "activating": "正在確認你的付款… Premium 將很快啟用。",
+    "successTitle": "感謝你的訂閱！",
+    "activated": "你的 Premium 使用權限現已啟用。",
+    "stillActivating": "你的付款正在確認中。這可能需要一點時間，請幾秒後重新整理。",
+    "goToMonitor": "前往 Price Gap Monitor",
+    "goToSettings": "在設定中查看訂閱",
+    "cardTitle": "訂閱",
+    "statusBadge": {
+      "basic": "Basic",
+      "premium": "Premium"
+    },
+    "active": "你的 Premium 訂閱已啟用。",
+    "nextBilling": "下次付款：{date}",
+    "cancelButton": "取消訂閱",
+    "canceling": "正在取消…",
+    "cancelPending": "Premium 將有效至 {date}。你的訂閱已取消，且不會續訂。",
+    "paymentFailed": "你的付款無法完成。",
+    "subscribeCta": "訂閱 Premium",
+    "modal": {
+      "title": "需要 Premium 訂閱",
+      "body": "訂閱 Premium，即可使用即時 Price Gap 資料與 Premium 功能。",
+      "cta": "查看訂閱"
+    }
   }
 }

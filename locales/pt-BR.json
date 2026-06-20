@@ -204,7 +204,14 @@
     "binanceUidRequired": "Digite seu UID da Binance.",
     "binanceUidAlreadyLinked": "Este UID da Binance já está vinculado a outra conta.",
     "binanceUserNotFound": "Usuário Binance não encontrado. Verifique seu UID e tente novamente.",
-    "binanceConnectError": "Falha na conexão com a Binance. Tente novamente mais tarde."
+    "binanceConnectError": "Falha na conexão com a Binance. Tente novamente mais tarde.",
+    "subscriptionCreateOk": "Assinatura criada. Redirecionando para o PayPal…",
+    "subscriptionAlreadyActive": "Você já tem uma assinatura ativa.",
+    "subscriptionRegionBlocked": "A assinatura não está disponível na sua região.",
+    "subscriptionCreateError": "Não foi possível iniciar a assinatura. Tente novamente.",
+    "subscriptionCancelOk": "Sua assinatura foi cancelada.",
+    "subscriptionNotActive": "Você não tem uma assinatura ativa.",
+    "subscriptionCancelError": "Não foi possível cancelar sua assinatura. Tente novamente."
   },
   "seo": {
     "title": "K-Stock Helper - Notícias do mercado acionário coreano em inglês",
@@ -213,5 +220,44 @@
     "newsDescription": "Leia um breve resumo das notícias do mercado de ações coreano. A análise completa por IA está disponível para membros Premium.",
     "disclosureDescription": "Leia um breve resumo de um comunicado do mercado de ações coreano e seu contexto relacionado. A análise completa por IA está disponível para membros Premium.",
     "relatedStocks": "Ações relacionadas"
+  },
+  "subscription": {
+    "title": "Assinatura Premium",
+    "subtitle": "Desbloqueie acesso completo aos recursos Premium do K-Stock Helper.",
+    "priceLine": "$1 no primeiro mês, depois $4.90 / mês",
+    "cancelAnytime": "Cancele a qualquer momento",
+    "benefitsTitle": "Benefícios Premium",
+    "benefit1": "Price Gap Tracker e dados de mercado em tempo real",
+    "benefit2": "Ferramentas avançadas de dados",
+    "benefit3": "Notícias do mercado coreano em tempo real, resumidas em pontos-chave",
+    "refundPolicy": "Reembolsos podem ser analisados em casos como erros de serviço, cobranças duplicadas ou problemas no processamento do pagamento.",
+    "cta": "Continuar com PayPal",
+    "processing": "Redirecionando para o PayPal…",
+    "unavailable": "Esta página não está disponível.",
+    "alreadyPremium": "Você já tem acesso Premium. Gerencie sua assinatura nas Configurações.",
+    "error": "Algo deu errado. Tente novamente.",
+    "activating": "Confirmando seu pagamento… O Premium será ativado em breve.",
+    "successTitle": "Obrigado por assinar!",
+    "activated": "Seu acesso Premium agora está ativo.",
+    "stillActivating": "Seu pagamento está sendo confirmado. Isso pode levar um momento — atualize a página em alguns segundos.",
+    "goToMonitor": "Ir para Price Gap Monitor",
+    "goToSettings": "Ver assinatura nas Configurações",
+    "cardTitle": "Assinatura",
+    "statusBadge": {
+      "basic": "Basic",
+      "premium": "Premium"
+    },
+    "active": "Sua assinatura Premium está ativa.",
+    "nextBilling": "Próxima cobrança: {date}",
+    "cancelButton": "Cancelar assinatura",
+    "canceling": "Cancelando…",
+    "cancelPending": "O Premium fica ativo até {date}. Sua assinatura foi cancelada e não será renovada.",
+    "paymentFailed": "Seu pagamento não pôde ser concluído.",
+    "subscribeCta": "Assinar Premium",
+    "modal": {
+      "title": "Assinatura Premium necessária",
+      "body": "Assine o Premium para acessar dados de Price Gap em tempo real e recursos Premium.",
+      "cta": "Ver assinatura"
+    }
   }
 }

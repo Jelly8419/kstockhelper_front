@@ -204,7 +204,14 @@
     "binanceUidRequired": "कृपया अपना Binance UID दर्ज करें।",
     "binanceUidAlreadyLinked": "यह Binance UID पहले से किसी अन्य खाते से जुड़ा है।",
     "binanceUserNotFound": "Binance उपयोगकर्ता नहीं मिला। अपना UID जाँचें और फिर से प्रयास करें।",
-    "binanceConnectError": "Binance कनेक्शन विफल रहा। कृपया बाद में फिर से प्रयास करें।"
+    "binanceConnectError": "Binance कनेक्शन विफल रहा। कृपया बाद में फिर से प्रयास करें।",
+    "subscriptionCreateOk": "सदस्यता बनाई गई। PayPal पर रीडायरेक्ट किया जा रहा है…",
+    "subscriptionAlreadyActive": "आपके पास पहले से एक सक्रिय सदस्यता है।",
+    "subscriptionRegionBlocked": "आपके क्षेत्र में सदस्यता उपलब्ध नहीं है।",
+    "subscriptionCreateError": "सदस्यता शुरू नहीं की जा सकी। कृपया फिर से प्रयास करें।",
+    "subscriptionCancelOk": "आपकी सदस्यता रद्द कर दी गई है।",
+    "subscriptionNotActive": "आपके पास सक्रिय सदस्यता नहीं है।",
+    "subscriptionCancelError": "आपकी सदस्यता रद्द नहीं की जा सकी। कृपया फिर से प्रयास करें।"
   },
   "seo": {
     "title": "K-Stock Helper - अंग्रेज़ी में कोरियाई स्टॉक समाचार",
@@ -213,5 +220,44 @@
     "newsDescription": "कोरियाई शेयर बाज़ार की खबरों का संक्षिप्त सारांश पढ़ें। पूरा AI विश्लेषण Premium सदस्यों के लिए उपलब्ध है।",
     "disclosureDescription": "कोरियाई शेयर बाज़ार की एक डिस्क्लोज़र और संबंधित संदर्भ का संक्षिप्त सारांश पढ़ें। पूरा AI विश्लेषण Premium सदस्यों के लिए उपलब्ध है।",
     "relatedStocks": "संबंधित शेयर"
+  },
+  "subscription": {
+    "title": "प्रीमियम सदस्यता",
+    "subtitle": "K-Stock Helper की Premium सुविधाओं का पूरा एक्सेस अनलॉक करें।",
+    "priceLine": "पहले महीने के लिए $1, फिर $4.90 / माह",
+    "cancelAnytime": "कभी भी रद्द करें",
+    "benefitsTitle": "प्रीमियम लाभ",
+    "benefit1": "रीयल-टाइम Price Gap Tracker और मार्केट डेटा",
+    "benefit2": "उन्नत डेटा टूल",
+    "benefit3": "रीयल-टाइम कोरियाई बाजार समाचार, मुख्य बिंदुओं में सारांशित",
+    "refundPolicy": "सेवा त्रुटि, दोहरा शुल्क या भुगतान प्रसंस्करण समस्या जैसे मामलों में रिफंड की समीक्षा की जा सकती है।",
+    "cta": "PayPal के साथ जारी रखें",
+    "processing": "PayPal पर रीडायरेक्ट किया जा रहा है…",
+    "unavailable": "यह पेज उपलब्ध नहीं है।",
+    "alreadyPremium": "आपके पास पहले से Premium एक्सेस है। Settings में अपनी सदस्यता प्रबंधित करें।",
+    "error": "कुछ गलत हो गया। कृपया फिर से प्रयास करें।",
+    "activating": "आपके भुगतान की पुष्टि की जा रही है… Premium जल्द ही सक्रिय हो जाएगा।",
+    "successTitle": "सदस्यता लेने के लिए धन्यवाद!",
+    "activated": "आपका Premium एक्सेस अब सक्रिय है।",
+    "stillActivating": "आपके भुगतान की पुष्टि की जा रही है। इसमें थोड़ा समय लग सकता है — कृपया कुछ सेकंड बाद रिफ्रेश करें।",
+    "goToMonitor": "Price Gap Monitor पर जाएं",
+    "goToSettings": "Settings में सदस्यता देखें",
+    "cardTitle": "सदस्यता",
+    "statusBadge": {
+      "basic": "Basic",
+      "premium": "Premium"
+    },
+    "active": "आपकी Premium सदस्यता सक्रिय है।",
+    "nextBilling": "अगला बिलिंग: {date}",
+    "cancelButton": "सदस्यता रद्द करें",
+    "canceling": "रद्द किया जा रहा है…",
+    "cancelPending": "Premium {date} तक सक्रिय रहेगा। आपकी सदस्यता रद्द कर दी गई है और नवीनीकृत नहीं होगी।",
+    "paymentFailed": "आपका भुगतान पूरा नहीं हो सका।",
+    "subscribeCta": "Premium की सदस्यता लें",
+    "modal": {
+      "title": "Premium सदस्यता आवश्यक है",
+      "body": "रीयल-टाइम Price Gap डेटा और Premium सुविधाओं तक पहुंचने के लिए Premium की सदस्यता लें।",
+      "cta": "सदस्यता देखें"
+    }
   }
 }

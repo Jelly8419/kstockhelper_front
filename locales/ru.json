@@ -204,7 +204,14 @@
     "binanceUidRequired": "Введите ваш UID Binance.",
     "binanceUidAlreadyLinked": "Этот UID Binance уже привязан к другому аккаунту.",
     "binanceUserNotFound": "Пользователь Binance не найден. Проверьте UID и попробуйте снова.",
-    "binanceConnectError": "Подключение Binance не удалось. Попробуйте позже."
+    "binanceConnectError": "Подключение Binance не удалось. Попробуйте позже.",
+    "subscriptionCreateOk": "Подписка создана. Перенаправление в PayPal…",
+    "subscriptionAlreadyActive": "У вас уже есть активная подписка.",
+    "subscriptionRegionBlocked": "Подписка недоступна в вашем регионе.",
+    "subscriptionCreateError": "Не удалось начать подписку. Повторите попытку.",
+    "subscriptionCancelOk": "Ваша подписка отменена.",
+    "subscriptionNotActive": "У вас нет активной подписки.",
+    "subscriptionCancelError": "Не удалось отменить подписку. Повторите попытку."
   },
   "seo": {
     "title": "K-Stock Helper — новости корейских акций на английском",
@@ -213,5 +220,44 @@
     "newsDescription": "Прочитайте краткое резюме новостей корейского фондового рынка. Полный AI-анализ доступен Premium-участникам.",
     "disclosureDescription": "Прочитайте краткое резюме раскрытия информации на корейском фондовом рынке и связанный контекст. Полный AI-анализ доступен Premium-участникам.",
     "relatedStocks": "Связанные акции"
+  },
+  "subscription": {
+    "title": "Премиум-подписка",
+    "subtitle": "Откройте полный доступ к Premium-функциям K-Stock Helper.",
+    "priceLine": "$1 за первый месяц, затем $4.90 / месяц",
+    "cancelAnytime": "Отменить можно в любое время",
+    "benefitsTitle": "Преимущества Premium",
+    "benefit1": "Price Gap Tracker и рыночные данные в реальном времени",
+    "benefit2": "Расширенные инструменты данных",
+    "benefit3": "Новости корейского рынка в реальном времени, кратко по ключевым пунктам",
+    "refundPolicy": "Возврат средств может быть рассмотрен в случаях ошибок сервиса, повторного списания или проблем с обработкой платежа.",
+    "cta": "Продолжить через PayPal",
+    "processing": "Перенаправление в PayPal…",
+    "unavailable": "Эта страница недоступна.",
+    "alreadyPremium": "У вас уже есть доступ Premium. Управляйте подпиской в настройках.",
+    "error": "Что-то пошло не так. Повторите попытку.",
+    "activating": "Подтверждаем ваш платеж… Premium скоро будет активирован.",
+    "successTitle": "Спасибо за подписку!",
+    "activated": "Ваш доступ Premium теперь активен.",
+    "stillActivating": "Ваш платеж подтверждается. Это может занять немного времени — обновите страницу через несколько секунд.",
+    "goToMonitor": "Перейти к Price Gap Monitor",
+    "goToSettings": "Посмотреть подписку в настройках",
+    "cardTitle": "Подписка",
+    "statusBadge": {
+      "basic": "Basic",
+      "premium": "Premium"
+    },
+    "active": "Ваша подписка Premium активна.",
+    "nextBilling": "Следующее списание: {date}",
+    "cancelButton": "Отменить подписку",
+    "canceling": "Отмена…",
+    "cancelPending": "Premium активен до {date}. Ваша подписка отменена и не будет продлеваться.",
+    "paymentFailed": "Не удалось завершить ваш платеж.",
+    "subscribeCta": "Оформить Premium",
+    "modal": {
+      "title": "Требуется подписка Premium",
+      "body": "Оформите Premium, чтобы получать данные Price Gap в реальном времени и Premium-функции.",
+      "cta": "Посмотреть подписку"
+    }
   }
 }

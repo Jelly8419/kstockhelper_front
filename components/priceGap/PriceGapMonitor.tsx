@@ -98,6 +98,11 @@ export function PriceGapMonitor({ tier }: { tier: "free" | "premium" }) {
         showAvg={showAvg}
       />
 
+      <div className="rounded-xl border border-border bg-surface px-4 py-3 text-sm leading-relaxed text-muted">
+        <p>{t("priceGap.chart.introLine1")}</p>
+        <p>{t("priceGap.chart.introLine2")}</p>
+      </div>
+
       <PriceGapFooter tier={tier} />
     </section>
   );

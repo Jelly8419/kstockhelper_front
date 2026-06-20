@@ -322,7 +322,9 @@
       "avgGapLine": "{n}D Avg Gap",
       "gapVsPastAvg": "Gap vs Past Avg",
       "date": "Date:",
-      "localTime": "Local Time"
+      "localTime": "Local Time",
+      "introLine1": "This chart is a comparison indicator that helps you see whether the exchange price is trading higher or lower than usual relative to the Korean market reference price.",
+      "introLine2": "For example, if the Current Gap is lower than the 10D Avg Gap, it means the current price is trading lower than its recent average level."
     },
     "filters": {
       "exchange": "Exchange",

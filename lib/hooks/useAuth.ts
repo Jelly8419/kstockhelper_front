@@ -3,7 +3,12 @@
 import { useCallback, useEffect, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
-import { BinanceStatus, UserTier } from "@/types/user";
+import {
+  BinanceStatus,
+  SubscriptionPlan,
+  SubscriptionStatus,
+  UserTier,
+} from "@/types/user";
 
 interface AuthState {
   /** guest (logged out) | free (logged in, tier!='premium') | premium (tier='premium'). */
@@ -12,6 +17,11 @@ interface AuthState {
   bybitUid: string | null;
   binanceUid: string | null;
   binanceStatus: BinanceStatus;
+  /** PayPal subscription status (restricted regions); display-only. */
+  subscriptionStatus: SubscriptionStatus;
+  subscriptionPlan: SubscriptionPlan | null;
+  nextBillingAt: string | null;
+  lastPaymentFailed: boolean;
   isLoading: boolean;
 }
 
@@ -26,6 +36,10 @@ const GUEST: AuthState = {
   bybitUid: null,
   binanceUid: null,
   binanceStatus: "not_applied",
+  subscriptionStatus: "none",
+  subscriptionPlan: null,
+  nextBillingAt: null,
+  lastPaymentFailed: false,
   isLoading: false,
 };
 
@@ -46,16 +60,22 @@ export function useAuth(): UseAuth {
     const email = session.user.email ?? null;
     const { data } = await supabase
       .from("users")
-      .select("tier, bybit_uid, binance_uid, binance_uid_status")
+      .select(
+        "tier, bybit_uid, binance_uid, binance_uid_status, subscription_status, subscription_plan, subscription_next_billing_at, subscription_last_payment_status"
+      )
       .eq("id", session.user.id)
       .maybeSingle();
 
     const dbTier = data?.tier as "free" | "premium" | undefined;
     const binanceStatus = (data?.binance_uid_status as BinanceStatus) ?? "not_applied";
     // Premium is decided solely by tier: the backend promotes a user to
-    // tier='premium' when their Bybit links or their Binance UID is approved.
-    // (binanceStatus is still surfaced below for the Settings UI.)
+    // tier='premium' when their Bybit links, their Binance UID is approved, OR
+    // their PayPal subscription activates. (binanceStatus / subscription* are
+    // still surfaced below for the Settings / Subscription UI.)
     const isPremium = dbTier === "premium";
+
+    const subscriptionStatus =
+      (data?.subscription_status as SubscriptionStatus | undefined) ?? "none";
 
     return {
       tier: (isPremium ? "premium" : "free") as UserTier,
@@ -63,6 +83,12 @@ export function useAuth(): UseAuth {
       bybitUid: (data?.bybit_uid as string | null) ?? null,
       binanceUid: (data?.binance_uid as string | null) ?? null,
       binanceStatus,
+      subscriptionStatus,
+      subscriptionPlan:
+        (data?.subscription_plan as SubscriptionPlan | null) ?? null,
+      nextBillingAt:
+        (data?.subscription_next_billing_at as string | null) ?? null,
+      lastPaymentFailed: subscriptionStatus === "past_due",
       isLoading: false,
     };
   }, []);

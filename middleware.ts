@@ -6,6 +6,7 @@ import {
   shouldShowBanner,
   SHOW_BANNER_HEADER,
   isRestrictedRegion,
+  isRestrictedForSubscription,
   RESTRICTED_REGION_COOKIE,
   isWhitelistedRequest,
 } from "@/lib/geo/bannerGate";
@@ -48,6 +49,18 @@ function isPriceGapPath(pathname: string): boolean {
   const segments = pathname.split("/").filter(Boolean);
   if (segments[0] === "price-gap" && segments.length === 1) return true;
   if (segments[1] === "price-gap" && segments.length === 2) return true;
+  return false;
+}
+
+/**
+ * Whether `pathname` targets the subscription page (`/subscription` or
+ * `/{locale}/subscription`). Allowed (non-restricted) regions are redirected
+ * away from it — PayPal subscription is a restricted-region-only path.
+ */
+function isSubscriptionPath(pathname: string): boolean {
+  const segments = pathname.split("/").filter(Boolean);
+  if (segments[0] === "subscription" && segments.length === 1) return true;
+  if (segments[1] === "subscription" && segments.length === 2) return true;
   return false;
 }
 
@@ -124,17 +137,44 @@ export async function middleware(request: NextRequest) {
   const showBanner = shouldShowBanner(request);
   request.headers.set(SHOW_BANNER_HEADER, showBanner ? "true" : "false");
 
-  const restricted = isRestrictedRegion(request);
+  // Two restriction decisions, deliberately separate:
+  //  - `restricted` (subscription policy): banner-hidden set ∪ unknown country
+  //    (prod). Drives the client cookie / subscription UI / Gap-Monitor premium
+  //    path. Unknown → restricted in prod is the "safe default" (PayPal path).
+  //  - `bannerRestricted` (exchange/guide policy): banner-hidden set only, with
+  //    unknown → NOT restricted (so local dev keeps the guide/UID flow).
+  const restricted = isRestrictedForSubscription(request);
+  const bannerRestricted = isRestrictedRegion(request);
 
   // Restricted regions cannot access the Start-Trading guide directly — send
-  // them home (`/{locale}/`). Server-side (IP-based) so it can't be bypassed by
-  // tampering with the client-readable cookie below.
-  if (restricted && isGuidePath(pathname)) {
+  // them home (`/{locale}/`). Uses the banner (exchange) restriction so unknown
+  // countries (local dev) aren't bounced off the guide. Server-side (IP-based)
+  // so it can't be bypassed by tampering with the client-readable cookie below.
+  if (bannerRestricted && isGuidePath(pathname)) {
     const url = request.nextUrl.clone();
     url.pathname = `/${localeFromPath(pathname)}/`;
     url.search = "";
     const redirect = NextResponse.redirect(url);
     redirect.cookies.set(RESTRICTED_REGION_COOKIE, "1", {
+      httpOnly: false,
+      sameSite: "lax",
+      path: "/",
+    });
+    return await updateSession(request, redirect);
+  }
+
+  // The `/subscription` page is the restricted-region (PayPal) Premium path.
+  // Allowed (non-restricted) regions are redirected home — region-level
+  // enforcement that can't be bypassed via the client cookie. Guest→login and
+  // Basic-vs-Premium gating happen client-side in the page (middleware lacks the
+  // user's tier). Detection-failure is `restricted` in prod, so an undetectable
+  // visitor is NOT bounced (safe default = subscription allowed).
+  if (!restricted && isSubscriptionPath(pathname)) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${localeFromPath(pathname)}/`;
+    url.search = "";
+    const redirect = NextResponse.redirect(url);
+    redirect.cookies.set(RESTRICTED_REGION_COOKIE, "0", {
       httpOnly: false,
       sameSite: "lax",
       path: "/",
@@ -173,7 +213,9 @@ export async function middleware(request: NextRequest) {
   // session cookies onto it so an in-flight session isn't dropped on redirect).
   const response = await updateSession(request, intlResponse);
 
-  // Expose the restricted-region decision to client components (non-httpOnly).
+  // Expose the (subscription-policy) restricted-region decision to client
+  // components (non-httpOnly). Drives useRestrictedRegion() → subscription UI,
+  // Gap-Monitor premium path, and the /subscription client guard.
   response.cookies.set(RESTRICTED_REGION_COOKIE, restricted ? "1" : "0", {
     httpOnly: false,
     sameSite: "lax",

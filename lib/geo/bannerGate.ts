@@ -135,3 +135,32 @@ export function shouldShowBanner(request: NextRequest): boolean {
 export function isRestrictedRegion(request: NextRequest): boolean {
   return !shouldShowBanner(request);
 }
+
+/**
+ * Whether this request is in the restricted-country group for the SUBSCRIPTION
+ * policy (PayPal-only Premium): restricted set ∪ unknown country.
+ *
+ * This is deliberately SEPARATE from `isRestrictedRegion`/`shouldShowBanner`:
+ *  - The subscription policy requires a safe default — country-detection failure
+ *    is treated AS restricted (so a non-detectable visitor gets the PayPal path,
+ *    never the exchange/UID path).
+ *  - But we must NOT flip the shared banner logic: locally `request.geo`/`.ip`
+ *    are undefined (unknown country), and treating that as restricted would hide
+ *    the signup banner and break the UID/guide flow in dev. So the unknown →
+ *    restricted default only applies in production; locally an unknown country
+ *    stays NOT restricted (use ?debugCountry=KR to exercise the restricted path).
+ *
+ * Drives the `x-restricted-region` cookie and the `/subscription` access gate.
+ */
+export function isRestrictedForSubscription(request: NextRequest): boolean {
+  // Banner-hidden countries (incl. KR, minus the KR IP whitelist) are restricted.
+  if (isRestrictedRegion(request)) return true;
+
+  // Unknown country: safe-default to restricted in production only, so local dev
+  // (always unknown) keeps the allowed-country UI. ?debugCountry overrides this
+  // by making the country known (handled inside getCountryCode / shouldShowBanner).
+  const country = getCountryCode(request);
+  if (!country && process.env.NODE_ENV === "production") return true;
+
+  return false;
+}

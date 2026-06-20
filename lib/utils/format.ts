@@ -49,6 +49,16 @@ export function withEllipsis(text: string | null | undefined): string {
 }
 
 /**
+ * Format an ISO timestamp as a date only ("YYYY-MM-DD") in the user's local
+ * timezone. Used for billing / Premium-until dates (no time-of-day needed).
+ */
+export function formatDate(iso: string): string {
+  const d = new Date(iso);
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
+/**
  * Format an ISO timestamp as "YYYY-MM-DD, HH:mm" in the user's local timezone.
  * PRD: registered time shown per user timezone.
  */

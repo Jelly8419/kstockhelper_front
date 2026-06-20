@@ -7,7 +7,9 @@
  * keeps the token off the client and centralizes 401 handling.
  */
 
-const BASE_URL = process.env.ADMIN_API_BASE_URL;
+import { backendBase } from "@/lib/env/backend";
+
+const BASE_URL = backendBase("/internal/admin", process.env.ADMIN_API_BASE_URL);
 
 /** Shape returned to our proxy routes. `unauthorized` flags an expired/invalid token. */
 export interface AdminApiResult<T> {

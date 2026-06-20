@@ -166,3 +166,27 @@ export function isRestrictedForSubscription(request: NextRequest): boolean {
 
   return false;
 }
+
+/**
+ * Whether this request is from KR and must be COMPLETELY blocked — no Gap
+ * Monitor, no subscription, no UID/guide. KR has no Premium path at all: our
+ * PayPal business account is KR-registered (PayPal forbids KR↔KR payments) and
+ * exchange referral/UID is unavailable in KR. So KR users are bounced from
+ * /price-gap, /subscription, and /guide to the region-blocked notice.
+ *
+ * EXCEPTION: whitelisted internal IPs (developer / PM) are NOT blocked — they
+ * are treated like an allowed country (full access, UID path, and direct-URL
+ * access to /subscription). This is the same whitelist used for Price Gap
+ * preview; here it doubles as the "internal users bypass the KR blackout" gate.
+ *
+ * Deliberately separate from BLOCKED_COUNTRIES / isRestrictedForSubscription:
+ * KR stays in BLOCKED_COUNTRIES (so the banner stays hidden and other gates are
+ * unchanged); this function is the extra, KR-only blackout the middleware applies
+ * BEFORE the subscription gates.
+ */
+export function isKrBlocked(request: NextRequest): boolean {
+  if (getCountryCode(request) !== "KR") return false;
+  // Developer / PM whitelist: bypass the KR blackout (treated as allowed).
+  if (isWhitelistedKrIp(requestIp(request))) return false;
+  return true;
+}

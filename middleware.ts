@@ -7,6 +7,7 @@ import {
   SHOW_BANNER_HEADER,
   isRestrictedRegion,
   isRestrictedForSubscription,
+  isKrBlocked,
   RESTRICTED_REGION_COOKIE,
   isWhitelistedRequest,
 } from "@/lib/geo/bannerGate";
@@ -145,6 +146,30 @@ export async function middleware(request: NextRequest) {
   //    unknown → NOT restricted (so local dev keeps the guide/UID flow).
   const restricted = isRestrictedForSubscription(request);
   const bannerRestricted = isRestrictedRegion(request);
+  // KR has NO Premium path (PayPal KR-account + no exchange UID) → fully blocked.
+  // Whitelisted internal IPs (dev/PM) are NOT krBlocked (treated as allowed).
+  const krBlocked = isKrBlocked(request);
+
+  // KR blackout (checked FIRST, before the guide/subscription/price-gap gates):
+  // KR users get NO Gap Monitor, NO subscription, NO guide. Bounce all three to
+  // the region-blocked notice. Server-side (IP-based) so it can't be bypassed.
+  if (
+    krBlocked &&
+    (isPriceGapPath(pathname) ||
+      isSubscriptionPath(pathname) ||
+      isGuidePath(pathname))
+  ) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${localeFromPath(pathname)}/region-blocked`;
+    url.search = "";
+    const redirect = NextResponse.redirect(url);
+    redirect.cookies.set(RESTRICTED_REGION_COOKIE, "1", {
+      httpOnly: false,
+      sameSite: "lax",
+      path: "/",
+    });
+    return await updateSession(request, redirect);
+  }
 
   // Restricted regions cannot access the Start-Trading guide directly — send
   // them home (`/{locale}/`). Uses the banner (exchange) restriction so unknown
@@ -184,8 +209,11 @@ export async function middleware(request: NextRequest) {
 
   // Price Gap Monitor visibility: public when the flag is ON, otherwise only
   // whitelisted internal IPs (developer / PM) for pre-launch verification.
+  // KR users (non-whitelisted) never see it — they're fully blocked, so hide the
+  // home card too (no point showing a banner that bounces to region-blocked).
   const { priceGapPublic } = await fetchFeatureFlags();
-  const priceGapVisible = priceGapPublic || isWhitelistedRequest(request);
+  const priceGapVisible =
+    !krBlocked && (priceGapPublic || isWhitelistedRequest(request));
   // Header so the SAME request's server components (home card) can read it
   // (the cookie below only arrives on the next request).
   request.headers.set(PRICE_GAP_VISIBLE_HEADER, priceGapVisible ? "true" : "false");

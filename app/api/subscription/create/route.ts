@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { backendUrl } from "@/lib/env/backend";
-import { isRestrictedForSubscription } from "@/lib/geo/bannerGate";
+import { isRestrictedForSubscription, isKrBlocked } from "@/lib/geo/bannerGate";
 
 export const dynamic = "force-dynamic";
 
@@ -31,6 +31,19 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       { success: false, message: "Not authenticated." },
       { status: 401 }
+    );
+  }
+
+  // KR has no subscription path (PayPal KR-account). The middleware already
+  // blocks the /subscription page for KR, but reject direct API calls too.
+  if (isKrBlocked(request)) {
+    return NextResponse.json(
+      {
+        success: false,
+        code: "SUBSCRIPTION_REGION_BLOCKED",
+        message: "Subscription is not available in your region.",
+      },
+      { status: 200 }
     );
   }
 

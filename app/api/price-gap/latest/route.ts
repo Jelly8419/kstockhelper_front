@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import { resolveServerTier } from "@/lib/priceGap/serverTier";
 import { mockPriceGapLatest } from "@/lib/api/priceGap.mock";
+import { backendBase } from "@/lib/env/backend";
 
 export const dynamic = "force-dynamic";
 
 /** Backend base, e.g. https://host/api/price-gap (server-only, no NEXT_PUBLIC). */
-const BASE = process.env.PRICE_GAP_API_BASE ?? "";
+const BASE = backendBase("/api/price-gap", process.env.PRICE_GAP_API_BASE);
 
 /**
  * BFF for the Price Gap latest snapshot (frontend-guide §"BFF").

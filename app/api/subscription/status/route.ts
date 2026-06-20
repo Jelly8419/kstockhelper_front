@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { backendUrl } from "@/lib/env/backend";
 
 export const dynamic = "force-dynamic";
 
 /** Optional backend endpoint returning the user's canonical subscription state. */
-const BACKEND_STATUS_URL = process.env.SUBSCRIPTION_STATUS_URL;
+const BACKEND_STATUS_URL = backendUrl(
+  "/api/subscription/status",
+  process.env.SUBSCRIPTION_STATUS_URL
+);
 
 /**
  * GET /api/subscription/status

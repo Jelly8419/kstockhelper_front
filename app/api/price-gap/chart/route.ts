@@ -7,10 +7,11 @@ import {
   PRICE_GAP_STOCK_ORDER,
 } from "@/types/priceGap";
 import type { AveragePeriod, Exchange, StockCode } from "@/types/priceGap";
+import { backendBase } from "@/lib/env/backend";
 
 export const dynamic = "force-dynamic";
 
-const BASE = process.env.PRICE_GAP_API_BASE ?? "";
+const BASE = backendBase("/api/price-gap", process.env.PRICE_GAP_API_BASE);
 const EXCHANGES: Exchange[] = ["binance", "bybit"];
 
 /** Parse/validate ?period=, falling back to the default (PRD §7.6). */

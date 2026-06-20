@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { backendUrl } from "@/lib/env/backend";
 
 export const dynamic = "force-dynamic";
 
 /** Backend endpoint that verifies a Bybit UID and upgrades the user to premium. */
-const BACKEND_VERIFY_URL = process.env.BYBIT_VERIFY_URL;
+const BACKEND_VERIFY_URL = backendUrl(
+  "/api/bybit/verify",
+  process.env.BYBIT_VERIFY_URL
+);
 
 /**
  * POST /api/bybit/verify  { bybitUid: string }

@@ -7,6 +7,8 @@
  * to the safe value so Price Gap stays internal-only.
  */
 
+import { backendBase } from "@/lib/env/backend";
+
 export interface FeatureFlags {
   /** Price Gap Monitor public visibility. false → whitelisted IPs only. */
   priceGapPublic: boolean;
@@ -19,8 +21,10 @@ export const DEFAULT_FLAGS: FeatureFlags = {
 /**
  * Backend host root (e.g. http://localhost:8080). The public flags endpoint
  * lives at `${BASE}/api/feature-flags` per the backend's public-API convention.
+ * Resolves from the shared BACKEND_API_BASE; FEATURE_FLAGS_API_BASE still wins
+ * when set (legacy override).
  */
-const BASE = process.env.FEATURE_FLAGS_API_BASE ?? "";
+const BASE = backendBase("", process.env.FEATURE_FLAGS_API_BASE);
 
 /**
  * Fetch the public flag snapshot from the backend, cached briefly (the backend

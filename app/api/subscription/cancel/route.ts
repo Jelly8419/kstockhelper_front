@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { backendUrl } from "@/lib/env/backend";
 
 export const dynamic = "force-dynamic";
 
 /** Backend endpoint that cancels the user's PayPal subscription at period end. */
-const BACKEND_CANCEL_URL = process.env.SUBSCRIPTION_CANCEL_URL;
+const BACKEND_CANCEL_URL = backendUrl(
+  "/api/subscription/cancel",
+  process.env.SUBSCRIPTION_CANCEL_URL
+);
 
 /**
  * POST /api/subscription/cancel

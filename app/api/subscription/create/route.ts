@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { backendUrl } from "@/lib/env/backend";
 
 export const dynamic = "force-dynamic";
 
 /** Backend endpoint that creates a PayPal subscription and returns its approval URL. */
-const BACKEND_CREATE_URL = process.env.SUBSCRIPTION_CREATE_URL;
+const BACKEND_CREATE_URL = backendUrl(
+  "/api/subscription/create",
+  process.env.SUBSCRIPTION_CREATE_URL
+);
 
 /**
  * POST /api/subscription/create

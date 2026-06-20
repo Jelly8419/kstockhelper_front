@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { backendUrl } from "@/lib/env/backend";
 
 export const dynamic = "force-dynamic";
 
 /** Backend endpoint that stores a Binance UID and sets status to 'pending'. */
-const BACKEND_CONNECT_URL = process.env.BINANCE_CONNECT_URL;
+const BACKEND_CONNECT_URL = backendUrl(
+  "/api/binance/connect",
+  process.env.BINANCE_CONNECT_URL
+);
 
 /**
  * POST /api/binance/connect  { binanceUid: string }

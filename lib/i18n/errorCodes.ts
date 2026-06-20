@@ -20,6 +20,15 @@ export const ERROR_CODE_KEY_MAP: Record<string, string> = {
   BINANCE_UID_ALREADY_LINKED: "error.binanceUidAlreadyLinked",
   BINANCE_USER_NOT_FOUND: "error.binanceUserNotFound",
   BINANCE_CONNECT_ERROR: "error.binanceConnectError",
+
+  // Subscription (PayPal)
+  SUBSCRIPTION_CREATE_OK: "error.subscriptionCreateOk",
+  SUBSCRIPTION_ALREADY_ACTIVE: "error.subscriptionAlreadyActive",
+  SUBSCRIPTION_REGION_BLOCKED: "error.subscriptionRegionBlocked",
+  SUBSCRIPTION_CREATE_ERROR: "error.subscriptionCreateError",
+  SUBSCRIPTION_CANCEL_OK: "error.subscriptionCancelOk",
+  SUBSCRIPTION_NOT_ACTIVE: "error.subscriptionNotActive",
+  SUBSCRIPTION_CANCEL_ERROR: "error.subscriptionCancelError",
 };
 
 /**

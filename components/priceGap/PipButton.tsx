@@ -10,6 +10,7 @@ import type {
   PriceGapLatest,
 } from "@/types/priceGap";
 import { useTranslation } from "@/lib/i18n/useTranslation";
+import { useRestrictedRegion } from "@/lib/hooks/useRestrictedRegion";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
 import { PipContent } from "./PipContent";
@@ -76,6 +77,7 @@ export function PipButton({
 }) {
   const { t } = useTranslation();
   const router = useRouter();
+  const restricted = useRestrictedRegion();
   const [lockedOpen, setLockedOpen] = useState(false);
   const [pipWindow, setPipWindow] = useState<Window | null>(null);
   // Resolve support after mount: it must match between SSR and the first client
@@ -117,9 +119,17 @@ export function PipButton({
             <Button variant="secondary" onClick={() => setLockedOpen(false)}>
               {t("common.close")}
             </Button>
-            <Button onClick={() => router.push("/guide")}>
-              {t("priceGap.delay.cta")}
-            </Button>
+            {/* Upgrade path branches by region: restricted → PayPal subscription,
+                allowed → exchange/UID guide. */}
+            {restricted ? (
+              <Button onClick={() => router.push("/subscription")}>
+                {t("subscription.modal.cta")}
+              </Button>
+            ) : (
+              <Button onClick={() => router.push("/guide")}>
+                {t("priceGap.delay.cta")}
+              </Button>
+            )}
           </div>
         </Modal>
       </>

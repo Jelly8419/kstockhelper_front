@@ -5,7 +5,7 @@ import { Link } from "@/lib/i18n/navigation";
 import { Button } from "@/components/ui/Button";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { useRestrictedRegion } from "@/lib/hooks/useRestrictedRegion";
-import { RestrictedPremiumModal } from "@/components/premium/RestrictedPremiumModal";
+import { SubscriptionRequiredModal } from "@/components/premium/SubscriptionRequiredModal";
 
 /**
  * Locked premium-content region for non-entitled viewers (guest / free).
@@ -80,17 +80,16 @@ function FreeCta() {
       </h2>
       <p className="text-sm text-muted">{t("newsGate.premiumBody")}</p>
       {restricted ? (
-        // Restricted regions: intercept the upgrade flow with the limitation
-        // modal instead of routing to /settings (PRD §3). FreeCta only renders
-        // for logged-in (free) users, so Join Waitlist is always available.
+        // Restricted regions: intercept the upgrade flow with the subscription
+        // modal (→ /subscription, PayPal path) instead of routing to /settings
+        // (the UID flow). FreeCta only renders for logged-in (free) users.
         <>
           <Button className="mt-1 w-full" onClick={() => setModalOpen(true)}>
             {t("newsGate.premiumUpgradeCta")}
           </Button>
-          <RestrictedPremiumModal
+          <SubscriptionRequiredModal
             open={modalOpen}
             onClose={() => setModalOpen(false)}
-            isLoggedIn
           />
         </>
       ) : (

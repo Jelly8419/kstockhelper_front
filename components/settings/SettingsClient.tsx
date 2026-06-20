@@ -10,8 +10,9 @@ import { Badge } from "@/components/ui/Badge";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { errorKeyForCode } from "@/lib/i18n/errorCodes";
 import { useRestrictedRegion } from "@/lib/hooks/useRestrictedRegion";
-import { joinWaitlist, type WaitlistStatus } from "@/lib/premium/waitlist";
 import { ChangeUidModal } from "./ChangeUidModal";
+import { SectionCard } from "./SectionCard";
+import { SubscriptionStatusCard } from "@/components/subscription/SubscriptionStatusCard";
 import { maskUid } from "@/lib/utils/format";
 
 export function SettingsClient() {
@@ -50,9 +51,9 @@ export function SettingsClient() {
       </section>
 
       {restricted ? (
-        // Restricted regions: hide exchange connection cards entirely and offer
-        // the waitlist instead (PRD §7).
-        <RestrictedRegionCard />
+        // Restricted regions: hide exchange connection cards entirely; show the
+        // PayPal subscription status card instead (badge, billing date, cancel).
+        <SubscriptionStatusCard />
       ) : (
         <>
           <BybitSection
@@ -356,75 +357,8 @@ function BinanceSection({
 }
 
 /* ------------------------------------------------------------------ */
-/* Restricted region (exchange-linked Premium unavailable)            */
-/* ------------------------------------------------------------------ */
-function RestrictedRegionCard() {
-  const { t } = useTranslation();
-  const [status, setStatus] = useState<WaitlistStatus | null>(null);
-  const [submitting, setSubmitting] = useState(false);
-
-  const handleJoin = async () => {
-    setSubmitting(true);
-    try {
-      setStatus(await joinWaitlist());
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  const message =
-    status === "ok"
-      ? t("restrictedPremium.waitlistSuccess")
-      : status === "already"
-        ? t("restrictedPremium.waitlistAlready")
-        : status === "error"
-          ? t("restrictedPremium.waitlistError")
-          : null;
-
-  const joined = status === "ok" || status === "already";
-
-  return (
-    <SectionCard title={t("restrictedPremium.mypageCardTitle")} badge={null}>
-      <p className="text-sm text-muted">{t("restrictedPremium.mypageCardBody")}</p>
-      {message && (
-        <p className={`text-sm ${status === "error" ? "text-down" : "text-up"}`}>
-          {message}
-        </p>
-      )}
-      <Button
-        onClick={handleJoin}
-        disabled={submitting || joined}
-        className="self-start"
-      >
-        {submitting ? t("common.loading") : t("restrictedPremium.joinWaitlist")}
-      </Button>
-    </SectionCard>
-  );
-}
-
-/* ------------------------------------------------------------------ */
 /* Shared bits                                                        */
 /* ------------------------------------------------------------------ */
-function SectionCard({
-  title,
-  badge,
-  children,
-}: {
-  title: string;
-  badge: React.ReactNode;
-  children: React.ReactNode;
-}) {
-  return (
-    <section className="flex flex-col gap-4 rounded-2xl border border-border bg-surface p-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-base font-semibold text-foreground">{title}</h2>
-        {badge}
-      </div>
-      {children}
-    </section>
-  );
-}
-
 function UidGuide({ exchange }: { exchange: string }) {
   const { t } = useTranslation();
   return (

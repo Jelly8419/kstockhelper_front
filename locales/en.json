@@ -119,6 +119,45 @@
     "mypageCardTitle": "Premium access is not available in your region",
     "mypageCardBody": "Due to financial regulations in certain regions, we are unable to offer exchange-linked Premium access in your country."
   },
+  "subscription": {
+    "title": "Premium Subscription",
+    "subtitle": "Unlock full access to K-Stock Helper Premium features.",
+    "priceLine": "$1 for the first month, then $4.90 / month",
+    "cancelAnytime": "Cancel anytime",
+    "benefitsTitle": "Premium Benefits",
+    "benefit1": "Real-time Price Gap Tracker & market data",
+    "benefit2": "Advanced Gap tools",
+    "benefit3": "Real-time Korean market news, summarized into key points",
+    "refundPolicy": "Refunds may be reviewed in cases such as service errors, duplicate charges, or payment processing issues.",
+    "cta": "Continue with PayPal",
+    "processing": "Redirecting to PayPal…",
+    "unavailable": "This page is not available.",
+    "alreadyPremium": "You already have Premium access. Manage your subscription from Settings.",
+    "error": "Something went wrong. Please try again.",
+    "activating": "Confirming your payment… Premium will be activated shortly.",
+    "successTitle": "Thank you for subscribing!",
+    "activated": "Your Premium access is now active.",
+    "stillActivating": "Your payment is being confirmed. This can take a moment — please refresh in a few seconds.",
+    "goToMonitor": "Go to Price Gap Monitor",
+    "goToSettings": "View subscription in Settings",
+    "cardTitle": "Subscription",
+    "statusBadge": {
+      "basic": "Basic",
+      "premium": "Premium"
+    },
+    "active": "Your Premium subscription is active.",
+    "nextBilling": "Next billing: {date}",
+    "cancelButton": "Cancel subscription",
+    "canceling": "Cancelling…",
+    "cancelPending": "Premium is active until {date}. Your subscription has been cancelled and will not renew.",
+    "paymentFailed": "Your payment could not be completed. Your account has been switched to Basic.",
+    "subscribeCta": "Subscribe to Premium",
+    "modal": {
+      "title": "Premium subscription required",
+      "body": "Subscribe to Premium to access real-time Price Gap data and Premium features.",
+      "cta": "View Subscription"
+    }
+  },
   "market": {
     "ariaOverview": "Market overview",
     "overview": "Market Overview",
@@ -206,7 +245,14 @@
     "binanceUidRequired": "Please enter your Binance UID.",
     "binanceUidAlreadyLinked": "This Binance UID is already linked to another account.",
     "binanceUserNotFound": "Binance user not found. Check your UID and try again.",
-    "binanceConnectError": "Binance connection failed. Please try again later."
+    "binanceConnectError": "Binance connection failed. Please try again later.",
+    "subscriptionCreateOk": "Subscription created. Redirecting to PayPal…",
+    "subscriptionAlreadyActive": "You already have an active subscription.",
+    "subscriptionRegionBlocked": "Subscription is not available in your region.",
+    "subscriptionCreateError": "Could not start the subscription. Please try again.",
+    "subscriptionCancelOk": "Your subscription has been cancelled.",
+    "subscriptionNotActive": "You don't have an active subscription.",
+    "subscriptionCancelError": "Could not cancel your subscription. Please try again."
   },
   "seo": {
     "title": "K-Stock Helper - Korean Stock News in English",

@@ -26,6 +26,14 @@ begin
   if not exists (select 1 from pg_type where typname = 'news_category') then
     create type public.news_category as enum ('disclosure', 'news');
   end if;
+  -- PayPal subscription state (restricted-region Premium path).
+  if not exists (select 1 from pg_type where typname = 'subscription_status') then
+    create type public.subscription_status as enum
+      ('none', 'active', 'canceling', 'past_due');
+  end if;
+  if not exists (select 1 from pg_type where typname = 'subscription_plan') then
+    create type public.subscription_plan as enum ('trial', 'regular');
+  end if;
 end$$;
 
 
@@ -44,6 +52,14 @@ create table if not exists public.users (
   terms_version      text,
   privacy_agreed_at  timestamptz,
   privacy_version    text,
+  -- PayPal subscription (restricted-region Premium). Display-only on the
+  -- frontend; the backend keeps `tier` in sync with `subscription_status`.
+  -- See migrations/0006_paypal_subscription.sql.
+  subscription_status              public.subscription_status not null default 'none',
+  subscription_next_billing_at     timestamptz,
+  subscription_plan                public.subscription_plan,
+  subscription_last_payment_status text,
+  paypal_subscription_id           text,
   created_at         timestamptz not null default now(),
   updated_at         timestamptz not null default now()
 );
@@ -53,6 +69,12 @@ alter table public.users add column if not exists terms_agreed_at   timestamptz;
 alter table public.users add column if not exists terms_version     text;
 alter table public.users add column if not exists privacy_agreed_at timestamptz;
 alter table public.users add column if not exists privacy_version   text;
+alter table public.users add column if not exists subscription_status
+  public.subscription_status not null default 'none';
+alter table public.users add column if not exists subscription_next_billing_at timestamptz;
+alter table public.users add column if not exists subscription_plan public.subscription_plan;
+alter table public.users add column if not exists subscription_last_payment_status text;
+alter table public.users add column if not exists paypal_subscription_id text;
 
 -- stocks (ticker master) ------------------------------------------------------
 create table if not exists public.stocks (

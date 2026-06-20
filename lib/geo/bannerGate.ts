@@ -138,28 +138,30 @@ export function isRestrictedRegion(request: NextRequest): boolean {
 
 /**
  * Whether this request is in the restricted-country group for the SUBSCRIPTION
- * policy (PayPal-only Premium): restricted set ∪ unknown country.
+ * policy (PayPal-only Premium): blocked set ∪ unknown country.
  *
  * This is deliberately SEPARATE from `isRestrictedRegion`/`shouldShowBanner`:
+ *  - It does NOT honor the KR IP whitelist. The whitelist exists so internal
+ *    KR users (developer / PM) can preview the banner / Price Gap before public
+ *    rollout — that's a *visibility* concession, not a *regulatory* one. For
+ *    Premium, a KR user is restricted regardless of IP (KR can't use exchange
+ *    referral/UID), so whitelisted KR IPs must still get the subscription path.
+ *    Hence we check `BLOCKED_COUNTRIES` directly instead of `isRestrictedRegion`.
  *  - The subscription policy requires a safe default — country-detection failure
  *    is treated AS restricted (so a non-detectable visitor gets the PayPal path,
- *    never the exchange/UID path).
- *  - But we must NOT flip the shared banner logic: locally `request.geo`/`.ip`
- *    are undefined (unknown country), and treating that as restricted would hide
- *    the signup banner and break the UID/guide flow in dev. So the unknown →
- *    restricted default only applies in production; locally an unknown country
- *    stays NOT restricted (use ?debugCountry=KR to exercise the restricted path).
+ *    never the exchange/UID path). Unknown → restricted applies in production
+ *    only, so local dev (always unknown) keeps the allowed-country UI; use
+ *    ?debugCountry=KR to exercise the restricted path locally.
  *
  * Drives the `x-restricted-region` cookie and the `/subscription` access gate.
  */
 export function isRestrictedForSubscription(request: NextRequest): boolean {
-  // Banner-hidden countries (incl. KR, minus the KR IP whitelist) are restricted.
-  if (isRestrictedRegion(request)) return true;
-
-  // Unknown country: safe-default to restricted in production only, so local dev
-  // (always unknown) keeps the allowed-country UI. ?debugCountry overrides this
-  // by making the country known (handled inside getCountryCode / shouldShowBanner).
   const country = getCountryCode(request);
+
+  // Known blocked country → restricted (KR included, whitelist NOT applied).
+  if (country && BLOCKED_COUNTRIES.has(country)) return true;
+
+  // Unknown country: safe-default to restricted in production only.
   if (!country && process.env.NODE_ENV === "production") return true;
 
   return false;

@@ -11,6 +11,7 @@ import type {
 } from "@/types/priceGap";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { useRestrictedRegion } from "@/lib/hooks/useRestrictedRegion";
+import { useTrackEvent } from "@/lib/analytics/useTrackEvent";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
 import { PipContent } from "./PipContent";
@@ -78,6 +79,7 @@ export function PipButton({
   const { t } = useTranslation();
   const router = useRouter();
   const restricted = useRestrictedRegion();
+  const track = useTrackEvent();
   const [lockedOpen, setLockedOpen] = useState(false);
   const [pipWindow, setPipWindow] = useState<Window | null>(null);
   // Resolve support after mount: it must match between SSR and the first client
@@ -105,7 +107,14 @@ export function PipButton({
   if (tier === "free") {
     return (
       <>
-        <Button variant="secondary" size="sm" onClick={() => setLockedOpen(true)}>
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => {
+            track("gap_pip_clicked", { tier, locked: true });
+            setLockedOpen(true);
+          }}
+        >
           <PipIcon />
           🔒 {t("priceGap.pip.button")}
         </Button>
@@ -151,6 +160,7 @@ export function PipButton({
   }
 
   const openPip = async () => {
+    track("gap_pip_clicked", { tier, locked: false });
     if (pipWindow) {
       pipWindow.focus();
       return;

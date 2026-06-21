@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { Link } from "@/lib/i18n/navigation";
 import { Button } from "@/components/ui/Button";
 import { getAppTranslations } from "@/lib/i18n/getTranslations";
+import { TrackedLink } from "@/lib/analytics/TrackedLink";
 
 /**
  * Home-screen entry point to the Price Gap Monitor (the page itself gates by
@@ -26,11 +26,15 @@ export async function PriceGapHomeCard() {
               {t("home.priceGapCard.subtitle")}
             </p>
           </div>
-          <Link href="/price-gap" className="mt-1">
+          <TrackedLink
+            event="home_gap_banner_clicked"
+            href="/price-gap"
+            className="mt-1"
+          >
             <Button variant="primary" size="lg">
               {t("home.priceGapCard.cta")} →
             </Button>
-          </Link>
+          </TrackedLink>
         </div>
 
         {/* Right: sample Gap Tracker chart */}

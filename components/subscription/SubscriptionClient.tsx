@@ -7,6 +7,7 @@ import { useRestrictedRegion } from "@/lib/hooks/useRestrictedRegion";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { errorKeyForCode } from "@/lib/i18n/errorCodes";
 import { createSubscription } from "@/lib/subscription/subscription";
+import { useTrackEvent } from "@/lib/analytics/useTrackEvent";
 import { Button } from "@/components/ui/Button";
 
 /**
@@ -26,6 +27,7 @@ export function SubscriptionClient() {
   const { tier, isLoading } = useAuth();
   const restricted = useRestrictedRegion();
   const { t } = useTranslation();
+  const track = useTrackEvent();
 
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -36,6 +38,13 @@ export function SubscriptionClient() {
       router.replace("/login");
     }
   }, [isLoading, tier, router]);
+
+  // Log the page view once the (restricted, non-guest) page is actually shown.
+  const pageVisible = !isLoading && tier !== "guest" && restricted;
+  useEffect(() => {
+    if (pageVisible) track("subscription_page_viewed");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageVisible]);
 
   if (isLoading || tier === "guest") {
     return <p className="text-sm text-muted">{t("common.loading")}</p>;
@@ -53,6 +62,7 @@ export function SubscriptionClient() {
   const isPremium = tier === "premium";
 
   const handleSubscribe = async () => {
+    track("subscribe_button_clicked", { plan: "regular" });
     setError(null);
     setSubmitting(true);
     try {

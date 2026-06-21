@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/Badge";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { errorKeyForCode } from "@/lib/i18n/errorCodes";
 import { useRestrictedRegion } from "@/lib/hooks/useRestrictedRegion";
+import { useTrackEvent } from "@/lib/analytics/useTrackEvent";
 import { ChangeUidModal } from "./ChangeUidModal";
 import { SectionCard } from "./SectionCard";
 import { SubscriptionStatusCard } from "@/components/subscription/SubscriptionStatusCard";
@@ -20,6 +21,7 @@ export function SettingsClient() {
   const auth = useAuth();
   const { t } = useTranslation();
   const restricted = useRestrictedRegion();
+  const track = useTrackEvent();
   const { tier, email, bybitUid, binanceUid, binanceStatus, isLoading } = auth;
 
   // Route guard: redirect guests to login once auth has resolved.
@@ -28,6 +30,13 @@ export function SettingsClient() {
       router.replace("/login");
     }
   }, [isLoading, tier, router]);
+
+  // Log the page view once the (non-guest) settings page is actually shown.
+  const pageVisible = !isLoading && tier !== "guest";
+  useEffect(() => {
+    if (pageVisible) track("mypage_viewed");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageVisible]);
 
   const handleLogout = async () => {
     const supabase = createClient();
@@ -208,6 +217,7 @@ function BinanceSection({
   onSubmitted: () => Promise<void>;
 }) {
   const { t } = useTranslation();
+  const track = useTrackEvent();
   const [uid, setUid] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -217,6 +227,7 @@ function BinanceSection({
 
   // Submit a Binance UID (→ pending); returns an error message or null.
   const connect = async (value: string): Promise<string | null> => {
+    track("uid_apply_clicked", { exchange: "binance" });
     const res = await fetch("/api/binance/connect", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

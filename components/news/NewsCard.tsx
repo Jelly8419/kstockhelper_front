@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/Badge";
 import { formatRegisteredTime, withEllipsis } from "@/lib/utils/format";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { buildDetailPath } from "@/lib/utils/slug";
+import { useTrackEvent } from "@/lib/analytics/useTrackEvent";
 
 interface Props {
   item: NewsPreview;
@@ -14,6 +15,7 @@ interface Props {
 
 export function NewsCard({ item }: Props) {
   const { t } = useTranslation();
+  const track = useTrackEvent();
   const cardClass =
     "flex flex-col gap-3 rounded-xl border border-border bg-surface p-5 text-left transition-colors hover:bg-surface-hover";
 
@@ -50,7 +52,16 @@ export function NewsCard({ item }: Props) {
   // /disclosures/ by category with the `{seqId}-{slug}` SEO path.
   const href = buildDetailPath(item.category, item.seqId, item.slug, item.title);
   return (
-    <Link href={href} className={cardClass}>
+    <Link
+      href={href}
+      className={cardClass}
+      onClick={() =>
+        track("home_news_contents_clicked", {
+          seq_id: item.seqId,
+          category: item.category,
+        })
+      }
+    >
       {content}
     </Link>
   );

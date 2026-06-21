@@ -3,6 +3,7 @@
 import type { AveragePeriod, Exchange, StockCode } from "@/types/priceGap";
 import { AVERAGE_PERIODS, PRICE_GAP_STOCKS } from "@/types/priceGap";
 import { useTranslation } from "@/lib/i18n/useTranslation";
+import { useTrackEvent } from "@/lib/analytics/useTrackEvent";
 
 const EXCHANGES: Exchange[] = ["binance", "bybit"];
 
@@ -34,6 +35,25 @@ export function ChartFilters({
   onShowAvg: (v: boolean) => void;
 }) {
   const { t } = useTranslation();
+  const track = useTrackEvent();
+
+  // Only log when the value actually changes (ignore re-selecting the current).
+  const changeStock = (next: StockCode) => {
+    if (next !== stock) track("gap_stock_changed", { stock: next, prev_stock: stock });
+    onStock(next);
+  };
+  const changeExchange = (next: Exchange) => {
+    if (next !== exchange) {
+      track("gap_exchange_changed", { exchange: next, prev_exchange: exchange });
+    }
+    onExchange(next);
+  };
+  const changePeriod = (next: AveragePeriod) => {
+    if (next !== period) {
+      track("gap_avg_period_changed", { period: next, prev_period: period });
+    }
+    onPeriod(next);
+  };
 
   return (
     <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
@@ -45,7 +65,7 @@ export function ChartFilters({
             <button
               key={code}
               type="button"
-              onClick={() => onStock(code)}
+              onClick={() => changeStock(code)}
               className={`px-3 py-1 text-sm transition-colors ${
                 stock === code
                   ? "bg-brand text-white"
@@ -68,7 +88,7 @@ export function ChartFilters({
             <button
               key={ex}
               type="button"
-              onClick={() => onExchange(ex)}
+              onClick={() => changeExchange(ex)}
               className={`px-3 py-1 text-sm capitalize transition-colors ${
                 exchange === ex
                   ? "bg-brand text-white"
@@ -88,7 +108,7 @@ export function ChartFilters({
         </span>
         <select
           value={period}
-          onChange={(e) => onPeriod(Number(e.target.value) as AveragePeriod)}
+          onChange={(e) => changePeriod(Number(e.target.value) as AveragePeriod)}
           className="rounded-lg border border-border bg-transparent px-2 py-1 text-sm text-foreground"
         >
           {AVERAGE_PERIODS.map((p) => (

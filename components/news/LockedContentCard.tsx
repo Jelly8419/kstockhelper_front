@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "@/lib/i18n/navigation";
 import { Button } from "@/components/ui/Button";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { useRestrictedRegion } from "@/lib/hooks/useRestrictedRegion";
+import { useTrackEvent } from "@/lib/analytics/useTrackEvent";
 import { SubscriptionRequiredModal } from "@/components/premium/SubscriptionRequiredModal";
 
 /**
@@ -52,6 +53,14 @@ export function LockedContentCard({ tier }: { tier: "guest" | "free" }) {
 
 function GuestCta() {
   const { t } = useTranslation();
+  const track = useTrackEvent();
+
+  // The locked card overlay IS the "login required" prompt for guests.
+  useEffect(() => {
+    track("login_required_modal_viewed");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <h2 className="text-base font-semibold text-foreground">
@@ -61,7 +70,11 @@ function GuestCta() {
       <Link href="/signup" className="mt-1 w-full">
         <Button className="w-full">{t("newsGate.guestSignupCta")}</Button>
       </Link>
-      <Link href="/login" className="text-sm text-brand hover:underline">
+      <Link
+        href="/login"
+        className="text-sm text-brand hover:underline"
+        onClick={() => track("login_required_modal_login_clicked")}
+      >
         {t("newsGate.guestLoginCta")}
       </Link>
     </>

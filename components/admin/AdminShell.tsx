@@ -60,6 +60,12 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             >
               Feature Flags
             </Link>
+            <Link
+              href={`${ADMIN_BASE_PATH}/analytics`}
+              className="text-sm text-muted hover:text-foreground"
+            >
+              이벤트 통계
+            </Link>
             <LogoutButton />
           </nav>
         </div>

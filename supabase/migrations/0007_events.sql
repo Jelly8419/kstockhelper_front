@@ -98,7 +98,14 @@ create or replace view public.analytics_funnel_daily as
     count(*) filter (where event_name = 'premium_required_modal_viewed') as premium_blocked,
     count(*) filter (where event_name = 'subscription_page_viewed')      as sub_page_viewed,
     count(*) filter (where event_name = 'subscribe_button_clicked')      as subscribe_clicked,
-    count(*) filter (where event_name = 'subscription_activated')        as activated
+    -- Only the backend's PayPal-webhook confirmation counts as a real
+    -- activation; the frontend success-page poll logs an approximate
+    -- 'subscription_activated' with source='success_poll', which we exclude here
+    -- to avoid double-counting. (Backend webhook inserts source='paypal_webhook'.)
+    count(*) filter (
+      where event_name = 'subscription_activated'
+        and properties->>'source' = 'paypal_webhook'
+    ) as activated
   from public.events
   group by 1
   order by 1 desc;

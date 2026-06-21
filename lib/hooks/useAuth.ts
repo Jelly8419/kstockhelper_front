@@ -13,6 +13,8 @@ import {
 interface AuthState {
   /** guest (logged out) | free (logged in, tier!='premium') | premium (tier='premium'). */
   tier: UserTier;
+  /** Supabase auth user id; null when logged out. Used for analytics user_id. */
+  userId: string | null;
   email: string | null;
   bybitUid: string | null;
   binanceUid: string | null;
@@ -32,6 +34,7 @@ interface UseAuth extends AuthState {
 
 const GUEST: AuthState = {
   tier: "guest",
+  userId: null,
   email: null,
   bybitUid: null,
   binanceUid: null,
@@ -79,6 +82,7 @@ export function useAuth(): UseAuth {
 
     return {
       tier: (isPremium ? "premium" : "free") as UserTier,
+      userId: session.user.id,
       email,
       bybitUid: (data?.bybit_uid as string | null) ?? null,
       binanceUid: (data?.binance_uid as string | null) ?? null,

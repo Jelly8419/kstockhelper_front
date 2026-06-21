@@ -1,9 +1,11 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter } from "@/lib/i18n/navigation";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
 import { useTranslation } from "@/lib/i18n/useTranslation";
+import { useTrackEvent } from "@/lib/analytics/useTrackEvent";
 
 /**
  * Shown to restricted-region Basic users who click a Premium feature in the Gap
@@ -23,6 +25,13 @@ export function SubscriptionRequiredModal({
 }) {
   const { t } = useTranslation();
   const router = useRouter();
+  const track = useTrackEvent();
+
+  // Fire the "premium required" view once each time the modal opens.
+  useEffect(() => {
+    if (open) track("premium_required_modal_viewed", { modal_type: "subscription_required" });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
 
   return (
     <Modal open={open} onClose={onClose} title={t("subscription.modal.title")}>
@@ -31,7 +40,14 @@ export function SubscriptionRequiredModal({
         <Button variant="secondary" onClick={onClose}>
           {t("common.close")}
         </Button>
-        <Button onClick={() => router.push("/subscription")}>
+        <Button
+          onClick={() => {
+            track("premium_required_modal_cta_clicked", {
+              modal_type: "subscription_required",
+            });
+            router.push("/subscription");
+          }}
+        >
           {t("subscription.modal.cta")}
         </Button>
       </div>

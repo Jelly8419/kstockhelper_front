@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { AveragePeriod, Exchange, StockCode } from "@/types/priceGap";
 import { DEFAULT_AVERAGE_PERIOD } from "@/types/priceGap";
 import { useTranslation } from "@/lib/i18n/useTranslation";
+import { useTrackEvent } from "@/lib/analytics/useTrackEvent";
 import { usePriceGapLatest } from "@/lib/hooks/usePriceGapLatest";
 import { StatusCards } from "./StatusCards";
 import { PriceGapTable } from "./PriceGapTable";
@@ -25,7 +26,26 @@ import { PriceGapFooter } from "./PriceGapFooter";
  */
 export function PriceGapMonitor({ tier }: { tier: "free" | "premium" }) {
   const { t } = useTranslation();
+  const track = useTrackEvent();
   const { data, prev, isLoading } = usePriceGapLatest(tier);
+
+  // Page-view + session time. Fire `gap_monitor_viewed` on mount; on unmount log
+  // it again with the dwell time (session_duration_ms) so funnel and engagement
+  // are both available. `track` is stable per render but we want mount/unmount
+  // only, so capture it in a ref to keep the effect dependency-free.
+  const trackRef = useRef(track);
+  trackRef.current = track;
+  useEffect(() => {
+    const startedAt = Date.now();
+    trackRef.current("gap_monitor_viewed", { tier });
+    return () => {
+      trackRef.current("gap_monitor_viewed", {
+        tier,
+        session_duration_ms: Date.now() - startedAt,
+      });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Chart-only controls (PRD §7): single stock, single exchange, avg period,
   // and the Avg Gap line toggle. Defaults: Samsung / Binance / 10D / ON.

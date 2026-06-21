@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { PRIVACY_POLICY, TERMS_OF_SERVICE } from "@/lib/legal/content";
 import { GoogleButton } from "@/components/auth/GoogleButton";
 import { useTranslation } from "@/lib/i18n/useTranslation";
+import { useTrackEvent } from "@/lib/analytics/useTrackEvent";
 
 type Step = "email" | "code" | "password";
 
@@ -18,6 +19,7 @@ const PASSWORD_MAX = 16;
 export function SignupForm() {
   const router = useRouter();
   const { t } = useTranslation();
+  const track = useTrackEvent();
   const [step, setStep] = useState<Step>("email");
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
@@ -57,6 +59,7 @@ export function SignupForm() {
         setError(error.message);
         return;
       }
+      track("signup_started", { method: "email" });
       setStep("code");
       setNotice(t("auth.codeSent", { email }));
     } finally {
@@ -152,6 +155,8 @@ export function SignupForm() {
           })
           .eq("id", user.id);
       }
+
+      track("signup_completed", { method: "email" });
 
       // New account → land on the guide page.
       router.push("/guide");

@@ -16,7 +16,7 @@ import {
   PRICE_GAP_VISIBLE_COOKIE,
   PRICE_GAP_VISIBLE_HEADER,
 } from "@/lib/featureFlags/constants";
-import { getCountryCode } from "@/lib/geo/country";
+import { getCountryCode, COUNTRY_CODE_COOKIE } from "@/lib/geo/country";
 import { resolveLocaleByCountry } from "@/lib/i18n/normalize";
 import { resolveBrowserLocale } from "@/lib/i18n/normalize";
 import { LOCALE_COOKIE } from "@/lib/i18n/config";
@@ -252,6 +252,15 @@ export async function middleware(request: NextRequest) {
 
   // Expose Price Gap visibility (for the home card).
   response.cookies.set(PRICE_GAP_VISIBLE_COOKIE, priceGapVisible ? "1" : "0", {
+    httpOnly: false,
+    sameSite: "lax",
+    path: "/",
+  });
+
+  // Expose the IP country code to client components for analytics `country_code`
+  // (clients can't read the IP geo directly). Empty string when unknown (local
+  // dev); ?debugCountry=XX forces a value in non-production.
+  response.cookies.set(COUNTRY_CODE_COOKIE, getCountryCode(request) ?? "", {
     httpOnly: false,
     sameSite: "lax",
     path: "/",

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "@/lib/i18n/navigation";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { useTranslation } from "@/lib/i18n/useTranslation";
+import { useTrackEvent } from "@/lib/analytics/useTrackEvent";
 import { Button } from "@/components/ui/Button";
 
 /** Poll cadence: re-check tier every 2s, up to ~15s, while the webhook lands. */
@@ -20,8 +21,11 @@ const MAX_POLLS = 8;
 export function SubscriptionSuccessClient() {
   const { tier, isLoading, refresh } = useAuth();
   const { t } = useTranslation();
+  const track = useTrackEvent();
   const [exhausted, setExhausted] = useState(false);
   const pollsRef = useRef(0);
+  // Guard so the activated / failed events each fire at most once per visit.
+  const loggedRef = useRef(false);
 
   const isPremium = tier === "premium";
 
@@ -40,6 +44,25 @@ export function SubscriptionSuccessClient() {
 
     return () => clearInterval(id);
   }, [isLoading, isPremium, refresh]);
+
+  // Premium resolved → activation confirmed (approximation; the backend webhook
+  // is the source of truth). Fire once.
+  useEffect(() => {
+    if (isPremium && !loggedRef.current) {
+      loggedRef.current = true;
+      track("subscription_activated", { source: "success_poll" });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPremium]);
+
+  // Polling exhausted without Premium → activation not yet confirmed. Fire once.
+  useEffect(() => {
+    if (exhausted && !loggedRef.current) {
+      loggedRef.current = true;
+      track("subscription_activation_failed", { reason: "poll_timeout" });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [exhausted]);
 
   if (isLoading) {
     return <p className="text-sm text-muted">{t("common.loading")}</p>;

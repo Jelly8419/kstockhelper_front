@@ -6,6 +6,7 @@ import { useAuth } from "@/lib/hooks/useAuth";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { errorKeyForCode } from "@/lib/i18n/errorCodes";
 import { cancelSubscription } from "@/lib/subscription/subscription";
+import { useTrackEvent } from "@/lib/analytics/useTrackEvent";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { formatDate } from "@/lib/utils/format";
@@ -23,6 +24,7 @@ import { SectionCard } from "@/components/settings/SectionCard";
 export function SubscriptionStatusCard() {
   const { t } = useTranslation();
   const auth = useAuth();
+  const track = useTrackEvent();
   const { tier, subscriptionStatus, nextBillingAt, lastPaymentFailed } = auth;
 
   const [canceling, setCanceling] = useState(false);
@@ -39,6 +41,9 @@ export function SubscriptionStatusCard() {
     try {
       const res = await cancelSubscription();
       if (res.success) {
+        // source distinguishes this user-initiated cancel from the backend's
+        // PayPal-webhook cancel event (same event_name) for dedup in analysis.
+        track("subscription_cancelled", { source: "user_action" });
         await auth.refresh();
         return;
       }

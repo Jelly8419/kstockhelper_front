@@ -11,6 +11,7 @@ import { NewsFilterTabs } from "./NewsFilterTabs";
 import { NewsCard } from "./NewsCard";
 import { Pagination } from "@/components/ui/Pagination";
 import { useTranslation } from "@/lib/i18n/useTranslation";
+import { useTrackEvent } from "@/lib/analytics/useTrackEvent";
 import { NEWS_PAGE_SIZE } from "@/lib/constants/news";
 
 interface Props {
@@ -39,6 +40,7 @@ export function NewsList({
   const [total, setTotal] = useState(initialTotal);
   const [loading, setLoading] = useState(false);
   const { t, locale } = useTranslation();
+  const track = useTrackEvent();
 
   const sectionRef = useRef<HTMLElement | null>(null);
   // Tracks the in-flight request so rapid tab/filter switches cancel the
@@ -97,10 +99,11 @@ export function NewsList({
   // Any filter change resets pagination to the first page.
   const changeCategory = useCallback(
     (next: ContentTypeFilter) => {
+      track("home_news_filter_clicked", { filter_type: "type", value: next });
       setCategory(next);
       fetchPage(next, tickers, 0, false);
     },
-    [fetchPage, tickers]
+    [fetchPage, tickers, track]
   );
 
   // Toggle one company; clearing the last selection falls back to "All".
@@ -109,18 +112,20 @@ export function NewsList({
       const next = tickers.includes(ticker)
         ? tickers.filter((t) => t !== ticker)
         : [...tickers, ticker];
+      track("home_news_filter_clicked", { filter_type: "company", value: ticker });
       setTickers(next);
       fetchPage(category, next, 0, false);
     },
-    [fetchPage, category, tickers]
+    [fetchPage, category, tickers, track]
   );
 
   // "All" company button: clear the selection (no-op if already empty).
   const resetTickers = useCallback(() => {
     if (tickers.length === 0) return;
+    track("home_news_filter_clicked", { filter_type: "company", value: "all" });
     setTickers([]);
     fetchPage(category, [], 0, false);
-  }, [fetchPage, category, tickers]);
+  }, [fetchPage, category, tickers, track]);
 
   const changePage = useCallback(
     (next: number) => {

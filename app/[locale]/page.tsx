@@ -10,6 +10,7 @@ import { ContentTypeFilter } from "@/types/news";
 import { SHOW_BANNER_HEADER } from "@/lib/geo/bannerGate";
 import { PRICE_GAP_VISIBLE_HEADER } from "@/lib/featureFlags/constants";
 import { resolveContentLocale } from "@/lib/i18n/normalize";
+import { PageView } from "@/lib/analytics/PageView";
 
 // Real-time content — always fetch fresh.
 export const dynamic = "force-dynamic";
@@ -49,6 +50,7 @@ export default async function Home({
 
   return (
     <div className="mx-auto flex max-w-container flex-col gap-10 px-4 py-8 sm:px-6">
+      <PageView event="home_viewed" />
       <MarketTicker />
       {showBanner && <SignupBanner />}
       {showPriceGap && <PriceGapHomeCard />}

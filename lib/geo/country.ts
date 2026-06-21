@@ -1,6 +1,14 @@
 import { NextRequest } from "next/server";
 
 /**
+ * Cookie the middleware sets so client components can read the visitor's country
+ * code (analytics `country_code`). Non-httpOnly on purpose: client JS reads it
+ * (see lib/analytics/context.ts). Value is the ISO alpha-2 code or "" when the
+ * country is unknown (e.g. local dev).
+ */
+export const COUNTRY_CODE_COOKIE = "x-country-code";
+
+/**
  * Extract the requester's ISO 3166-1 alpha-2 country code on Vercel.
  *
  * Reads `request.geo.country` first (populated by Vercel's edge), then the

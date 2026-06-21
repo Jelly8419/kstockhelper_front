@@ -1,6 +1,7 @@
 import { Link } from "@/lib/i18n/navigation";
 import { Button } from "@/components/ui/Button";
 import { getAppTranslations } from "@/lib/i18n/getTranslations";
+import { TrackedLink } from "@/lib/analytics/TrackedLink";
 
 export async function SignupBanner() {
   const { t } = await getAppTranslations();
@@ -14,11 +15,14 @@ export async function SignupBanner() {
           <p className="text-sm text-muted">{t("banner.subtitle")}</p>
         </div>
         <div className="flex shrink-0 flex-col items-start gap-1.5 sm:items-end">
-          <Link href="/guide">
+          <TrackedLink
+            event="home_start_trading_banner_clicked"
+            href="/guide"
+          >
             <Button variant="primary" size="lg">
               {t("banner.cta")}
             </Button>
-          </Link>
+          </TrackedLink>
           <Link
             href="/settings"
             className="text-xs text-muted hover:text-foreground"

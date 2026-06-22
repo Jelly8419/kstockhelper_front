@@ -29,30 +29,39 @@ export function PriceGapMonitor({ tier }: { tier: "free" | "premium" }) {
   const track = useTrackEvent();
   const { data, prev, isLoading } = usePriceGapLatest(tier);
 
-  // Page-view + session time. Fire `gap_monitor_viewed` on mount; on unmount log
-  // it again with the dwell time (session_duration_ms) so funnel and engagement
-  // are both available. `track` is stable per render but we want mount/unmount
-  // only, so capture it in a ref to keep the effect dependency-free.
-  const trackRef = useRef(track);
-  trackRef.current = track;
-  useEffect(() => {
-    const startedAt = Date.now();
-    trackRef.current("gap_monitor_viewed", { tier });
-    return () => {
-      trackRef.current("gap_monitor_viewed", {
-        tier,
-        session_duration_ms: Date.now() - startedAt,
-      });
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // Chart-only controls (PRD §7): single stock, single exchange, avg period,
   // and the Avg Gap line toggle. Defaults: Samsung / Binance / 10D / ON.
   const [stock, setStock] = useState<StockCode>("005930");
   const [exchange, setExchange] = useState<Exchange>("binance");
   const [period, setPeriod] = useState<AveragePeriod>(DEFAULT_AVERAGE_PERIOD);
   const [showAvg, setShowAvg] = useState(true);
+
+  // Page-view + session time. Fire `gap_monitor_viewed` on mount; on unmount log
+  // it again with the dwell time (session_time_seconds) so funnel and engagement
+  // are both available. The effect runs mount/unmount only, so read the latest
+  // track fn and filter state from a ref to keep it dependency-free.
+  const stateRef = useRef({ track, stock, exchange, period });
+  stateRef.current = { track, stock, exchange, period };
+  useEffect(() => {
+    const startedAt = Date.now();
+    const s = stateRef.current;
+    s.track("gap_monitor_viewed", {
+      session_time_seconds: 0,
+      selected_stock: s.stock,
+      selected_exchange: s.exchange,
+      avg_period: s.period,
+    });
+    return () => {
+      const end = stateRef.current;
+      end.track("gap_monitor_viewed", {
+        session_time_seconds: Math.round((Date.now() - startedAt) / 1000),
+        selected_stock: end.stock,
+        selected_exchange: end.exchange,
+        avg_period: end.period,
+      });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const delayed = tier === "free";
   const warming = data?.warmingUp === true;

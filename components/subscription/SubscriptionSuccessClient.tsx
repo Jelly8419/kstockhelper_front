@@ -50,7 +50,12 @@ export function SubscriptionSuccessClient() {
   useEffect(() => {
     if (isPremium && !loggedRef.current) {
       loggedRef.current = true;
-      track("subscription_activated", { source: "success_poll" });
+      track("subscription_activated", {
+        source: "success_poll",
+        payment_provider: "paypal",
+        plan_name: "premium_monthly",
+        billing_cycle: "trial",
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPremium]);
@@ -59,7 +64,12 @@ export function SubscriptionSuccessClient() {
   useEffect(() => {
     if (exhausted && !loggedRef.current) {
       loggedRef.current = true;
-      track("subscription_activation_failed", { reason: "poll_timeout" });
+      track("subscription_activation_failed", {
+        source: "success_poll",
+        payment_provider: "paypal",
+        plan_name: "premium_monthly",
+        failure_reason: "poll_timeout",
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [exhausted]);

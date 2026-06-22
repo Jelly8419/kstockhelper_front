@@ -33,6 +33,8 @@ export function DelayBadge() {
           <SubscriptionRequiredModal
             open={modalOpen}
             onClose={() => setModalOpen(false)}
+            triggerPage="gap_monitor"
+            triggerFeature="realtime_data"
           />
         </>
       ) : (

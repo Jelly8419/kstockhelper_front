@@ -57,8 +57,8 @@ export function NewsCard({ item }: Props) {
       className={cardClass}
       onClick={() =>
         track("home_news_contents_clicked", {
-          seq_id: item.seqId,
-          category: item.category,
+          content_id: item.seqId,
+          content_type: item.category,
         })
       }
     >

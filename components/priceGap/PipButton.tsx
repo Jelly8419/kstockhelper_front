@@ -111,7 +111,13 @@ export function PipButton({
           variant="secondary"
           size="sm"
           onClick={() => {
-            track("gap_pip_clicked", { tier, locked: true });
+            track("gap_pip_clicked", {
+              tier,
+              locked: true,
+              selected_stock: stock,
+              selected_exchange: exchange,
+              avg_period: period,
+            });
             setLockedOpen(true);
           }}
         >
@@ -160,7 +166,13 @@ export function PipButton({
   }
 
   const openPip = async () => {
-    track("gap_pip_clicked", { tier, locked: false });
+    track("gap_pip_clicked", {
+      tier,
+      locked: false,
+      selected_stock: stock,
+      selected_exchange: exchange,
+      avg_period: period,
+    });
     if (pipWindow) {
       pipWindow.focus();
       return;

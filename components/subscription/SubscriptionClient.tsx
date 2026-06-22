@@ -42,7 +42,13 @@ export function SubscriptionClient() {
   // Log the page view once the (restricted, non-guest) page is actually shown.
   const pageVisible = !isLoading && tier !== "guest" && restricted;
   useEffect(() => {
-    if (pageVisible) track("subscription_page_viewed");
+    if (pageVisible) {
+      track("subscription_page_viewed", {
+        plan_name: "premium_monthly",
+        currency: "USD",
+        payment_provider: "paypal",
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageVisible]);
 
@@ -62,7 +68,11 @@ export function SubscriptionClient() {
   const isPremium = tier === "premium";
 
   const handleSubscribe = async () => {
-    track("subscribe_button_clicked", { plan: "regular" });
+    track("subscribe_button_clicked", {
+      plan_name: "premium_monthly",
+      currency: "USD",
+      payment_provider: "paypal",
+    });
     setError(null);
     setSubmitting(true);
     try {

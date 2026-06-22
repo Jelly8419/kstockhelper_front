@@ -227,7 +227,7 @@ function BinanceSection({
 
   // Submit a Binance UID (→ pending); returns an error message or null.
   const connect = async (value: string): Promise<string | null> => {
-    track("uid_apply_clicked", { exchange: "binance" });
+    track("uid_apply_clicked", { exchange: "binance", action_source: "settings" });
     const res = await fetch("/api/binance/connect", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

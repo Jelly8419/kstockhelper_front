@@ -43,7 +43,12 @@ export function SubscriptionStatusCard() {
       if (res.success) {
         // source distinguishes this user-initiated cancel from the backend's
         // PayPal-webhook cancel event (same event_name) for dedup in analysis.
-        track("subscription_cancelled", { source: "user_action" });
+        track("subscription_cancelled", {
+          source: "user_action",
+          payment_provider: "paypal",
+          plan_name: "premium_monthly",
+          billing_cycle: null,
+        });
         await auth.refresh();
         return;
       }

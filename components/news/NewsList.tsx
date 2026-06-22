@@ -99,7 +99,10 @@ export function NewsList({
   // Any filter change resets pagination to the first page.
   const changeCategory = useCallback(
     (next: ContentTypeFilter) => {
-      track("home_news_filter_clicked", { filter_type: "type", value: next });
+      track("home_news_filter_clicked", {
+        filter_type: "type",
+        filter_value: next,
+      });
       setCategory(next);
       fetchPage(next, tickers, 0, false);
     },
@@ -112,7 +115,10 @@ export function NewsList({
       const next = tickers.includes(ticker)
         ? tickers.filter((t) => t !== ticker)
         : [...tickers, ticker];
-      track("home_news_filter_clicked", { filter_type: "company", value: ticker });
+      track("home_news_filter_clicked", {
+        filter_type: "company",
+        filter_value: ticker,
+      });
       setTickers(next);
       fetchPage(category, next, 0, false);
     },
@@ -122,7 +128,10 @@ export function NewsList({
   // "All" company button: clear the selection (no-op if already empty).
   const resetTickers = useCallback(() => {
     if (tickers.length === 0) return;
-    track("home_news_filter_clicked", { filter_type: "company", value: "all" });
+    track("home_news_filter_clicked", {
+      filter_type: "company",
+      filter_value: "all",
+    });
     setTickers([]);
     fetchPage(category, [], 0, false);
   }, [fetchPage, category, tickers, track]);

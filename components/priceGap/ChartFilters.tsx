@@ -38,19 +38,38 @@ export function ChartFilters({
   const track = useTrackEvent();
 
   // Only log when the value actually changes (ignore re-selecting the current).
+  // Each gap event carries the resulting filter state (selected_stock /
+  // selected_exchange / avg_period) per the data spec sheet.
   const changeStock = (next: StockCode) => {
-    if (next !== stock) track("gap_stock_changed", { stock: next, prev_stock: stock });
+    if (next !== stock) {
+      track("gap_stock_changed", {
+        selected_stock: next,
+        selected_exchange: exchange,
+        avg_period: period,
+        prev_stock: stock,
+      });
+    }
     onStock(next);
   };
   const changeExchange = (next: Exchange) => {
     if (next !== exchange) {
-      track("gap_exchange_changed", { exchange: next, prev_exchange: exchange });
+      track("gap_exchange_changed", {
+        selected_stock: stock,
+        selected_exchange: next,
+        avg_period: period,
+        prev_exchange: exchange,
+      });
     }
     onExchange(next);
   };
   const changePeriod = (next: AveragePeriod) => {
     if (next !== period) {
-      track("gap_avg_period_changed", { period: next, prev_period: period });
+      track("gap_avg_period_changed", {
+        selected_stock: stock,
+        selected_exchange: exchange,
+        avg_period: next,
+        prev_period: period,
+      });
     }
     onPeriod(next);
   };

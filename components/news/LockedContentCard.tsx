@@ -57,7 +57,10 @@ function GuestCta() {
 
   // The locked card overlay IS the "login required" prompt for guests.
   useEffect(() => {
-    track("login_required_modal_viewed");
+    track("login_required_modal_viewed", {
+      trigger_page: "news_detail",
+      trigger_action: "view_premium_content",
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -73,7 +76,12 @@ function GuestCta() {
       <Link
         href="/login"
         className="text-sm text-brand hover:underline"
-        onClick={() => track("login_required_modal_login_clicked")}
+        onClick={() =>
+          track("login_required_modal_login_clicked", {
+            trigger_page: "news_detail",
+            auth_method: "email",
+          })
+        }
       >
         {t("newsGate.guestLoginCta")}
       </Link>
@@ -103,6 +111,8 @@ function FreeCta() {
           <SubscriptionRequiredModal
             open={modalOpen}
             onClose={() => setModalOpen(false)}
+            triggerPage="news_detail"
+            triggerFeature="premium_content"
           />
         </>
       ) : (

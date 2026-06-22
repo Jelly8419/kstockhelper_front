@@ -21,7 +21,10 @@ export function HotNewsCard({ item }: { item: HotNewsPublicItem }) {
     <Link
       href={href}
       onClick={() =>
-        track("home_hot_in_korea_contents_clicked", { seq_id: item.seqId })
+        track("home_hot_in_korea_contents_clicked", {
+          content_id: item.seqId,
+          content_type: "hot_news",
+        })
       }
       className="flex h-full flex-col gap-3 rounded-xl border border-border bg-surface p-5 text-left transition-colors hover:bg-surface-hover"
     >

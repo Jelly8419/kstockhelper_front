@@ -19,9 +19,15 @@ import { useTrackEvent } from "@/lib/analytics/useTrackEvent";
 export function SubscriptionRequiredModal({
   open,
   onClose,
+  triggerPage,
+  triggerFeature,
 }: {
   open: boolean;
   onClose: () => void;
+  /** Where the modal was triggered (analytics trigger_page), e.g. 'news_detail'. */
+  triggerPage?: string;
+  /** Which premium feature triggered it (analytics trigger_feature). */
+  triggerFeature?: string;
 }) {
   const { t } = useTranslation();
   const router = useRouter();
@@ -29,7 +35,13 @@ export function SubscriptionRequiredModal({
 
   // Fire the "premium required" view once each time the modal opens.
   useEffect(() => {
-    if (open) track("premium_required_modal_viewed", { modal_type: "subscription_required" });
+    if (open) {
+      track("premium_required_modal_viewed", {
+        modal_type: "subscription_required",
+        trigger_page: triggerPage,
+        trigger_feature: triggerFeature,
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
@@ -44,6 +56,8 @@ export function SubscriptionRequiredModal({
           onClick={() => {
             track("premium_required_modal_cta_clicked", {
               modal_type: "subscription_required",
+              trigger_page: triggerPage,
+              trigger_feature: triggerFeature,
             });
             router.push("/subscription");
           }}

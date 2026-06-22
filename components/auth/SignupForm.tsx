@@ -59,7 +59,7 @@ export function SignupForm() {
         setError(error.message);
         return;
       }
-      track("signup_started", { method: "email" });
+      track("signup_started", { trigger_page: "signup", auth_method: "email" });
       setStep("code");
       setNotice(t("auth.codeSent", { email }));
     } finally {
@@ -156,7 +156,7 @@ export function SignupForm() {
           .eq("id", user.id);
       }
 
-      track("signup_completed", { method: "email" });
+      track("signup_completed", { trigger_page: "signup", auth_method: "email" });
 
       // New account → land on the guide page.
       router.push("/guide");

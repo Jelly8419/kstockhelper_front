@@ -37,6 +37,26 @@ export interface AnalyticsEventRow {
   count: number;
 }
 
+/** Row of GET /internal/admin/analytics/raw — one raw event. */
+export interface AnalyticsRawRow {
+  createdAt: string;
+  eventName: string;
+  userId: string | null;
+  countryCode: string | null;
+  countryGroup: string | null;
+  membershipStatus: string | null;
+  pagePath: string | null;
+  deviceType: string | null;
+  properties: Record<string, unknown>;
+}
+
+export interface AnalyticsRawResponse {
+  rows: AnalyticsRawRow[];
+  total: number;
+  page: number;
+  pageSize: number;
+}
+
 export interface AnalyticsDauResponse {
   rows: AnalyticsDauRow[];
 }

@@ -7,6 +7,9 @@
 /** Row of GET /internal/admin/analytics/dau. */
 export interface AnalyticsDauRow {
   day: string;
+  /** Unique visitors incl. guests (distinct properties.anon_id). May be absent
+   *  until the backend exposes it — treated as 0 when missing. */
+  uniqueVisitors?: number;
   loggedInUsers: number;
   totalEvents: number;
 }

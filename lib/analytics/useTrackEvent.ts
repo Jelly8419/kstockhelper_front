@@ -7,6 +7,7 @@ import { useRestrictedRegion } from "@/lib/hooks/useRestrictedRegion";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { readCountryCode, mapMembership } from "./context";
 import { getDeviceType } from "./deviceType";
+import { getAnonId } from "./anonId";
 import { logEvent } from "./logEvent";
 import type { EventName, EventProps } from "./types";
 
@@ -41,7 +42,9 @@ export function useTrackEvent(): (name: EventName, props?: EventProps) => void {
         membership_status: mapMembership(tier),
         device_type: getDeviceType(),
         page_path: pathname,
-        properties: { locale, ...(props ?? {}) },
+        // anon_id groups a single browser's events (unique-visitor counting,
+        // incl. guests). Caller props can still override if ever needed.
+        properties: { locale, anon_id: getAnonId(), ...(props ?? {}) },
       });
     },
     [tier, userId, restricted, locale, pathname]

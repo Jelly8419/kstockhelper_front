@@ -126,7 +126,7 @@
     "cancelAnytime": "Cancel anytime",
     "benefitsTitle": "Premium Benefits",
     "benefit1": "Real-time Price Gap Tracker & market data",
-    "benefit2": "Advanced Gap tools",
+    "benefit2": "Advanced data tools",
     "benefit3": "Real-time Korean market news, summarized into key points",
     "refundPolicy": "Refunds may be reviewed in cases such as service errors, duplicate charges, or payment processing issues.",
     "cta": "Continue with PayPal",
@@ -150,7 +150,7 @@
     "cancelButton": "Cancel subscription",
     "canceling": "Cancelling…",
     "cancelPending": "Premium is active until {date}. Your subscription has been cancelled and will not renew.",
-    "paymentFailed": "Your payment could not be completed. Your account has been switched to Basic.",
+    "paymentFailed": "Your payment could not be completed.",
     "subscribeCta": "Subscribe to Premium",
     "modal": {
       "title": "Premium subscription required",
@@ -266,7 +266,7 @@
     "priceGapCard": {
       "liveNow": "Live Now",
       "title": "Price Gap Monitor",
-      "subtitle": "Compare Korean stock prices with Binance & Bybit futures in real time.",
+      "subtitle": "See whether the current price is higher or lower than the market reference.",
       "cta": "Open Price Gap Monitor"
     }
   },

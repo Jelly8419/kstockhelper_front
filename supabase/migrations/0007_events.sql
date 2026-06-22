@@ -70,9 +70,17 @@ create policy "events_insert_anon" on public.events
 -- console. A future (free, self-hosted) Metabase can point at these directly.
 -- -----------------------------------------------------------------------------
 
--- Daily active (logged-in) users + total event volume.
-create or replace view public.analytics_dau as
+-- Daily unique visitors + active (logged-in) users + total event volume.
+-- unique_visitors uses properties.anon_id (a per-browser id we attach to every
+-- event), so it counts guests too — unlike logged_in_users, which needs user_id.
+-- DROP + CREATE (not CREATE OR REPLACE): inserting a column changes existing
+-- column positions/names, which CREATE OR REPLACE forbids. Dropping a view is
+-- safe (no stored data); the GRANTs below re-apply afterwards.
+drop view if exists public.analytics_dau;
+create view public.analytics_dau as
   select date_trunc('day', created_at) as day,
+         count(distinct properties->>'anon_id')
+           filter (where properties ? 'anon_id')                  as unique_visitors,
          count(distinct user_id) filter (where user_id is not null) as logged_in_users,
          count(*) as total_events
   from public.events
@@ -109,3 +117,13 @@ create or replace view public.analytics_funnel_daily as
   from public.events
   group by 1
   order by 1 desc;
+
+-- -----------------------------------------------------------------------------
+-- View grants. The analytics views are read by the backend (admin API). Grant
+-- SELECT on them explicitly — a newly created view does not inherit SELECT for
+-- service_role, so the backend gets "permission denied for view ..." without
+-- this. Only the views are exposed; base-table `events` SELECT stays denied.
+-- -----------------------------------------------------------------------------
+grant select on public.analytics_dau          to service_role;
+grant select on public.analytics_event_counts to service_role;
+grant select on public.analytics_funnel_daily to service_role;

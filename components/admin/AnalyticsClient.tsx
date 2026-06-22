@@ -108,6 +108,7 @@ export function AnalyticsClient() {
         .reverse()
         .map((r) => ({
           day: kstDayLabel(r.day),
+          uniqueVisitors: r.uniqueVisitors ?? 0,
           loggedInUsers: r.loggedInUsers,
           totalEvents: r.totalEvents,
         })),
@@ -184,6 +185,13 @@ export function AnalyticsClient() {
                 <XAxis dataKey="day" tick={{ fontSize: 12 }} />
                 <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip />
+                <Line
+                  type="monotone"
+                  dataKey="uniqueVisitors"
+                  name="순 방문자"
+                  stroke="#f59e0b"
+                  dot={false}
+                />
                 <Line
                   type="monotone"
                   dataKey="loggedInUsers"

@@ -42,6 +42,7 @@ export const RAW_EVENT_AREAS: RawEventArea[] = [
     eventNames: [
       "login_required_modal_viewed",
       "login_required_modal_login_clicked",
+      "signup_viewed",
       "signup_started",
       "signup_completed",
     ],

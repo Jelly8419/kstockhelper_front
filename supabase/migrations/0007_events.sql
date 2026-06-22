@@ -43,6 +43,11 @@ create index if not exists events_user_id_idx    on public.events (user_id);
 -- analytics views.
 -- -----------------------------------------------------------------------------
 grant insert on table public.events to anon, authenticated;
+-- The backend (admin RAW log API) reads events directly via service_role. A new
+-- table doesn't always inherit SELECT for service_role, so grant it explicitly.
+-- NOT granted to anon/authenticated — raw reads stay backend-only (the analytics
+-- isolation; clients can only INSERT).
+grant select on table public.events to service_role;
 
 -- -----------------------------------------------------------------------------
 -- RLS: INSERT only (same pattern as 0003_waitlist.sql).

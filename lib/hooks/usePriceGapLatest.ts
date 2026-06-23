@@ -22,14 +22,12 @@ interface UsePriceGapLatest {
 }
 
 /**
- * Polls the latest Price Gap snapshot. premium → realtime (tier=premium),
- * free → 10-min delayed (tier=basic). Keeps the previous snapshot so the table
- * can color KR/Exchange prices by direction vs the last poll (the backend does
- * not send direction).
+ * Polls the latest Price Gap snapshot. premium → realtime (tier=premium);
+ * guest/free → 10-min delayed (tier=basic). Keeps the previous snapshot so the
+ * table can color KR/Exchange prices by direction vs the last poll (the backend
+ * does not send direction).
  */
-export function usePriceGapLatest(
-  tier: Exclude<UserTier, "guest">
-): UsePriceGapLatest {
+export function usePriceGapLatest(tier: UserTier): UsePriceGapLatest {
   const apiTier = tier === "premium" ? "premium" : "basic";
   const [data, setData] = useState<PriceGapLatest | null>(null);
   const [prev, setPrev] = useState<PriceGapLatest | null>(null);

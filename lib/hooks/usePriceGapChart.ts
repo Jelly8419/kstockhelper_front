@@ -26,7 +26,7 @@ export function usePriceGapChart(
   exchange: Exchange,
   stock: StockCode,
   period: AveragePeriod,
-  tier: Exclude<UserTier, "guest">
+  tier: UserTier
 ): UsePriceGapChart {
   const apiTier = tier === "premium" ? "premium" : "basic";
   const [candles, setCandles] = useState<PriceGapCandle[]>([]);

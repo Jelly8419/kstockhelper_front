@@ -25,17 +25,12 @@ function resolvePeriod(raw: string | null): AveragePeriod {
 /**
  * BFF for the Price Gap 1-minute OHLC chart (one stock × one exchange).
  * `exchange`/`stock` come from the client; `tier` is decided server-side from
- * the session (same anti-forgery rationale as /latest). Falls back to mock when
- * PRICE_GAP_API_BASE is unset.
+ * the session (same anti-forgery rationale as /latest). Guests resolve to
+ * `basic` (delayed) — allowed without login per the guest-access spec. Falls
+ * back to mock when PRICE_GAP_API_BASE is unset.
  */
 export async function GET(req: NextRequest) {
   const tier = await resolveServerTier();
-  if (!tier) {
-    return NextResponse.json(
-      { success: false, code: "PRICE_GAP_UNAUTHENTICATED", message: "Login required." },
-      { status: 401 }
-    );
-  }
 
   const exchange = req.nextUrl.searchParams.get("exchange") as Exchange | null;
   const stock = req.nextUrl.searchParams.get("stock") as StockCode | null;

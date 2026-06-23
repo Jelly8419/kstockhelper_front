@@ -1,5 +1,6 @@
 "use client";
 
+import type { UserTier } from "@/types/user";
 import type { PriceGapLatest } from "@/types/priceGap";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { formatNumber } from "@/lib/utils/format";
@@ -15,7 +16,7 @@ export function StatusCards({
   tier,
 }: {
   data: PriceGapLatest | null;
-  tier: "free" | "premium";
+  tier: UserTier;
 }) {
   const { t } = useTranslation();
   const open = data?.marketOpen ?? false;
@@ -54,7 +55,7 @@ export function StatusCards({
           {t("priceGap.status.lastUpdated")}{" "}
           {data ? localDateTimeFull(data.serverTime) : "—"}
         </p>
-        {tier === "free" && (
+        {tier !== "premium" && (
           <p className="text-xs text-muted">
             {t("priceGap.status.updated.delayed")}
           </p>

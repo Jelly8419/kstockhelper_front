@@ -59,7 +59,7 @@ export function PriceGapChart({
   /** Fill the parent's height instead of using a fixed height (PiP). */
   fill = false,
 }: {
-  tier: Exclude<UserTier, "guest">;
+  tier: UserTier;
   exchange: Exchange;
   stock: StockCode;
   period: AveragePeriod;

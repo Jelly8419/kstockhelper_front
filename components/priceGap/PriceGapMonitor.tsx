@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import type { UserTier } from "@/types/user";
 import type { AveragePeriod, Exchange, StockCode } from "@/types/priceGap";
 import { DEFAULT_AVERAGE_PERIOD } from "@/types/priceGap";
 import { useTranslation } from "@/lib/i18n/useTranslation";
@@ -22,9 +23,11 @@ import { PriceGapFooter } from "./PriceGapFooter";
  * filters and PIP affect the CHART only; the table always shows every stock and
  * both exchanges.
  *
- * tier drives the delay: premium = realtime, free = 10-min delayed + PIP locked.
+ * tier drives the delay: premium = realtime; guest/free = 10-min delayed +
+ * PIP locked. guest and free differ only in their upgrade CTAs (login vs
+ * upgrade), handled inside DelayBadge / PipButton.
  */
-export function PriceGapMonitor({ tier }: { tier: "free" | "premium" }) {
+export function PriceGapMonitor({ tier }: { tier: UserTier }) {
   const { t } = useTranslation();
   const track = useTrackEvent();
   const { data, prev, isLoading } = usePriceGapLatest(tier);
@@ -63,7 +66,7 @@ export function PriceGapMonitor({ tier }: { tier: "free" | "premium" }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const delayed = tier === "free";
+  const delayed = tier !== "premium";
   const warming = data?.warmingUp === true;
 
   return (
@@ -80,7 +83,7 @@ export function PriceGapMonitor({ tier }: { tier: "free" | "premium" }) {
         </div>
       </div>
 
-      {delayed && <DelayBadge />}
+      {delayed && <DelayBadge tier={tier} />}
 
       <StatusCards data={data} tier={tier} />
 

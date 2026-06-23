@@ -297,7 +297,8 @@
       "cta": "View real-time data"
     },
     "guest": {
-      "cta": "Log in to view delayed Price Gap data. Premium members can access real-time Price Gap data."
+      "delayBanner": "You're viewing limited 10-minute delayed data as a guest.",
+      "loginCta": "Log in"
     },
     "restricted": {
       "body": "Price Gap Monitor is not available in your region."

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "@/lib/i18n/navigation";
+import type { UserTier } from "@/types/user";
 import type {
   AveragePeriod,
   Exchange,
@@ -55,7 +56,9 @@ function PipIcon({ active }: { active?: boolean }) {
  *  - premium + supported browser → opens a Document Picture-in-Picture window
  *    that renders {@link PipContent} (summary table + mini chart) via a portal.
  *  - premium + unsupported browser → disabled with a hint.
- *  - free → locked; clicking explains it's premium-only and routes to /guide.
+ *  - guest/free → locked; clicking explains it's premium-only. The modal CTA
+ *    branches: guest → login (/login), free+restricted → /subscription,
+ *    free+allowed → /guide.
  *
  * Document PiP is Chromium-desktop only (Chrome/Edge); Safari/Firefox lack it.
  * Because the PiP window is a separate document, we copy the page's stylesheets
@@ -68,7 +71,7 @@ export function PipButton({
   period,
   showAvg,
 }: {
-  tier: "free" | "premium";
+  tier: UserTier;
   /** Reserved for future use (table reads its own realtime poll). */
   data: PriceGapLatest | null;
   exchange: Exchange;
@@ -104,7 +107,7 @@ export function PipButton({
     };
   }, [pipWindow]);
 
-  if (tier === "free") {
+  if (tier !== "premium") {
     return (
       <>
         <Button
@@ -134,9 +137,23 @@ export function PipButton({
             <Button variant="secondary" onClick={() => setLockedOpen(false)}>
               {t("common.close")}
             </Button>
-            {/* Upgrade path branches by region: restricted → PayPal subscription,
-                allowed → exchange/UID guide. */}
-            {restricted ? (
+            {/* CTA branches by tier/region:
+                - guest            → log in first (/login)
+                - free + restricted → PayPal subscription (/subscription)
+                - free + allowed    → exchange/UID guide (/guide) */}
+            {tier === "guest" ? (
+              <Button
+                onClick={() => {
+                  track("login_required_modal_login_clicked", {
+                    trigger_page: "gap_monitor",
+                    auth_method: "email",
+                  });
+                  router.push("/login");
+                }}
+              >
+                {t("priceGap.guest.loginCta")}
+              </Button>
+            ) : restricted ? (
               <Button onClick={() => router.push("/subscription")}>
                 {t("subscription.modal.cta")}
               </Button>

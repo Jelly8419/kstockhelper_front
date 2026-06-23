@@ -1,13 +1,14 @@
 "use client";
 
+import type { UserTier } from "@/types/user";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 
 /**
  * Description / Notes below the chart (PRD §10): About Gap (the USDT-based
- * formula), Past Avg Gap, Gap vs Past Avg, and Notes. Free tier adds the
- * 10-minute-delay lines.
+ * formula), Past Avg Gap, Gap vs Past Avg, and Notes. Delayed tiers (guest/free)
+ * add the 10-minute-delay lines.
  */
-export function PriceGapFooter({ tier }: { tier: "free" | "premium" }) {
+export function PriceGapFooter({ tier }: { tier: UserTier }) {
   const { t } = useTranslation();
 
   return (
@@ -38,8 +39,8 @@ export function PriceGapFooter({ tier }: { tier: "free" | "premium" }) {
           {t("priceGap.footer.notesTitle")}
         </p>
         <ul className="list-disc space-y-1 pl-4">
-          {tier === "free" && <li>{t("priceGap.footer.noteDelay")}</li>}
-          {tier === "free" && <li>{t("priceGap.footer.noteRefresh")}</li>}
+          {tier !== "premium" && <li>{t("priceGap.footer.noteDelay")}</li>}
+          {tier !== "premium" && <li>{t("priceGap.footer.noteRefresh")}</li>}
           <li>{t("priceGap.footer.noteLocalTime")}</li>
           <li>{t("priceGap.footer.noteAdvice")}</li>
         </ul>

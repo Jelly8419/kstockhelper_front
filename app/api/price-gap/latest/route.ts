@@ -12,18 +12,13 @@ const BASE = backendBase("/api/price-gap", process.env.PRICE_GAP_API_BASE);
  * BFF for the Price Gap latest snapshot (frontend-guide §"BFF").
  *
  * The browser never calls the backend directly: the tier is decided HERE from
- * the session so it can't be forged via `?tier=`. Guests are refused. When
- * PRICE_GAP_API_BASE is unset, the in-repo mock is served so the UI works
- * before the backend is wired.
+ * the session so it can't be forged via `?tier=`. Guests resolve to `basic`
+ * (10-min delayed) — they are allowed to view delayed data without logging in
+ * (guest-access spec). When PRICE_GAP_API_BASE is unset, the in-repo mock is
+ * served so the UI works before the backend is wired.
  */
 export async function GET() {
   const tier = await resolveServerTier();
-  if (!tier) {
-    return NextResponse.json(
-      { success: false, code: "PRICE_GAP_UNAUTHENTICATED", message: "Login required." },
-      { status: 401 }
-    );
-  }
 
   if (!BASE) {
     return NextResponse.json({

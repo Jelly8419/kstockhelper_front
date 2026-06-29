@@ -14,6 +14,7 @@
   "gnb": {
     "news": "Tin tức",
     "stocks": "Cổ phiếu",
+    "realEstate": "Mua bất động sản Hàn Quốc",
     "settings": "Cài đặt",
     "logIn": "Đăng nhập",
     "signUp": "Đăng ký",
@@ -104,7 +105,9 @@
   "hotNews": {
     "sectionTitle": "Đang hot ở Hàn Quốc",
     "sectionDescription": "Những câu chuyện nổi bật nhất trên thị trường Hàn Quốc hiện nay.",
-    "carouselAria": "Đang hot ở Hàn Quốc"
+    "carouselAria": "Đang hot ở Hàn Quốc",
+    "prevAria": "Previous",
+    "nextAria": "Next"
   },
   "restrictedPremium": {
     "title": "Không thể truy cập Premium",
@@ -116,6 +119,45 @@
     "waitlistError": "Đã xảy ra lỗi. Vui lòng thử lại.",
     "mypageCardTitle": "Quyền truy cập Premium không khả dụng ở khu vực của bạn",
     "mypageCardBody": "Do quy định tài chính tại một số khu vực, chúng tôi không thể cung cấp quyền truy cập Premium liên kết với sàn giao dịch tại quốc gia của bạn."
+  },
+  "subscription": {
+    "title": "Đăng ký Premium",
+    "subtitle": "Mở khóa toàn quyền truy cập các tính năng Premium của K-Stock Helper.",
+    "priceLine": "$1 cho tháng đầu tiên, sau đó $4.90 / tháng",
+    "cancelAnytime": "Hủy bất cứ lúc nào",
+    "benefitsTitle": "Lợi ích Premium",
+    "benefit1": "Price Gap Tracker & dữ liệu thị trường theo thời gian thực",
+    "benefit2": "Công cụ dữ liệu nâng cao",
+    "benefit3": "Tin tức thị trường Hàn Quốc theo thời gian thực, được tóm tắt thành các điểm chính",
+    "refundPolicy": "Khoản hoàn tiền có thể được xem xét trong các trường hợp như lỗi dịch vụ, tính phí trùng lặp hoặc sự cố xử lý thanh toán.",
+    "cta": "Tiếp tục với PayPal",
+    "processing": "Đang chuyển đến PayPal…",
+    "unavailable": "Trang này không khả dụng.",
+    "alreadyPremium": "Bạn đã có quyền truy cập Premium. Quản lý gói đăng ký trong Cài đặt.",
+    "error": "Đã xảy ra sự cố. Vui lòng thử lại.",
+    "activating": "Đang xác nhận thanh toán của bạn… Premium sẽ sớm được kích hoạt.",
+    "successTitle": "Cảm ơn bạn đã đăng ký!",
+    "activated": "Quyền truy cập Premium của bạn hiện đã được kích hoạt.",
+    "stillActivating": "Thanh toán của bạn đang được xác nhận. Việc này có thể mất một chút thời gian — vui lòng làm mới sau vài giây.",
+    "goToMonitor": "Đi đến Price Gap Monitor",
+    "goToSettings": "Xem gói đăng ký trong Cài đặt",
+    "cardTitle": "Gói đăng ký",
+    "statusBadge": {
+      "basic": "Basic",
+      "premium": "Premium"
+    },
+    "active": "Gói đăng ký Premium của bạn đang hoạt động.",
+    "nextBilling": "Thanh toán tiếp theo: {date}",
+    "cancelButton": "Hủy gói đăng ký",
+    "canceling": "Đang hủy…",
+    "cancelPending": "Premium có hiệu lực đến {date}. Gói đăng ký của bạn đã bị hủy và sẽ không gia hạn.",
+    "paymentFailed": "Không thể hoàn tất thanh toán của bạn.",
+    "subscribeCta": "Đăng ký Premium",
+    "modal": {
+      "title": "Cần đăng ký Premium",
+      "body": "Đăng ký Premium để truy cập dữ liệu Price Gap theo thời gian thực và các tính năng Premium.",
+      "cta": "Xem gói đăng ký"
+    }
   },
   "market": {
     "ariaOverview": "Tổng quan thị trường",
@@ -221,43 +263,230 @@
     "disclosureDescription": "Đọc bản tóm tắt công bố của thị trường chứng khoán Hàn Quốc và bối cảnh liên quan. Phân tích AI đầy đủ dành cho thành viên Premium.",
     "relatedStocks": "Cổ phiếu liên quan"
   },
-  "subscription": {
-    "title": "Đăng ký Premium",
-    "subtitle": "Mở khóa toàn quyền truy cập các tính năng Premium của K-Stock Helper.",
-    "priceLine": "$1 cho tháng đầu tiên, sau đó $4.90 / tháng",
-    "cancelAnytime": "Hủy bất cứ lúc nào",
-    "benefitsTitle": "Lợi ích Premium",
-    "benefit1": "Price Gap Tracker & dữ liệu thị trường theo thời gian thực",
-    "benefit2": "Công cụ dữ liệu nâng cao",
-    "benefit3": "Tin tức thị trường Hàn Quốc theo thời gian thực, được tóm tắt thành các điểm chính",
-    "refundPolicy": "Khoản hoàn tiền có thể được xem xét trong các trường hợp như lỗi dịch vụ, tính phí trùng lặp hoặc sự cố xử lý thanh toán.",
-    "cta": "Tiếp tục với PayPal",
-    "processing": "Đang chuyển đến PayPal…",
-    "unavailable": "Trang này không khả dụng.",
-    "alreadyPremium": "Bạn đã có quyền truy cập Premium. Quản lý gói đăng ký trong Cài đặt.",
-    "error": "Đã xảy ra sự cố. Vui lòng thử lại.",
-    "activating": "Đang xác nhận thanh toán của bạn… Premium sẽ sớm được kích hoạt.",
-    "successTitle": "Cảm ơn bạn đã đăng ký!",
-    "activated": "Quyền truy cập Premium của bạn hiện đã được kích hoạt.",
-    "stillActivating": "Thanh toán của bạn đang được xác nhận. Việc này có thể mất một chút thời gian — vui lòng làm mới sau vài giây.",
-    "goToMonitor": "Đi đến Price Gap Monitor",
-    "goToSettings": "Xem gói đăng ký trong Cài đặt",
-    "cardTitle": "Gói đăng ký",
-    "statusBadge": {
-      "basic": "Basic",
-      "premium": "Premium"
+  "home": {
+    "priceGapCard": {
+      "liveNow": "Live Now",
+      "title": "Price Gap Monitor",
+      "subtitle": "See whether the current price is higher or lower than the market reference.",
+      "cta": "Open Price Gap Monitor"
     },
-    "active": "Gói đăng ký Premium của bạn đang hoạt động.",
-    "nextBilling": "Thanh toán tiếp theo: {date}",
-    "cancelButton": "Hủy gói đăng ký",
-    "canceling": "Đang hủy…",
-    "cancelPending": "Premium có hiệu lực đến {date}. Gói đăng ký của bạn đã bị hủy và sẽ không gia hạn.",
-    "paymentFailed": "Không thể hoàn tất thanh toán của bạn.",
-    "subscribeCta": "Đăng ký Premium",
-    "modal": {
-      "title": "Cần đăng ký Premium",
-      "body": "Đăng ký Premium để truy cập dữ liệu Price Gap theo thời gian thực và các tính năng Premium.",
-      "cta": "Xem gói đăng ký"
+    "realEstateBanner": {
+      "badge": "MỚI",
+      "title": "Bạn muốn mua bất động sản tại Hàn Quốc?",
+      "subtitle": "Nhận hỗ trợ trọn quy trình cho người mua nước ngoài — từ tìm kiếm bất động sản đến pháp lý, thuế và hoàn tất giao dịch. Mua từ xa hoặc đến Hàn Quốc với hỗ trợ concierge trực tiếp.",
+      "cta": "Xem hỗ trợ bất động sản"
+    }
+  },
+  "priceGap": {
+    "title": "Price Gap Monitor",
+    "subtitle": {
+      "line1": "See whether the current price is higher or lower than the market reference.",
+      "line2": "Track exchange prices against Korea's USDT reference price and past average gap during Korean market hours."
+    },
+    "status": {
+      "koreaMarket": "Korea Market",
+      "open": "Open",
+      "closed": "Closed",
+      "hours": "09:00 – 15:35 KST",
+      "usdtKrw": "USDT/KRW",
+      "fxDelayed": "FX delayed",
+      "lastUpdated": "Last updated:",
+      "updated": {
+        "delayed": "10 min delayed"
+      }
+    },
+    "state": {
+      "closed": "Korea Market is closed.",
+      "warmingUp": "Preparing data…"
+    },
+    "delay": {
+      "banner": "You are viewing 10-minute delayed data because you are on a Basic plan.",
+      "cta": "View real-time data"
+    },
+    "guest": {
+      "delayBanner": "You're viewing limited 10-minute delayed data as a guest.",
+      "loginCta": "Log in"
+    },
+    "restricted": {
+      "body": "Price Gap Monitor is not available in your region."
+    },
+    "table": {
+      "stock": "Stock",
+      "krPrice": "KR Price",
+      "referencePrice": "Reference Price",
+      "binance": "Binance",
+      "bybit": "Bybit",
+      "price": "Price",
+      "currentGap": "Current Gap",
+      "pastAvgGap": "Past Avg Gap",
+      "gapVsPastAvg": "Gap vs Past Avg",
+      "pastAvgGapTip": "Average gap at the same minute of the trading day, from all available history.",
+      "gapVsPastAvgTip": "Current Gap − Past Avg Gap."
+    },
+    "chart": {
+      "title": "Gap Tracker",
+      "empty": "No chart data to display.",
+      "currentGapLine": "Current Gap",
+      "avgGapLine": "{n}D Avg Gap",
+      "gapVsPastAvg": "Gap vs Past Avg",
+      "date": "Date:",
+      "localTime": "Local Time",
+      "introLine1": "This chart is a comparison indicator that helps you see whether the exchange price is trading higher or lower than usual relative to the Korean market reference price.",
+      "introLine2": "For example, if the Current Gap is lower than the 10D Avg Gap, it means the current price is trading lower than its recent average level."
+    },
+    "filters": {
+      "exchange": "Exchange",
+      "stock": "Stock",
+      "averagePeriod": "Average Period",
+      "dayAvg": "{n} Day Avg",
+      "showAvgGap": "Show Avg Gap"
+    },
+    "pip": {
+      "button": "PIP",
+      "unsupported": "PIP is not supported in this browser.",
+      "premiumOnly": "PIP is available for Premium members only.",
+      "premiumHint": "Upgrade to Premium to monitor real-time price gaps while working in another window.",
+      "live": "Live",
+      "ref": "Ref",
+      "gap": "Gap",
+      "binanceShort": "B",
+      "bybitShort": "Y"
+    },
+    "footer": {
+      "aboutTitle": "About Gap",
+      "formulaRef": "Reference Price (USDT) = KR Price / USDT-KRW",
+      "formulaGap": "Gap = Exchange Price − Reference Price",
+      "formulaGapPct": "Gap (%) = Gap / Reference Price × 100",
+      "causes": "Price gaps may occur due to exchange liquidity, market hours, product structure, funding & fees, and FX movement.",
+      "avgTitle": "Past Avg Gap & Gap vs Past Avg",
+      "pastAvgGap": "Past Avg Gap is the average gap at the same minute of the trading day, calculated from available historical data.",
+      "gapVsPastAvg": "Gap vs Past Avg = Current Gap − Past Avg Gap.",
+      "availableData": "Historical average uses available data only.",
+      "notesTitle": "Notes",
+      "noteDelay": "You are viewing 10-minute delayed data.",
+      "noteRefresh": "Delayed data is refreshed every 5 seconds.",
+      "noteLocalTime": "Market data is based on KST. Chart time is shown in your local time.",
+      "noteAdvice": "This information is for market comparison only and does not constitute investment advice."
+    }
+  },
+  "realEstate": {
+    "seo": {
+      "homeTitle": "Mua bất động sản tại Hàn Quốc mà không cần đến Hàn Quốc | K-Stock Helper",
+      "homeDescription": "Dịch vụ hỗ trợ trọn quy trình duy nhất dành cho người nước ngoài mua bất động sản tại Hàn Quốc. Hỗ trợ tìm kiếm bất động sản, môi giới, pháp lý, thuế, giấy tờ, điều phối thanh toán và hoàn tất giao dịch.",
+      "requestTitle": "Yêu cầu hỗ trợ mua | Bất động sản Hàn Quốc",
+      "requestDescription": "Gửi yêu cầu hỗ trợ mua bất động sản Hàn Quốc. Hãy cho chúng tôi biết quốc gia, ngân sách, loại bất động sản và yêu cầu của bạn.",
+      "breadcrumbHome": "Trang chủ",
+      "breadcrumbRealEstate": "Mua bất động sản Hàn Quốc"
+    },
+    "home": {
+      "hero": {
+        "badge": "HỖ TRỢ MUA BẤT ĐỘNG SẢN HÀN QUỐC TỪ XA",
+        "titleLine1": "Mua bất động sản tại Hàn Quốc",
+        "titleLine2": "Không cần đến Hàn Quốc",
+        "highlight": "Chúng tôi xử lý toàn bộ quy trình cho bạn",
+        "description": "Chúng tôi giúp bạn tìm bất động sản Hàn Quốc phù hợp với nhu cầu — từ các thành phố lớn đến các khu vực tiềm năng liên quan đến Samsung, SK Hynix và tăng trưởng bán dẫn của Hàn Quốc. Mạng lưới địa phương đáng tin cậy của chúng tôi xử lý môi giới, pháp lý, thuế, giấy tờ, điều phối thanh toán và hoàn tất giao dịch.",
+        "cta": "Yêu cầu hỗ trợ mua",
+        "ctaSub": "Bạn muốn đến Hàn Quốc? Hỗ trợ concierge trực tiếp cũng có sẵn."
+      },
+      "trust": {
+        "card1Title": "An toàn & đáng tin cậy",
+        "card1Desc": "Thông tin của bạn được xử lý bảo mật.",
+        "card2Title": "Mạng lưới địa phương đáng tin cậy",
+        "card2Desc": "Môi giới, pháp lý, thuế và hoàn tất giao dịch thông qua các chuyên gia đáng tin cậy tại Hàn Quốc.",
+        "card3Title": "Phù hợp với nhu cầu của bạn",
+        "card3Desc": "Các lựa chọn được điều chỉnh theo ngân sách, khu vực mục tiêu và loại bất động sản của bạn.",
+        "card4Title": "Rõ ràng & minh bạch",
+        "card4Desc": "Chúng tôi giải thích chi phí, tài liệu, lịch thanh toán và các bước tiếp theo."
+      },
+      "scope": {
+        "title": "Chúng tôi hỗ trợ những gì",
+        "description": "Từ tìm kiếm đến hoàn tất giao dịch, chúng tôi giúp xử lý toàn bộ quy trình mua thông qua mạng lưới địa phương đáng tin cậy tại Hàn Quốc.",
+        "step1": "Tìm kiếm bất động sản",
+        "step2": "Xem từ xa & sàng lọc",
+        "step3": "Môi giới & đàm phán",
+        "step4": "Pháp lý, thuế & giấy tờ",
+        "step5": "Thanh toán & hoàn tất giao dịch"
+      },
+      "why": {
+        "title": "Vì sao người mua nước ngoài chọn chúng tôi",
+        "subtitle": "Dịch vụ hỗ trợ trọn quy trình duy nhất dành cho người mua nước ngoài mua bất động sản tại Hàn Quốc.",
+        "point1": "Mua từ xa hoặc đến Hàn Quốc với hỗ trợ trực tiếp",
+        "point2": "Hỗ trợ bằng tiếng Anh và các ứng dụng nhắn tin lớn",
+        "point3": "Các lựa chọn bất động sản được lọc theo nhu cầu của bạn",
+        "point4": "Chỉ yêu cầu tài liệu nhạy cảm khi cần thiết"
+      },
+      "values": {
+        "card1Title": "Toàn bộ quy trình",
+        "card1Desc": "Dịch vụ duy nhất kết hợp tìm kiếm bất động sản, môi giới, pháp lý, thuế, giấy tờ, thanh toán và hỗ trợ hoàn tất giao dịch cho người mua nước ngoài tại Hàn Quốc.",
+        "card2Title": "Từ xa hoặc trực tiếp",
+        "card2Desc": "Mua từ nước ngoài, hoặc đến Hàn Quốc với hỗ trợ concierge trực tiếp — từ đón sân bay đến tham quan bất động sản và lịch hẹn hoàn tất giao dịch.",
+        "card3Title": "Không cần chuyển đến ở",
+        "card3Desc": "Bạn có thể không cần sống ở Hàn Quốc sau khi mua."
+      },
+      "contact": {
+        "title": "Bạn có câu hỏi?",
+        "description": "Hãy liên hệ trực tiếp qua kênh bạn muốn. Chúng tôi có thể giải thích quy trình mua và các lựa chọn hỗ trợ hiện có.",
+        "privacyNote": "Thông tin của bạn được bảo mật và chỉ được dùng để phản hồi yêu cầu cũng như điều phối hỗ trợ mua."
+      }
+    },
+    "channels": {
+      "whatsapp": "WhatsApp",
+      "wechat": "WeChat",
+      "line": "LINE",
+      "telegram": "Telegram",
+      "email": "Email"
+    },
+    "request": {
+      "back": "Quay lại trang bất động sản",
+      "header": {
+        "title": "Yêu cầu hỗ trợ mua",
+        "subtitle": "Cho chúng tôi biết thông tin của bạn",
+        "description": "Vui lòng điền vào biểu mẫu bên dưới. Nhóm của chúng tôi sẽ xem xét yêu cầu và phản hồi bạn qua email."
+      },
+      "form": {
+        "emailLabel": "Email",
+        "emailPlaceholder": "Nhập địa chỉ email của bạn",
+        "emailInvalid": "Vui lòng nhập địa chỉ email hợp lệ.",
+        "countryLabel": "Quốc gia cư trú",
+        "countryPlaceholder": "Chọn quốc gia của bạn",
+        "countryRequired": "Vui lòng chọn quốc gia cư trú của bạn.",
+        "budgetLabel": "Khoảng ngân sách",
+        "budgetHelper": "Nhập khoảng ngân sách ước tính của bạn.",
+        "budgetMinPlaceholder": "Số tiền tối thiểu",
+        "budgetMaxPlaceholder": "Số tiền tối đa",
+        "budgetRequired": "Vui lòng nhập khoảng ngân sách ước tính của bạn.",
+        "budgetMinGreater": "Số tiền tối thiểu không được lớn hơn số tiền tối đa.",
+        "propertyTypeLabel": "Loại bất động sản",
+        "propertyTypeRequired": "Vui lòng chọn loại bất động sản.",
+        "propertyTypeApartment": "Căn hộ",
+        "propertyTypeOfficetel": "Officetel",
+        "propertyTypeOther": "Khác",
+        "propertyTypeNotSure": "Chưa chắc",
+        "inKoreaLabel": "Hiện bạn đang ở Hàn Quốc?",
+        "inKoreaRequired": "Vui lòng chọn tình trạng vị trí hiện tại của bạn.",
+        "inKoreaYes": "Có",
+        "inKoreaNo": "Không",
+        "messageLabel": "Tin nhắn",
+        "messagePlaceholder": "Vui lòng cho chúng tôi biết về bất động sản bạn đang tìm kiếm, khu vực mong muốn, thời gian dự kiến và các chi tiết khác.",
+        "messageRequired": "Vui lòng nhập tin nhắn của bạn.",
+        "submit": "Gửi yêu cầu",
+        "submitting": "Đang gửi...",
+        "submitError": "Đã xảy ra lỗi. Vui lòng thử lại.",
+        "privacyNote": "Thông tin của bạn được bảo mật và chỉ được dùng để phản hồi yêu cầu của bạn."
+      },
+      "modal": {
+        "title": "Yêu cầu đã được gửi",
+        "description": "Cảm ơn bạn. Yêu cầu của bạn đã được gửi thành công. Nhóm của chúng tôi sẽ xem xét thông tin và liên hệ với bạn qua email.",
+        "ok": "OK"
+      },
+      "channels": {
+        "title": "Bạn cần phản hồi nhanh hơn?",
+        "description": "Bạn có thể liên hệ với chúng tôi qua các kênh sau trước hoặc sau khi gửi yêu cầu."
+      },
+      "safety": {
+        "title": "An toàn. Riêng tư. Đáng tin cậy.",
+        "description": "Ở giai đoạn này, chúng tôi không yêu cầu tài liệu nhạy cảm. Yêu cầu về tài liệu sẽ được giải thích sau khi chúng tôi xem xét yêu cầu của bạn."
+      }
     }
   }
 }

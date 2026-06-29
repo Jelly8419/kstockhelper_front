@@ -14,6 +14,7 @@
   "gnb": {
     "news": "Berita",
     "stocks": "Saham",
+    "realEstate": "Beli Properti Korea",
     "settings": "Pengaturan",
     "logIn": "Masuk",
     "signUp": "Daftar",
@@ -104,7 +105,9 @@
   "hotNews": {
     "sectionTitle": "Trending di Korea",
     "sectionDescription": "Berita utama yang sedang tren di pasar Korea saat ini.",
-    "carouselAria": "Trending di Korea"
+    "carouselAria": "Trending di Korea",
+    "prevAria": "Previous",
+    "nextAria": "Next"
   },
   "restrictedPremium": {
     "title": "Akses Premium tidak tersedia",
@@ -116,6 +119,45 @@
     "waitlistError": "Terjadi kesalahan. Silakan coba lagi.",
     "mypageCardTitle": "Akses Premium tidak tersedia di wilayah Anda",
     "mypageCardBody": "Karena regulasi keuangan di beberapa wilayah, kami tidak dapat menawarkan akses Premium yang terhubung dengan exchange di negara Anda."
+  },
+  "subscription": {
+    "title": "Langganan Premium",
+    "subtitle": "Buka akses penuh ke fitur Premium K-Stock Helper.",
+    "priceLine": "$1 untuk bulan pertama, lalu $4.90 / bulan",
+    "cancelAnytime": "Batalkan kapan saja",
+    "benefitsTitle": "Manfaat Premium",
+    "benefit1": "Price Gap Tracker & data pasar real-time",
+    "benefit2": "Alat data lanjutan",
+    "benefit3": "Berita pasar Korea real-time, diringkas menjadi poin utama",
+    "refundPolicy": "Pengembalian dana dapat ditinjau untuk kasus seperti kesalahan layanan, tagihan ganda, atau masalah pemrosesan pembayaran.",
+    "cta": "Lanjutkan dengan PayPal",
+    "processing": "Mengalihkan ke PayPal…",
+    "unavailable": "Halaman ini tidak tersedia.",
+    "alreadyPremium": "Anda sudah memiliki akses Premium. Kelola langganan Anda di Pengaturan.",
+    "error": "Terjadi kesalahan. Silakan coba lagi.",
+    "activating": "Mengonfirmasi pembayaran Anda… Premium akan segera diaktifkan.",
+    "successTitle": "Terima kasih telah berlangganan!",
+    "activated": "Akses Premium Anda sekarang aktif.",
+    "stillActivating": "Pembayaran Anda sedang dikonfirmasi. Ini mungkin perlu beberapa saat — silakan segarkan dalam beberapa detik.",
+    "goToMonitor": "Buka Price Gap Monitor",
+    "goToSettings": "Lihat langganan di Pengaturan",
+    "cardTitle": "Langganan",
+    "statusBadge": {
+      "basic": "Basic",
+      "premium": "Premium"
+    },
+    "active": "Langganan Premium Anda aktif.",
+    "nextBilling": "Tagihan berikutnya: {date}",
+    "cancelButton": "Batalkan langganan",
+    "canceling": "Membatalkan…",
+    "cancelPending": "Premium aktif hingga {date}. Langganan Anda telah dibatalkan dan tidak akan diperpanjang.",
+    "paymentFailed": "Pembayaran Anda tidak dapat diselesaikan.",
+    "subscribeCta": "Berlangganan Premium",
+    "modal": {
+      "title": "Langganan Premium diperlukan",
+      "body": "Berlangganan Premium untuk mengakses data Price Gap real-time dan fitur Premium.",
+      "cta": "Lihat langganan"
+    }
   },
   "market": {
     "ariaOverview": "Ikhtisar pasar",
@@ -221,43 +263,230 @@
     "disclosureDescription": "Baca ringkasan singkat keterbukaan informasi pasar saham Korea dan konteks terkait. Analisis AI lengkap tersedia untuk anggota Premium.",
     "relatedStocks": "Saham terkait"
   },
-  "subscription": {
-    "title": "Langganan Premium",
-    "subtitle": "Buka akses penuh ke fitur Premium K-Stock Helper.",
-    "priceLine": "$1 untuk bulan pertama, lalu $4.90 / bulan",
-    "cancelAnytime": "Batalkan kapan saja",
-    "benefitsTitle": "Manfaat Premium",
-    "benefit1": "Price Gap Tracker & data pasar real-time",
-    "benefit2": "Alat data lanjutan",
-    "benefit3": "Berita pasar Korea real-time, diringkas menjadi poin utama",
-    "refundPolicy": "Pengembalian dana dapat ditinjau untuk kasus seperti kesalahan layanan, tagihan ganda, atau masalah pemrosesan pembayaran.",
-    "cta": "Lanjutkan dengan PayPal",
-    "processing": "Mengalihkan ke PayPal…",
-    "unavailable": "Halaman ini tidak tersedia.",
-    "alreadyPremium": "Anda sudah memiliki akses Premium. Kelola langganan Anda di Pengaturan.",
-    "error": "Terjadi kesalahan. Silakan coba lagi.",
-    "activating": "Mengonfirmasi pembayaran Anda… Premium akan segera diaktifkan.",
-    "successTitle": "Terima kasih telah berlangganan!",
-    "activated": "Akses Premium Anda sekarang aktif.",
-    "stillActivating": "Pembayaran Anda sedang dikonfirmasi. Ini mungkin perlu beberapa saat — silakan segarkan dalam beberapa detik.",
-    "goToMonitor": "Buka Price Gap Monitor",
-    "goToSettings": "Lihat langganan di Pengaturan",
-    "cardTitle": "Langganan",
-    "statusBadge": {
-      "basic": "Basic",
-      "premium": "Premium"
+  "home": {
+    "priceGapCard": {
+      "liveNow": "Live Now",
+      "title": "Price Gap Monitor",
+      "subtitle": "See whether the current price is higher or lower than the market reference.",
+      "cta": "Open Price Gap Monitor"
     },
-    "active": "Langganan Premium Anda aktif.",
-    "nextBilling": "Tagihan berikutnya: {date}",
-    "cancelButton": "Batalkan langganan",
-    "canceling": "Membatalkan…",
-    "cancelPending": "Premium aktif hingga {date}. Langganan Anda telah dibatalkan dan tidak akan diperpanjang.",
-    "paymentFailed": "Pembayaran Anda tidak dapat diselesaikan.",
-    "subscribeCta": "Berlangganan Premium",
-    "modal": {
-      "title": "Langganan Premium diperlukan",
-      "body": "Berlangganan Premium untuk mengakses data Price Gap real-time dan fitur Premium.",
-      "cta": "Lihat langganan"
+    "realEstateBanner": {
+      "badge": "BARU",
+      "title": "Ingin membeli properti di Korea?",
+      "subtitle": "Dapatkan dukungan menyeluruh untuk pembeli asing — mulai dari pencarian properti hingga legal, pajak, dan penutupan. Beli dari jarak jauh atau kunjungi Korea dengan dukungan concierge langsung.",
+      "cta": "Jelajahi Dukungan Real Estat"
+    }
+  },
+  "priceGap": {
+    "title": "Price Gap Monitor",
+    "subtitle": {
+      "line1": "See whether the current price is higher or lower than the market reference.",
+      "line2": "Track exchange prices against Korea's USDT reference price and past average gap during Korean market hours."
+    },
+    "status": {
+      "koreaMarket": "Korea Market",
+      "open": "Open",
+      "closed": "Closed",
+      "hours": "09:00 – 15:35 KST",
+      "usdtKrw": "USDT/KRW",
+      "fxDelayed": "FX delayed",
+      "lastUpdated": "Last updated:",
+      "updated": {
+        "delayed": "10 min delayed"
+      }
+    },
+    "state": {
+      "closed": "Korea Market is closed.",
+      "warmingUp": "Preparing data…"
+    },
+    "delay": {
+      "banner": "You are viewing 10-minute delayed data because you are on a Basic plan.",
+      "cta": "View real-time data"
+    },
+    "guest": {
+      "delayBanner": "You're viewing limited 10-minute delayed data as a guest.",
+      "loginCta": "Log in"
+    },
+    "restricted": {
+      "body": "Price Gap Monitor is not available in your region."
+    },
+    "table": {
+      "stock": "Stock",
+      "krPrice": "KR Price",
+      "referencePrice": "Reference Price",
+      "binance": "Binance",
+      "bybit": "Bybit",
+      "price": "Price",
+      "currentGap": "Current Gap",
+      "pastAvgGap": "Past Avg Gap",
+      "gapVsPastAvg": "Gap vs Past Avg",
+      "pastAvgGapTip": "Average gap at the same minute of the trading day, from all available history.",
+      "gapVsPastAvgTip": "Current Gap − Past Avg Gap."
+    },
+    "chart": {
+      "title": "Gap Tracker",
+      "empty": "No chart data to display.",
+      "currentGapLine": "Current Gap",
+      "avgGapLine": "{n}D Avg Gap",
+      "gapVsPastAvg": "Gap vs Past Avg",
+      "date": "Date:",
+      "localTime": "Local Time",
+      "introLine1": "This chart is a comparison indicator that helps you see whether the exchange price is trading higher or lower than usual relative to the Korean market reference price.",
+      "introLine2": "For example, if the Current Gap is lower than the 10D Avg Gap, it means the current price is trading lower than its recent average level."
+    },
+    "filters": {
+      "exchange": "Exchange",
+      "stock": "Stock",
+      "averagePeriod": "Average Period",
+      "dayAvg": "{n} Day Avg",
+      "showAvgGap": "Show Avg Gap"
+    },
+    "pip": {
+      "button": "PIP",
+      "unsupported": "PIP is not supported in this browser.",
+      "premiumOnly": "PIP is available for Premium members only.",
+      "premiumHint": "Upgrade to Premium to monitor real-time price gaps while working in another window.",
+      "live": "Live",
+      "ref": "Ref",
+      "gap": "Gap",
+      "binanceShort": "B",
+      "bybitShort": "Y"
+    },
+    "footer": {
+      "aboutTitle": "About Gap",
+      "formulaRef": "Reference Price (USDT) = KR Price / USDT-KRW",
+      "formulaGap": "Gap = Exchange Price − Reference Price",
+      "formulaGapPct": "Gap (%) = Gap / Reference Price × 100",
+      "causes": "Price gaps may occur due to exchange liquidity, market hours, product structure, funding & fees, and FX movement.",
+      "avgTitle": "Past Avg Gap & Gap vs Past Avg",
+      "pastAvgGap": "Past Avg Gap is the average gap at the same minute of the trading day, calculated from available historical data.",
+      "gapVsPastAvg": "Gap vs Past Avg = Current Gap − Past Avg Gap.",
+      "availableData": "Historical average uses available data only.",
+      "notesTitle": "Notes",
+      "noteDelay": "You are viewing 10-minute delayed data.",
+      "noteRefresh": "Delayed data is refreshed every 5 seconds.",
+      "noteLocalTime": "Market data is based on KST. Chart time is shown in your local time.",
+      "noteAdvice": "This information is for market comparison only and does not constitute investment advice."
+    }
+  },
+  "realEstate": {
+    "seo": {
+      "homeTitle": "Beli Properti di Korea Tanpa Mengunjungi Korea | K-Stock Helper",
+      "homeDescription": "Satu-satunya layanan menyeluruh untuk pembeli asing yang membeli properti di Korea. Dapatkan dukungan untuk pencarian properti, broker, legal, pajak, dokumen, koordinasi pembayaran, dan penutupan.",
+      "requestTitle": "Ajukan Dukungan Pembelian | Real Estat Korea",
+      "requestDescription": "Kirim permintaan Anda untuk dukungan pembelian properti Korea. Beri tahu kami negara, anggaran, jenis properti, dan kebutuhan Anda.",
+      "breadcrumbHome": "Beranda",
+      "breadcrumbRealEstate": "Beli Properti Korea"
+    },
+    "home": {
+      "hero": {
+        "badge": "DUKUNGAN PEMBELIAN PROPERTI KOREA JARAK JAUH",
+        "titleLine1": "Beli Properti di Korea",
+        "titleLine2": "Tanpa Mengunjungi Korea",
+        "highlight": "Kami menangani seluruh proses untuk Anda",
+        "description": "Kami membantu Anda menemukan properti Korea yang sesuai kebutuhan — dari kota-kota besar hingga area potensial yang terhubung dengan Samsung, SK Hynix, dan pertumbuhan semikonduktor Korea. Jaringan lokal tepercaya kami menangani broker, legal, pajak, dokumen, koordinasi pembayaran, dan penutupan.",
+        "cta": "Ajukan Dukungan Pembelian",
+        "ctaSub": "Ingin mengunjungi Korea? Dukungan concierge langsung juga tersedia."
+      },
+      "trust": {
+        "card1Title": "Aman & Andal",
+        "card1Desc": "Informasi Anda ditangani secara rahasia.",
+        "card2Title": "Jaringan Lokal Tepercaya",
+        "card2Desc": "Broker, legal, pajak, dan penutupan melalui profesional tepercaya di Korea.",
+        "card3Title": "Sesuai Kebutuhan Anda",
+        "card3Desc": "Opsi yang disesuaikan dengan anggaran, area target, dan jenis properti Anda.",
+        "card4Title": "Jelas & Transparan",
+        "card4Desc": "Kami menjelaskan biaya, dokumen, jadwal pembayaran, dan langkah berikutnya."
+      },
+      "scope": {
+        "title": "Yang Kami Bantu",
+        "description": "Dari pencarian hingga penutupan, kami membantu menangani seluruh proses pembelian melalui jaringan lokal tepercaya kami di Korea.",
+        "step1": "Pencarian Properti",
+        "step2": "Peninjauan Jarak Jauh & Seleksi",
+        "step3": "Broker & Negosiasi",
+        "step4": "Legal, Pajak & Dokumen",
+        "step5": "Pembayaran & Penutupan"
+      },
+      "why": {
+        "title": "Mengapa Pembeli Asing Memilih Kami",
+        "subtitle": "Satu-satunya layanan menyeluruh untuk pembeli asing yang membeli properti di Korea.",
+        "point1": "Beli dari jarak jauh atau kunjungi Korea dengan dukungan langsung",
+        "point2": "Dukungan dalam bahasa Inggris dan aplikasi pesan utama",
+        "point3": "Pilihan properti disaring sesuai kebutuhan Anda",
+        "point4": "Dokumen sensitif hanya diminta saat diperlukan"
+      },
+      "values": {
+        "card1Title": "Proses Penuh",
+        "card1Desc": "Satu-satunya layanan yang menggabungkan pencarian properti, broker, legal, pajak, dokumen, pembayaran, dan dukungan penutupan untuk pembeli asing di Korea.",
+        "card2Title": "Jarak Jauh atau Langsung",
+        "card2Desc": "Beli dari luar negeri, atau kunjungi Korea dengan dukungan concierge langsung — dari penjemputan bandara hingga kunjungan properti dan janji penutupan.",
+        "card3Title": "Tidak Perlu Pindah Masuk",
+        "card3Desc": "Anda mungkin tidak perlu tinggal di Korea setelah pembelian."
+      },
+      "contact": {
+        "title": "Ada pertanyaan?",
+        "description": "Hubungi kami langsung melalui saluran pilihan Anda. Kami dapat menjelaskan proses pembelian dan opsi dukungan yang tersedia.",
+        "privacyNote": "Informasi Anda aman dan hanya akan digunakan untuk menanggapi permintaan serta mengoordinasikan dukungan pembelian."
+      }
+    },
+    "channels": {
+      "whatsapp": "WhatsApp",
+      "wechat": "WeChat",
+      "line": "LINE",
+      "telegram": "Telegram",
+      "email": "Email"
+    },
+    "request": {
+      "back": "Kembali ke Halaman Real Estat",
+      "header": {
+        "title": "Ajukan Dukungan Pembelian",
+        "subtitle": "Beri tahu kami informasi Anda",
+        "description": "Silakan isi formulir di bawah ini. Tim kami akan meninjau permintaan Anda dan menghubungi Anda melalui email."
+      },
+      "form": {
+        "emailLabel": "Email",
+        "emailPlaceholder": "Masukkan alamat email Anda",
+        "emailInvalid": "Masukkan alamat email yang valid.",
+        "countryLabel": "Negara tempat tinggal",
+        "countryPlaceholder": "Pilih negara Anda",
+        "countryRequired": "Pilih negara tempat tinggal Anda.",
+        "budgetLabel": "Kisaran anggaran",
+        "budgetHelper": "Masukkan perkiraan kisaran anggaran Anda.",
+        "budgetMinPlaceholder": "Jumlah minimum",
+        "budgetMaxPlaceholder": "Jumlah maksimum",
+        "budgetRequired": "Masukkan perkiraan kisaran anggaran Anda.",
+        "budgetMinGreater": "Jumlah minimum tidak boleh lebih besar dari jumlah maksimum.",
+        "propertyTypeLabel": "Jenis properti",
+        "propertyTypeRequired": "Pilih jenis properti.",
+        "propertyTypeApartment": "Apartemen",
+        "propertyTypeOfficetel": "Officetel",
+        "propertyTypeOther": "Lainnya",
+        "propertyTypeNotSure": "Belum yakin",
+        "inKoreaLabel": "Apakah Anda saat ini berada di Korea?",
+        "inKoreaRequired": "Pilih status lokasi Anda saat ini.",
+        "inKoreaYes": "Ya",
+        "inKoreaNo": "Tidak",
+        "messageLabel": "Pesan",
+        "messagePlaceholder": "Beri tahu kami properti yang Anda cari, area pilihan, jadwal, dan detail lainnya.",
+        "messageRequired": "Masukkan pesan Anda.",
+        "submit": "Kirim Permintaan",
+        "submitting": "Mengirim...",
+        "submitError": "Terjadi kesalahan. Silakan coba lagi.",
+        "privacyNote": "Informasi Anda aman dan hanya akan digunakan untuk menanggapi permintaan Anda."
+      },
+      "modal": {
+        "title": "Permintaan Terkirim",
+        "description": "Terima kasih. Permintaan Anda berhasil dikirim. Tim kami akan meninjau informasi Anda dan menghubungi Anda melalui email.",
+        "ok": "OK"
+      },
+      "channels": {
+        "title": "Butuh respons lebih cepat?",
+        "description": "Anda dapat menghubungi kami melalui saluran berikut sebelum atau setelah mengirim permintaan."
+      },
+      "safety": {
+        "title": "Aman. Privat. Tepercaya.",
+        "description": "Kami tidak meminta dokumen sensitif pada tahap ini. Persyaratan dokumen akan dijelaskan setelah kami meninjau permintaan Anda."
+      }
     }
   }
 }

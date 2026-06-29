@@ -14,6 +14,7 @@
   "gnb": {
     "news": "新聞",
     "stocks": "股票",
+    "realEstate": "購買韓國房地產",
     "settings": "設定",
     "logIn": "登入",
     "signUp": "註冊",
@@ -104,7 +105,9 @@
   "hotNews": {
     "sectionTitle": "韓國熱門",
     "sectionDescription": "目前韓國市場最熱門的焦點消息。",
-    "carouselAria": "韓國熱門"
+    "carouselAria": "韓國熱門",
+    "prevAria": "Previous",
+    "nextAria": "Next"
   },
   "restrictedPremium": {
     "title": "Premium 存取權目前無法使用",
@@ -116,6 +119,45 @@
     "waitlistError": "發生錯誤。請再試一次。",
     "mypageCardTitle": "你的所在地區無法使用 Premium 存取權",
     "mypageCardBody": "由於部分地區的金融相關規範，我們無法在你的國家/地區提供與交易所連結的 Premium 存取權。"
+  },
+  "subscription": {
+    "title": "Premium 訂閱",
+    "subtitle": "解鎖 K-Stock Helper Premium 功能的完整使用權限。",
+    "priceLine": "首月 $1，之後每月 $4.90",
+    "cancelAnytime": "可隨時取消",
+    "benefitsTitle": "Premium 權益",
+    "benefit1": "即時 Price Gap Tracker 與市場資料",
+    "benefit2": "進階資料工具",
+    "benefit3": "即時韓國市場新聞，濃縮為重點摘要",
+    "refundPolicy": "如遇服務錯誤、重複扣款或付款處理問題，可能會審核退款。",
+    "cta": "使用 PayPal 繼續",
+    "processing": "正在前往 PayPal…",
+    "unavailable": "此頁面無法使用。",
+    "alreadyPremium": "你已擁有 Premium 使用權限。請在設定中管理訂閱。",
+    "error": "發生錯誤。請再試一次。",
+    "activating": "正在確認你的付款… Premium 將很快啟用。",
+    "successTitle": "感謝你的訂閱！",
+    "activated": "你的 Premium 使用權限現已啟用。",
+    "stillActivating": "你的付款正在確認中。這可能需要一點時間，請幾秒後重新整理。",
+    "goToMonitor": "前往 Price Gap Monitor",
+    "goToSettings": "在設定中查看訂閱",
+    "cardTitle": "訂閱",
+    "statusBadge": {
+      "basic": "Basic",
+      "premium": "Premium"
+    },
+    "active": "你的 Premium 訂閱已啟用。",
+    "nextBilling": "下次付款：{date}",
+    "cancelButton": "取消訂閱",
+    "canceling": "正在取消…",
+    "cancelPending": "Premium 將有效至 {date}。你的訂閱已取消，且不會續訂。",
+    "paymentFailed": "你的付款無法完成。",
+    "subscribeCta": "訂閱 Premium",
+    "modal": {
+      "title": "需要 Premium 訂閱",
+      "body": "訂閱 Premium，即可使用即時 Price Gap 資料與 Premium 功能。",
+      "cta": "查看訂閱"
+    }
   },
   "market": {
     "ariaOverview": "市場概覽",
@@ -221,43 +263,230 @@
     "disclosureDescription": "閱讀韓國股市公告的簡短摘要與相關背景。完整 AI 分析提供給 Premium 會員。",
     "relatedStocks": "相關股票"
   },
-  "subscription": {
-    "title": "Premium 訂閱",
-    "subtitle": "解鎖 K-Stock Helper Premium 功能的完整使用權限。",
-    "priceLine": "首月 $1，之後每月 $4.90",
-    "cancelAnytime": "可隨時取消",
-    "benefitsTitle": "Premium 權益",
-    "benefit1": "即時 Price Gap Tracker 與市場資料",
-    "benefit2": "進階資料工具",
-    "benefit3": "即時韓國市場新聞，濃縮為重點摘要",
-    "refundPolicy": "如遇服務錯誤、重複扣款或付款處理問題，可能會審核退款。",
-    "cta": "使用 PayPal 繼續",
-    "processing": "正在前往 PayPal…",
-    "unavailable": "此頁面無法使用。",
-    "alreadyPremium": "你已擁有 Premium 使用權限。請在設定中管理訂閱。",
-    "error": "發生錯誤。請再試一次。",
-    "activating": "正在確認你的付款… Premium 將很快啟用。",
-    "successTitle": "感謝你的訂閱！",
-    "activated": "你的 Premium 使用權限現已啟用。",
-    "stillActivating": "你的付款正在確認中。這可能需要一點時間，請幾秒後重新整理。",
-    "goToMonitor": "前往 Price Gap Monitor",
-    "goToSettings": "在設定中查看訂閱",
-    "cardTitle": "訂閱",
-    "statusBadge": {
-      "basic": "Basic",
-      "premium": "Premium"
+  "home": {
+    "priceGapCard": {
+      "liveNow": "Live Now",
+      "title": "Price Gap Monitor",
+      "subtitle": "See whether the current price is higher or lower than the market reference.",
+      "cta": "Open Price Gap Monitor"
     },
-    "active": "你的 Premium 訂閱已啟用。",
-    "nextBilling": "下次付款：{date}",
-    "cancelButton": "取消訂閱",
-    "canceling": "正在取消…",
-    "cancelPending": "Premium 將有效至 {date}。你的訂閱已取消，且不會續訂。",
-    "paymentFailed": "你的付款無法完成。",
-    "subscribeCta": "訂閱 Premium",
-    "modal": {
-      "title": "需要 Premium 訂閱",
-      "body": "訂閱 Premium，即可使用即時 Price Gap 資料與 Premium 功能。",
-      "cta": "查看訂閱"
+    "realEstateBanner": {
+      "badge": "全新",
+      "title": "想在韓國購買房地產嗎？",
+      "subtitle": "為外國買家提供端到端支援——從房地產搜尋到法律、稅務與成交。可遠端購買，也可赴韓享有現場禮賓支援。",
+      "cta": "了解房地產支援"
+    }
+  },
+  "priceGap": {
+    "title": "Price Gap Monitor",
+    "subtitle": {
+      "line1": "See whether the current price is higher or lower than the market reference.",
+      "line2": "Track exchange prices against Korea's USDT reference price and past average gap during Korean market hours."
+    },
+    "status": {
+      "koreaMarket": "Korea Market",
+      "open": "Open",
+      "closed": "Closed",
+      "hours": "09:00 – 15:35 KST",
+      "usdtKrw": "USDT/KRW",
+      "fxDelayed": "FX delayed",
+      "lastUpdated": "Last updated:",
+      "updated": {
+        "delayed": "10 min delayed"
+      }
+    },
+    "state": {
+      "closed": "Korea Market is closed.",
+      "warmingUp": "Preparing data…"
+    },
+    "delay": {
+      "banner": "You are viewing 10-minute delayed data because you are on a Basic plan.",
+      "cta": "View real-time data"
+    },
+    "guest": {
+      "delayBanner": "You're viewing limited 10-minute delayed data as a guest.",
+      "loginCta": "Log in"
+    },
+    "restricted": {
+      "body": "Price Gap Monitor is not available in your region."
+    },
+    "table": {
+      "stock": "Stock",
+      "krPrice": "KR Price",
+      "referencePrice": "Reference Price",
+      "binance": "Binance",
+      "bybit": "Bybit",
+      "price": "Price",
+      "currentGap": "Current Gap",
+      "pastAvgGap": "Past Avg Gap",
+      "gapVsPastAvg": "Gap vs Past Avg",
+      "pastAvgGapTip": "Average gap at the same minute of the trading day, from all available history.",
+      "gapVsPastAvgTip": "Current Gap − Past Avg Gap."
+    },
+    "chart": {
+      "title": "Gap Tracker",
+      "empty": "No chart data to display.",
+      "currentGapLine": "Current Gap",
+      "avgGapLine": "{n}D Avg Gap",
+      "gapVsPastAvg": "Gap vs Past Avg",
+      "date": "Date:",
+      "localTime": "Local Time",
+      "introLine1": "This chart is a comparison indicator that helps you see whether the exchange price is trading higher or lower than usual relative to the Korean market reference price.",
+      "introLine2": "For example, if the Current Gap is lower than the 10D Avg Gap, it means the current price is trading lower than its recent average level."
+    },
+    "filters": {
+      "exchange": "Exchange",
+      "stock": "Stock",
+      "averagePeriod": "Average Period",
+      "dayAvg": "{n} Day Avg",
+      "showAvgGap": "Show Avg Gap"
+    },
+    "pip": {
+      "button": "PIP",
+      "unsupported": "PIP is not supported in this browser.",
+      "premiumOnly": "PIP is available for Premium members only.",
+      "premiumHint": "Upgrade to Premium to monitor real-time price gaps while working in another window.",
+      "live": "Live",
+      "ref": "Ref",
+      "gap": "Gap",
+      "binanceShort": "B",
+      "bybitShort": "Y"
+    },
+    "footer": {
+      "aboutTitle": "About Gap",
+      "formulaRef": "Reference Price (USDT) = KR Price / USDT-KRW",
+      "formulaGap": "Gap = Exchange Price − Reference Price",
+      "formulaGapPct": "Gap (%) = Gap / Reference Price × 100",
+      "causes": "Price gaps may occur due to exchange liquidity, market hours, product structure, funding & fees, and FX movement.",
+      "avgTitle": "Past Avg Gap & Gap vs Past Avg",
+      "pastAvgGap": "Past Avg Gap is the average gap at the same minute of the trading day, calculated from available historical data.",
+      "gapVsPastAvg": "Gap vs Past Avg = Current Gap − Past Avg Gap.",
+      "availableData": "Historical average uses available data only.",
+      "notesTitle": "Notes",
+      "noteDelay": "You are viewing 10-minute delayed data.",
+      "noteRefresh": "Delayed data is refreshed every 5 seconds.",
+      "noteLocalTime": "Market data is based on KST. Chart time is shown in your local time.",
+      "noteAdvice": "This information is for market comparison only and does not constitute investment advice."
+    }
+  },
+  "realEstate": {
+    "seo": {
+      "homeTitle": "無需前往韓國即可購買韓國房地產 | K-Stock Helper",
+      "homeDescription": "唯一為外國買家在韓國購買房地產提供端到端支援的服務。協助房地產搜尋、中介、法律、稅務、文件、付款協調與成交。",
+      "requestTitle": "申請購買支援 | 韓國房地產",
+      "requestDescription": "提交韓國房地產購買支援請求。請告訴我們您的國家、預算、房地產類型與需求。",
+      "breadcrumbHome": "首頁",
+      "breadcrumbRealEstate": "購買韓國房地產"
+    },
+    "home": {
+      "hero": {
+        "badge": "遠端韓國房地產購買支援",
+        "titleLine1": "購買韓國房地產",
+        "titleLine2": "無需前往韓國",
+        "highlight": "我們為您處理整個流程",
+        "description": "我們協助您尋找符合需求的韓國房地產——從主要城市到與 Samsung、SK Hynix 和韓國半導體成長相關的潛力地區。我們可信賴的在地網絡會處理中介、法律、稅務、文件、付款協調與成交。",
+        "cta": "申請購買支援",
+        "ctaSub": "想親自前往韓國？也可提供現場禮賓支援。"
+      },
+      "trust": {
+        "card1Title": "安全且可靠",
+        "card1Desc": "您的資訊會被保密處理。",
+        "card2Title": "可信賴的在地網絡",
+        "card2Desc": "透過韓國可信賴的專業人士處理中介、法律、稅務與成交。",
+        "card3Title": "符合您的需求",
+        "card3Desc": "依您的預算、目標地區與房地產類型量身篩選選項。",
+        "card4Title": "清楚透明",
+        "card4Desc": "我們會說明費用、文件、付款時程與後續步驟。"
+      },
+      "scope": {
+        "title": "我們提供的協助",
+        "description": "從搜尋到成交，我們透過韓國可信賴的在地網絡協助處理完整購買流程。",
+        "step1": "房地產搜尋",
+        "step2": "遠端看房與篩選",
+        "step3": "中介與協商",
+        "step4": "法律、稅務與文件",
+        "step5": "付款與成交"
+      },
+      "why": {
+        "title": "為什麼外國買家選擇我們",
+        "subtitle": "唯一為外國買家在韓國購買房地產提供端到端支援的服務。",
+        "point1": "可遠端購買，或赴韓享有現場支援",
+        "point2": "支援英文與主要通訊應用程式",
+        "point3": "依您的需求篩選房地產選項",
+        "point4": "僅在必要時要求敏感文件"
+      },
+      "values": {
+        "card1Title": "完整流程",
+        "card1Desc": "唯一為外國買家在韓國結合房地產搜尋、中介、法律、稅務、文件、付款與成交支援的服務。",
+        "card2Title": "遠端或現場",
+        "card2Desc": "可從海外購買，或赴韓享有現場禮賓支援——從機場接送到看房與成交預約。",
+        "card3Title": "無需入住",
+        "card3Desc": "購買後，您可能不需要住在韓國。"
+      },
+      "contact": {
+        "title": "有問題嗎？",
+        "description": "請透過您偏好的管道直接聯絡我們。我們可以說明購買流程與可用的支援選項。",
+        "privacyNote": "您的資訊是安全的，且僅會用於回覆您的請求與協調購買支援。"
+      }
+    },
+    "channels": {
+      "whatsapp": "WhatsApp",
+      "wechat": "WeChat",
+      "line": "LINE",
+      "telegram": "Telegram",
+      "email": "Email"
+    },
+    "request": {
+      "back": "返回房地產首頁",
+      "header": {
+        "title": "申請購買支援",
+        "subtitle": "告訴我們您的資訊",
+        "description": "請填寫下方表單。我們的團隊會審核您的請求，並透過電子郵件與您聯絡。"
+      },
+      "form": {
+        "emailLabel": "電子郵件",
+        "emailPlaceholder": "輸入您的電子郵件地址",
+        "emailInvalid": "請輸入有效的電子郵件地址。",
+        "countryLabel": "居住國家",
+        "countryPlaceholder": "選擇您的國家",
+        "countryRequired": "請選擇您的居住國家。",
+        "budgetLabel": "預算範圍",
+        "budgetHelper": "輸入您的預估預算範圍。",
+        "budgetMinPlaceholder": "最低金額",
+        "budgetMaxPlaceholder": "最高金額",
+        "budgetRequired": "請輸入您的預估預算範圍。",
+        "budgetMinGreater": "最低金額不可高於最高金額。",
+        "propertyTypeLabel": "房地產類型",
+        "propertyTypeRequired": "請選擇房地產類型。",
+        "propertyTypeApartment": "公寓",
+        "propertyTypeOfficetel": "Officetel",
+        "propertyTypeOther": "其他",
+        "propertyTypeNotSure": "尚不確定",
+        "inKoreaLabel": "您目前在韓國嗎？",
+        "inKoreaRequired": "請選擇您目前的位置狀態。",
+        "inKoreaYes": "是",
+        "inKoreaNo": "否",
+        "messageLabel": "訊息",
+        "messagePlaceholder": "請告訴我們您正在尋找的房地產、偏好地區、時程與其他細節。",
+        "messageRequired": "請輸入您的訊息。",
+        "submit": "提交請求",
+        "submitting": "提交中...",
+        "submitError": "發生錯誤。請再試一次。",
+        "privacyNote": "您的資訊是安全的，且僅會用於回覆您的請求。"
+      },
+      "modal": {
+        "title": "請求已提交",
+        "description": "謝謝。您的請求已成功提交。我們的團隊會審核您的資訊，並透過電子郵件與您聯絡。",
+        "ok": "OK"
+      },
+      "channels": {
+        "title": "需要更快回覆嗎？",
+        "description": "您可以在提交請求前後透過以下管道聯絡我們。"
+      },
+      "safety": {
+        "title": "安全。私密。可信賴。",
+        "description": "在此階段，我們不會要求敏感文件。文件需求會在我們審核您的請求後說明。"
+      }
     }
   }
 }

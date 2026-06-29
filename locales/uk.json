@@ -14,6 +14,7 @@
   "gnb": {
     "news": "Новини",
     "stocks": "Акції",
+    "realEstate": "Купити нерухомість у Кореї",
     "settings": "Налаштування",
     "logIn": "Увійти",
     "signUp": "Зареєструватися",
@@ -104,7 +105,9 @@
   "hotNews": {
     "sectionTitle": "Актуальне в Кореї",
     "sectionDescription": "Головні актуальні матеріали корейського ринку просто зараз.",
-    "carouselAria": "Актуальне в Кореї"
+    "carouselAria": "Актуальне в Кореї",
+    "prevAria": "Previous",
+    "nextAria": "Next"
   },
   "restrictedPremium": {
     "title": "Доступ до Premium недоступний",
@@ -116,6 +119,45 @@
     "waitlistError": "Щось пішло не так. Спробуйте ще раз.",
     "mypageCardTitle": "Доступ до Premium недоступний у вашому регіоні",
     "mypageCardBody": "Через фінансові регуляторні вимоги в деяких регіонах ми не можемо надавати у вашій країні доступ до Premium, пов’язаний із біржами."
+  },
+  "subscription": {
+    "title": "Преміум-підписка",
+    "subtitle": "Відкрийте повний доступ до Premium-функцій K-Stock Helper.",
+    "priceLine": "$1 за перший місяць, потім $4.90 / місяць",
+    "cancelAnytime": "Скасувати можна будь-коли",
+    "benefitsTitle": "Переваги Premium",
+    "benefit1": "Price Gap Tracker і ринкові дані в реальному часі",
+    "benefit2": "Розширені інструменти даних",
+    "benefit3": "Новини корейського ринку в реальному часі, стисло за ключовими пунктами",
+    "refundPolicy": "Повернення коштів може розглядатися у випадках помилок сервісу, дублювання платежу або проблем з обробкою оплати.",
+    "cta": "Продовжити через PayPal",
+    "processing": "Перенаправлення до PayPal…",
+    "unavailable": "Ця сторінка недоступна.",
+    "alreadyPremium": "У вас уже є доступ Premium. Керуйте підпискою в налаштуваннях.",
+    "error": "Щось пішло не так. Спробуйте ще раз.",
+    "activating": "Підтверджуємо ваш платіж… Premium незабаром буде активовано.",
+    "successTitle": "Дякуємо за підписку!",
+    "activated": "Ваш доступ Premium тепер активний.",
+    "stillActivating": "Ваш платіж підтверджується. Це може зайняти трохи часу — оновіть сторінку за кілька секунд.",
+    "goToMonitor": "Перейти до Price Gap Monitor",
+    "goToSettings": "Переглянути підписку в налаштуваннях",
+    "cardTitle": "Підписка",
+    "statusBadge": {
+      "basic": "Basic",
+      "premium": "Premium"
+    },
+    "active": "Ваша підписка Premium активна.",
+    "nextBilling": "Наступне списання: {date}",
+    "cancelButton": "Скасувати підписку",
+    "canceling": "Скасування…",
+    "cancelPending": "Premium активний до {date}. Вашу підписку скасовано, і вона не поновлюватиметься.",
+    "paymentFailed": "Не вдалося завершити ваш платіж.",
+    "subscribeCta": "Оформити Premium",
+    "modal": {
+      "title": "Потрібна підписка Premium",
+      "body": "Оформіть Premium, щоб отримати доступ до даних Price Gap у реальному часі та Premium-функцій.",
+      "cta": "Переглянути підписку"
+    }
   },
   "market": {
     "ariaOverview": "Огляд ринку",
@@ -221,43 +263,230 @@
     "disclosureDescription": "Прочитайте коротке резюме розкриття інформації на корейському фондовому ринку та пов’язаний контекст. Повний AI-аналіз доступний Premium-користувачам.",
     "relatedStocks": "Пов’язані акції"
   },
-  "subscription": {
-    "title": "Преміум-підписка",
-    "subtitle": "Відкрийте повний доступ до Premium-функцій K-Stock Helper.",
-    "priceLine": "$1 за перший місяць, потім $4.90 / місяць",
-    "cancelAnytime": "Скасувати можна будь-коли",
-    "benefitsTitle": "Переваги Premium",
-    "benefit1": "Price Gap Tracker і ринкові дані в реальному часі",
-    "benefit2": "Розширені інструменти даних",
-    "benefit3": "Новини корейського ринку в реальному часі, стисло за ключовими пунктами",
-    "refundPolicy": "Повернення коштів може розглядатися у випадках помилок сервісу, дублювання платежу або проблем з обробкою оплати.",
-    "cta": "Продовжити через PayPal",
-    "processing": "Перенаправлення до PayPal…",
-    "unavailable": "Ця сторінка недоступна.",
-    "alreadyPremium": "У вас уже є доступ Premium. Керуйте підпискою в налаштуваннях.",
-    "error": "Щось пішло не так. Спробуйте ще раз.",
-    "activating": "Підтверджуємо ваш платіж… Premium незабаром буде активовано.",
-    "successTitle": "Дякуємо за підписку!",
-    "activated": "Ваш доступ Premium тепер активний.",
-    "stillActivating": "Ваш платіж підтверджується. Це може зайняти трохи часу — оновіть сторінку за кілька секунд.",
-    "goToMonitor": "Перейти до Price Gap Monitor",
-    "goToSettings": "Переглянути підписку в налаштуваннях",
-    "cardTitle": "Підписка",
-    "statusBadge": {
-      "basic": "Basic",
-      "premium": "Premium"
+  "home": {
+    "priceGapCard": {
+      "liveNow": "Live Now",
+      "title": "Price Gap Monitor",
+      "subtitle": "See whether the current price is higher or lower than the market reference.",
+      "cta": "Open Price Gap Monitor"
     },
-    "active": "Ваша підписка Premium активна.",
-    "nextBilling": "Наступне списання: {date}",
-    "cancelButton": "Скасувати підписку",
-    "canceling": "Скасування…",
-    "cancelPending": "Premium активний до {date}. Вашу підписку скасовано, і вона не поновлюватиметься.",
-    "paymentFailed": "Не вдалося завершити ваш платіж.",
-    "subscribeCta": "Оформити Premium",
-    "modal": {
-      "title": "Потрібна підписка Premium",
-      "body": "Оформіть Premium, щоб отримати доступ до даних Price Gap у реальному часі та Premium-функцій.",
-      "cta": "Переглянути підписку"
+    "realEstateBanner": {
+      "badge": "НОВЕ",
+      "title": "Хочете купити нерухомість у Кореї?",
+      "subtitle": "Отримайте повну підтримку для іноземних покупців — від пошуку нерухомості до юридичних, податкових питань і закриття угоди. Купуйте дистанційно або відвідайте Корею з очною concierge-підтримкою.",
+      "cta": "Переглянути підтримку з нерухомості"
+    }
+  },
+  "priceGap": {
+    "title": "Price Gap Monitor",
+    "subtitle": {
+      "line1": "See whether the current price is higher or lower than the market reference.",
+      "line2": "Track exchange prices against Korea's USDT reference price and past average gap during Korean market hours."
+    },
+    "status": {
+      "koreaMarket": "Korea Market",
+      "open": "Open",
+      "closed": "Closed",
+      "hours": "09:00 – 15:35 KST",
+      "usdtKrw": "USDT/KRW",
+      "fxDelayed": "FX delayed",
+      "lastUpdated": "Last updated:",
+      "updated": {
+        "delayed": "10 min delayed"
+      }
+    },
+    "state": {
+      "closed": "Korea Market is closed.",
+      "warmingUp": "Preparing data…"
+    },
+    "delay": {
+      "banner": "You are viewing 10-minute delayed data because you are on a Basic plan.",
+      "cta": "View real-time data"
+    },
+    "guest": {
+      "delayBanner": "You're viewing limited 10-minute delayed data as a guest.",
+      "loginCta": "Log in"
+    },
+    "restricted": {
+      "body": "Price Gap Monitor is not available in your region."
+    },
+    "table": {
+      "stock": "Stock",
+      "krPrice": "KR Price",
+      "referencePrice": "Reference Price",
+      "binance": "Binance",
+      "bybit": "Bybit",
+      "price": "Price",
+      "currentGap": "Current Gap",
+      "pastAvgGap": "Past Avg Gap",
+      "gapVsPastAvg": "Gap vs Past Avg",
+      "pastAvgGapTip": "Average gap at the same minute of the trading day, from all available history.",
+      "gapVsPastAvgTip": "Current Gap − Past Avg Gap."
+    },
+    "chart": {
+      "title": "Gap Tracker",
+      "empty": "No chart data to display.",
+      "currentGapLine": "Current Gap",
+      "avgGapLine": "{n}D Avg Gap",
+      "gapVsPastAvg": "Gap vs Past Avg",
+      "date": "Date:",
+      "localTime": "Local Time",
+      "introLine1": "This chart is a comparison indicator that helps you see whether the exchange price is trading higher or lower than usual relative to the Korean market reference price.",
+      "introLine2": "For example, if the Current Gap is lower than the 10D Avg Gap, it means the current price is trading lower than its recent average level."
+    },
+    "filters": {
+      "exchange": "Exchange",
+      "stock": "Stock",
+      "averagePeriod": "Average Period",
+      "dayAvg": "{n} Day Avg",
+      "showAvgGap": "Show Avg Gap"
+    },
+    "pip": {
+      "button": "PIP",
+      "unsupported": "PIP is not supported in this browser.",
+      "premiumOnly": "PIP is available for Premium members only.",
+      "premiumHint": "Upgrade to Premium to monitor real-time price gaps while working in another window.",
+      "live": "Live",
+      "ref": "Ref",
+      "gap": "Gap",
+      "binanceShort": "B",
+      "bybitShort": "Y"
+    },
+    "footer": {
+      "aboutTitle": "About Gap",
+      "formulaRef": "Reference Price (USDT) = KR Price / USDT-KRW",
+      "formulaGap": "Gap = Exchange Price − Reference Price",
+      "formulaGapPct": "Gap (%) = Gap / Reference Price × 100",
+      "causes": "Price gaps may occur due to exchange liquidity, market hours, product structure, funding & fees, and FX movement.",
+      "avgTitle": "Past Avg Gap & Gap vs Past Avg",
+      "pastAvgGap": "Past Avg Gap is the average gap at the same minute of the trading day, calculated from available historical data.",
+      "gapVsPastAvg": "Gap vs Past Avg = Current Gap − Past Avg Gap.",
+      "availableData": "Historical average uses available data only.",
+      "notesTitle": "Notes",
+      "noteDelay": "You are viewing 10-minute delayed data.",
+      "noteRefresh": "Delayed data is refreshed every 5 seconds.",
+      "noteLocalTime": "Market data is based on KST. Chart time is shown in your local time.",
+      "noteAdvice": "This information is for market comparison only and does not constitute investment advice."
+    }
+  },
+  "realEstate": {
+    "seo": {
+      "homeTitle": "Купити нерухомість у Кореї без поїздки до Кореї | K-Stock Helper",
+      "homeDescription": "Єдиний end-to-end сервіс для іноземних покупців нерухомості в Кореї. Допомога з пошуком об’єкта, брокерськими послугами, юридичними та податковими питаннями, документами, координацією платежів і закриттям угоди.",
+      "requestTitle": "Запит на підтримку купівлі | Нерухомість у Кореї",
+      "requestDescription": "Надішліть запит на підтримку купівлі нерухомості в Кореї. Вкажіть країну, бюджет, тип нерухомості та вимоги.",
+      "breadcrumbHome": "Головна",
+      "breadcrumbRealEstate": "Купити нерухомість у Кореї"
+    },
+    "home": {
+      "hero": {
+        "badge": "ДИСТАНЦІЙНА ПІДТРИМКА КУПІВЛІ НЕРУХОМОСТІ В КОРЕЇ",
+        "titleLine1": "Купіть нерухомість у Кореї",
+        "titleLine2": "Без поїздки до Кореї",
+        "highlight": "Ми супроводжуємо весь процес за вас",
+        "description": "Ми допомагаємо знайти нерухомість у Кореї відповідно до ваших потреб — від великих міст до перспективних районів, пов’язаних із Samsung, SK Hynix і зростанням напівпровідникової галузі Кореї. Наша надійна локальна мережа супроводжує брокерські послуги, юридичні та податкові питання, документи, координацію платежів і закриття угоди.",
+        "cta": "Запит на підтримку купівлі",
+        "ctaSub": "Бажаєте відвідати Корею? Також доступна очна concierge-підтримка."
+      },
+      "trust": {
+        "card1Title": "Безпечно та надійно",
+        "card1Desc": "Ваша інформація обробляється конфіденційно.",
+        "card2Title": "Надійна локальна мережа",
+        "card2Desc": "Брокерські послуги, юридичні та податкові питання, а також закриття через надійних фахівців у Кореї.",
+        "card3Title": "Під ваші потреби",
+        "card3Desc": "Варіанти з урахуванням вашого бюджету, цільового району та типу нерухомості.",
+        "card4Title": "Зрозуміло та прозоро",
+        "card4Desc": "Ми пояснюємо витрати, документи, графік платежів і наступні кроки."
+      },
+      "scope": {
+        "title": "З чим ми допомагаємо",
+        "description": "Від пошуку до закриття угоди ми допомагаємо супроводжувати весь процес купівлі через нашу надійну локальну мережу в Кореї.",
+        "step1": "Пошук нерухомості",
+        "step2": "Дистанційні перегляди та відбір",
+        "step3": "Брокерські послуги та переговори",
+        "step4": "Юридичні питання, податки та документи",
+        "step5": "Платежі та закриття"
+      },
+      "why": {
+        "title": "Чому іноземні покупці обирають нас",
+        "subtitle": "Єдиний end-to-end сервіс для іноземних покупців нерухомості в Кореї.",
+        "point1": "Купуйте дистанційно або відвідайте Корею з очною підтримкою",
+        "point2": "Підтримка англійською та в основних месенджерах",
+        "point3": "Варіанти нерухомості добираються під ваші потреби",
+        "point4": "Конфіденційні документи запитуються лише за потреби"
+      },
+      "values": {
+        "card1Title": "Повний процес",
+        "card1Desc": "Єдиний сервіс, який поєднує пошук нерухомості, брокерські послуги, юридичні й податкові питання, документи, платежі та підтримку закриття для іноземних покупців у Кореї.",
+        "card2Title": "Дистанційно або очно",
+        "card2Desc": "Купуйте з-за кордону або відвідайте Корею з очною concierge-підтримкою — від зустрічі в аеропорту до переглядів об’єктів і зустрічей щодо закриття угоди.",
+        "card3Title": "Не обов’язково переїжджати",
+        "card3Desc": "Після купівлі вам, можливо, не потрібно буде жити в Кореї."
+      },
+      "contact": {
+        "title": "Є запитання?",
+        "description": "Зв’яжіться з нами напряму через зручний для вас канал. Ми можемо пояснити процес купівлі та доступні варіанти підтримки.",
+        "privacyNote": "Ваша інформація в безпеці та використовуватиметься лише для відповіді на ваш запит і координації підтримки купівлі."
+      }
+    },
+    "channels": {
+      "whatsapp": "WhatsApp",
+      "wechat": "WeChat",
+      "line": "LINE",
+      "telegram": "Telegram",
+      "email": "Email"
+    },
+    "request": {
+      "back": "Назад до сторінки нерухомості",
+      "header": {
+        "title": "Запит на підтримку купівлі",
+        "subtitle": "Розкажіть нам про себе",
+        "description": "Будь ласка, заповніть форму нижче. Наша команда розгляне ваш запит і зв’яжеться з вами електронною поштою."
+      },
+      "form": {
+        "emailLabel": "Email",
+        "emailPlaceholder": "Введіть вашу електронну адресу",
+        "emailInvalid": "Введіть коректну електронну адресу.",
+        "countryLabel": "Країна проживання",
+        "countryPlaceholder": "Оберіть країну",
+        "countryRequired": "Оберіть країну проживання.",
+        "budgetLabel": "Діапазон бюджету",
+        "budgetHelper": "Введіть орієнтовний діапазон бюджету.",
+        "budgetMinPlaceholder": "Мін. сума",
+        "budgetMaxPlaceholder": "Макс. сума",
+        "budgetRequired": "Введіть орієнтовний діапазон бюджету.",
+        "budgetMinGreater": "Мінімальна сума не може бути більшою за максимальну.",
+        "propertyTypeLabel": "Тип нерухомості",
+        "propertyTypeRequired": "Оберіть тип нерухомості.",
+        "propertyTypeApartment": "Квартира",
+        "propertyTypeOfficetel": "Офістель",
+        "propertyTypeOther": "Інше",
+        "propertyTypeNotSure": "Поки не впевнений",
+        "inKoreaLabel": "Ви зараз перебуваєте в Кореї?",
+        "inKoreaRequired": "Оберіть ваш поточний статус місцеперебування.",
+        "inKoreaYes": "Так",
+        "inKoreaNo": "Ні",
+        "messageLabel": "Повідомлення",
+        "messagePlaceholder": "Розкажіть, яку нерухомість ви шукаєте, бажані райони, терміни та інші деталі.",
+        "messageRequired": "Введіть повідомлення.",
+        "submit": "Надіслати запит",
+        "submitting": "Надсилання...",
+        "submitError": "Щось пішло не так. Спробуйте ще раз.",
+        "privacyNote": "Ваша інформація в безпеці та використовуватиметься лише для відповіді на ваш запит."
+      },
+      "modal": {
+        "title": "Запит надіслано",
+        "description": "Дякуємо. Ваш запит успішно надіслано. Наша команда розгляне інформацію та зв’яжеться з вами електронною поштою.",
+        "ok": "OK"
+      },
+      "channels": {
+        "title": "Потрібна швидша відповідь?",
+        "description": "Ви можете зв’язатися з нами через наведені нижче канали до або після надсилання запиту."
+      },
+      "safety": {
+        "title": "Безпечно. Приватно. Надійно.",
+        "description": "На цьому етапі ми не запитуємо конфіденційні документи. Вимоги до документів будуть пояснені після розгляду вашого запиту."
+      }
     }
   }
 }

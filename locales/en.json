@@ -14,6 +14,7 @@
   "gnb": {
     "news": "News",
     "stocks": "Stocks",
+    "realEstate": "Buy Korean Real Estate",
     "settings": "Settings",
     "logIn": "Log In",
     "signUp": "Sign Up",
@@ -268,6 +269,12 @@
       "title": "Price Gap Monitor",
       "subtitle": "See whether the current price is higher or lower than the market reference.",
       "cta": "Open Price Gap Monitor"
+    },
+    "realEstateBanner": {
+      "badge": "NEW",
+      "title": "Looking to Buy Property in Korea?",
+      "subtitle": "Get end-to-end support for foreign buyers — from property search to legal, tax, and closing. Buy remotely or visit Korea with in-person concierge support.",
+      "cta": "Explore Real Estate Support"
     }
   },
   "priceGap": {
@@ -360,6 +367,126 @@
       "noteRefresh": "Delayed data is refreshed every 5 seconds.",
       "noteLocalTime": "Market data is based on KST. Chart time is shown in your local time.",
       "noteAdvice": "This information is for market comparison only and does not constitute investment advice."
+    }
+  },
+  "realEstate": {
+    "seo": {
+      "homeTitle": "Buy Property in Korea Without Visiting Korea | K-Stock Helper",
+      "homeDescription": "The only end-to-end service for foreign buyers purchasing property in Korea. Get support with property search, brokerage, legal, tax, paperwork, payment coordination, and closing.",
+      "requestTitle": "Request Buying Support | Korea real estate",
+      "requestDescription": "Submit your request for Korean real estate buying support. Tell us your country, budget, property type, and requirements.",
+      "breadcrumbHome": "Home",
+      "breadcrumbRealEstate": "Buy Korean Real Estate"
+    },
+    "home": {
+      "hero": {
+        "badge": "REMOTE KOREA REAL ESTATE BUYING SUPPORT",
+        "titleLine1": "Buy Property in Korea",
+        "titleLine2": "Without Visiting Korea",
+        "highlight": "We Handle the Entire Process for You",
+        "description": "We help you find Korean real estate that matches your needs — from major cities to promising areas connected to Samsung, SK Hynix, and Korea's semiconductor growth. Our trusted local network handles brokerage, legal, tax, paperwork, payment coordination, and closing.",
+        "cta": "Request Buying Support",
+        "ctaSub": "Prefer to visit Korea? In-person concierge support is also available."
+      },
+      "trust": {
+        "card1Title": "Safe & Reliable",
+        "card1Desc": "Your information is handled confidentially.",
+        "card2Title": "Trusted Local Network",
+        "card2Desc": "Brokerage, legal, tax, and closing through trusted professionals in Korea.",
+        "card3Title": "Matched to Your Needs",
+        "card3Desc": "Options tailored by your budget, target area, and property type.",
+        "card4Title": "Clear & Transparent",
+        "card4Desc": "We explain costs, documents, payment schedule, and next steps."
+      },
+      "scope": {
+        "title": "What We Help With",
+        "description": "From search to closing, we help handle the full buying process through our trusted local network in Korea.",
+        "step1": "Property Search",
+        "step2": "Remote Viewings & Screening",
+        "step3": "Brokerage & Negotiation",
+        "step4": "Legal, Tax & Paperwork",
+        "step5": "Payment & Closing"
+      },
+      "why": {
+        "title": "Why Foreign Buyers Choose Us",
+        "subtitle": "The only end-to-end service for foreign buyers purchasing property in Korea.",
+        "point1": "Buy remotely or visit Korea with in-person support",
+        "point2": "Support in English and major messaging apps",
+        "point3": "Property options filtered to your needs",
+        "point4": "Sensitive documents requested only when needed"
+      },
+      "values": {
+        "card1Title": "Full Process",
+        "card1Desc": "The only service that combines property search, brokerage, legal, tax, paperwork, payment, and closing support for foreign buyers in Korea.",
+        "card2Title": "Remote or In-Person",
+        "card2Desc": "Buy from overseas, or visit Korea with in-person concierge support — from airport pickup to property visits and closing appointments.",
+        "card3Title": "No Move-In Required",
+        "card3Desc": "You may not need to live in Korea after purchase."
+      },
+      "contact": {
+        "title": "Have questions?",
+        "description": "Contact us directly through your preferred channel. We can help explain the buying process and available support options.",
+        "privacyNote": "Your information is safe and will only be used to respond to your request and coordinate buying support."
+      }
+    },
+    "channels": {
+      "whatsapp": "WhatsApp",
+      "wechat": "WeChat",
+      "line": "LINE",
+      "telegram": "Telegram",
+      "email": "Email"
+    },
+    "request": {
+      "back": "Back to Real Estate Home",
+      "header": {
+        "title": "Request Buying Support",
+        "subtitle": "Tell us about your information",
+        "description": "Please fill out the form below. Our team will review your request and get back to you by email."
+      },
+      "form": {
+        "emailLabel": "Email",
+        "emailPlaceholder": "Enter your email address",
+        "emailInvalid": "Please enter a valid email address.",
+        "countryLabel": "Country of residence",
+        "countryPlaceholder": "Select your country",
+        "countryRequired": "Please select your country of residence.",
+        "budgetLabel": "Budget range",
+        "budgetHelper": "Enter your estimated budget range.",
+        "budgetMinPlaceholder": "Min amount",
+        "budgetMaxPlaceholder": "Max amount",
+        "budgetRequired": "Please enter your estimated budget range.",
+        "budgetMinGreater": "Min amount cannot be greater than max amount.",
+        "propertyTypeLabel": "Property type",
+        "propertyTypeRequired": "Please select a property type.",
+        "propertyTypeApartment": "Apartment",
+        "propertyTypeOfficetel": "Officetel",
+        "propertyTypeOther": "Other",
+        "propertyTypeNotSure": "Not sure yet",
+        "inKoreaLabel": "Are you currently in Korea?",
+        "inKoreaRequired": "Please select your current location status.",
+        "inKoreaYes": "Yes",
+        "inKoreaNo": "No",
+        "messageLabel": "Message",
+        "messagePlaceholder": "Please tell us about the property you're looking for, your preferred areas, timeline, and any other details.",
+        "messageRequired": "Please enter your message.",
+        "submit": "Submit Request",
+        "submitting": "Submitting...",
+        "submitError": "Something went wrong. Please try again.",
+        "privacyNote": "Your information is safe and will only be used to respond to your request."
+      },
+      "modal": {
+        "title": "Request Submitted",
+        "description": "Thank you. Your request has been submitted successfully. Our team will review your information and contact you by email.",
+        "ok": "OK"
+      },
+      "channels": {
+        "title": "Need a faster response?",
+        "description": "You can contact us through the following channels before or after submitting your request."
+      },
+      "safety": {
+        "title": "Safe. Private. Trusted.",
+        "description": "We do not ask for sensitive documents at this stage. Document requirements will be explained after we review your request."
+      }
     }
   }
 }

@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 import { MarketTicker } from "@/components/market/MarketTicker";
 import { SignupBanner } from "@/components/banner/SignupBanner";
+import { RealEstateBanner } from "@/components/banner/RealEstateBanner";
 import { PriceGapHomeCard } from "@/components/priceGap/PriceGapHomeCard";
 import { NewsList } from "@/components/news/NewsList";
 import { HotInKoreaCarousel } from "@/components/hotNews/HotInKoreaCarousel";
@@ -54,6 +55,9 @@ export default async function Home({
       <MarketTicker />
       {showBanner && <SignupBanner />}
       {showPriceGap && <PriceGapHomeCard />}
+      {/* Real Estate entry point — shown in all regions (no geo gate; the
+          service is open everywhere, unlike exchange/subscription features). */}
+      <RealEstateBanner />
       <HotInKoreaCarousel items={hotItems} />
       <NewsList
         initialItems={items}

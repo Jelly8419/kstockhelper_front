@@ -14,6 +14,7 @@
   "gnb": {
     "news": "Notícias",
     "stocks": "Ações",
+    "realEstate": "Comprar imóveis na Coreia",
     "settings": "Configurações",
     "logIn": "Entrar",
     "signUp": "Cadastrar-se",
@@ -104,7 +105,9 @@
   "hotNews": {
     "sectionTitle": "Em alta na Coreia",
     "sectionDescription": "Principais destaques do mercado coreano agora.",
-    "carouselAria": "Em alta na Coreia"
+    "carouselAria": "Em alta na Coreia",
+    "prevAria": "Previous",
+    "nextAria": "Next"
   },
   "restrictedPremium": {
     "title": "Acesso Premium indisponível",
@@ -116,6 +119,45 @@
     "waitlistError": "Algo deu errado. Tente novamente.",
     "mypageCardTitle": "O acesso Premium não está disponível na sua região",
     "mypageCardBody": "Devido a regulamentações financeiras em certas regiões, não podemos oferecer acesso Premium vinculado a exchanges no seu país."
+  },
+  "subscription": {
+    "title": "Assinatura Premium",
+    "subtitle": "Desbloqueie acesso completo aos recursos Premium do K-Stock Helper.",
+    "priceLine": "$1 no primeiro mês, depois $4.90 / mês",
+    "cancelAnytime": "Cancele a qualquer momento",
+    "benefitsTitle": "Benefícios Premium",
+    "benefit1": "Price Gap Tracker e dados de mercado em tempo real",
+    "benefit2": "Ferramentas avançadas de dados",
+    "benefit3": "Notícias do mercado coreano em tempo real, resumidas em pontos-chave",
+    "refundPolicy": "Reembolsos podem ser analisados em casos como erros de serviço, cobranças duplicadas ou problemas no processamento do pagamento.",
+    "cta": "Continuar com PayPal",
+    "processing": "Redirecionando para o PayPal…",
+    "unavailable": "Esta página não está disponível.",
+    "alreadyPremium": "Você já tem acesso Premium. Gerencie sua assinatura nas Configurações.",
+    "error": "Algo deu errado. Tente novamente.",
+    "activating": "Confirmando seu pagamento… O Premium será ativado em breve.",
+    "successTitle": "Obrigado por assinar!",
+    "activated": "Seu acesso Premium agora está ativo.",
+    "stillActivating": "Seu pagamento está sendo confirmado. Isso pode levar um momento — atualize a página em alguns segundos.",
+    "goToMonitor": "Ir para Price Gap Monitor",
+    "goToSettings": "Ver assinatura nas Configurações",
+    "cardTitle": "Assinatura",
+    "statusBadge": {
+      "basic": "Basic",
+      "premium": "Premium"
+    },
+    "active": "Sua assinatura Premium está ativa.",
+    "nextBilling": "Próxima cobrança: {date}",
+    "cancelButton": "Cancelar assinatura",
+    "canceling": "Cancelando…",
+    "cancelPending": "O Premium fica ativo até {date}. Sua assinatura foi cancelada e não será renovada.",
+    "paymentFailed": "Seu pagamento não pôde ser concluído.",
+    "subscribeCta": "Assinar Premium",
+    "modal": {
+      "title": "Assinatura Premium necessária",
+      "body": "Assine o Premium para acessar dados de Price Gap em tempo real e recursos Premium.",
+      "cta": "Ver assinatura"
+    }
   },
   "market": {
     "ariaOverview": "Visão geral do mercado",
@@ -221,43 +263,230 @@
     "disclosureDescription": "Leia um breve resumo de um comunicado do mercado de ações coreano e seu contexto relacionado. A análise completa por IA está disponível para membros Premium.",
     "relatedStocks": "Ações relacionadas"
   },
-  "subscription": {
-    "title": "Assinatura Premium",
-    "subtitle": "Desbloqueie acesso completo aos recursos Premium do K-Stock Helper.",
-    "priceLine": "$1 no primeiro mês, depois $4.90 / mês",
-    "cancelAnytime": "Cancele a qualquer momento",
-    "benefitsTitle": "Benefícios Premium",
-    "benefit1": "Price Gap Tracker e dados de mercado em tempo real",
-    "benefit2": "Ferramentas avançadas de dados",
-    "benefit3": "Notícias do mercado coreano em tempo real, resumidas em pontos-chave",
-    "refundPolicy": "Reembolsos podem ser analisados em casos como erros de serviço, cobranças duplicadas ou problemas no processamento do pagamento.",
-    "cta": "Continuar com PayPal",
-    "processing": "Redirecionando para o PayPal…",
-    "unavailable": "Esta página não está disponível.",
-    "alreadyPremium": "Você já tem acesso Premium. Gerencie sua assinatura nas Configurações.",
-    "error": "Algo deu errado. Tente novamente.",
-    "activating": "Confirmando seu pagamento… O Premium será ativado em breve.",
-    "successTitle": "Obrigado por assinar!",
-    "activated": "Seu acesso Premium agora está ativo.",
-    "stillActivating": "Seu pagamento está sendo confirmado. Isso pode levar um momento — atualize a página em alguns segundos.",
-    "goToMonitor": "Ir para Price Gap Monitor",
-    "goToSettings": "Ver assinatura nas Configurações",
-    "cardTitle": "Assinatura",
-    "statusBadge": {
-      "basic": "Basic",
-      "premium": "Premium"
+  "home": {
+    "priceGapCard": {
+      "liveNow": "Live Now",
+      "title": "Price Gap Monitor",
+      "subtitle": "See whether the current price is higher or lower than the market reference.",
+      "cta": "Open Price Gap Monitor"
     },
-    "active": "Sua assinatura Premium está ativa.",
-    "nextBilling": "Próxima cobrança: {date}",
-    "cancelButton": "Cancelar assinatura",
-    "canceling": "Cancelando…",
-    "cancelPending": "O Premium fica ativo até {date}. Sua assinatura foi cancelada e não será renovada.",
-    "paymentFailed": "Seu pagamento não pôde ser concluído.",
-    "subscribeCta": "Assinar Premium",
-    "modal": {
-      "title": "Assinatura Premium necessária",
-      "body": "Assine o Premium para acessar dados de Price Gap em tempo real e recursos Premium.",
-      "cta": "Ver assinatura"
+    "realEstateBanner": {
+      "badge": "NOVO",
+      "title": "Quer comprar um imóvel na Coreia?",
+      "subtitle": "Receba suporte de ponta a ponta para compradores estrangeiros — da busca pelo imóvel até questões legais, fiscais e fechamento. Compre remotamente ou visite a Coreia com suporte concierge presencial.",
+      "cta": "Explorar suporte imobiliário"
+    }
+  },
+  "priceGap": {
+    "title": "Price Gap Monitor",
+    "subtitle": {
+      "line1": "See whether the current price is higher or lower than the market reference.",
+      "line2": "Track exchange prices against Korea's USDT reference price and past average gap during Korean market hours."
+    },
+    "status": {
+      "koreaMarket": "Korea Market",
+      "open": "Open",
+      "closed": "Closed",
+      "hours": "09:00 – 15:35 KST",
+      "usdtKrw": "USDT/KRW",
+      "fxDelayed": "FX delayed",
+      "lastUpdated": "Last updated:",
+      "updated": {
+        "delayed": "10 min delayed"
+      }
+    },
+    "state": {
+      "closed": "Korea Market is closed.",
+      "warmingUp": "Preparing data…"
+    },
+    "delay": {
+      "banner": "You are viewing 10-minute delayed data because you are on a Basic plan.",
+      "cta": "View real-time data"
+    },
+    "guest": {
+      "delayBanner": "You're viewing limited 10-minute delayed data as a guest.",
+      "loginCta": "Log in"
+    },
+    "restricted": {
+      "body": "Price Gap Monitor is not available in your region."
+    },
+    "table": {
+      "stock": "Stock",
+      "krPrice": "KR Price",
+      "referencePrice": "Reference Price",
+      "binance": "Binance",
+      "bybit": "Bybit",
+      "price": "Price",
+      "currentGap": "Current Gap",
+      "pastAvgGap": "Past Avg Gap",
+      "gapVsPastAvg": "Gap vs Past Avg",
+      "pastAvgGapTip": "Average gap at the same minute of the trading day, from all available history.",
+      "gapVsPastAvgTip": "Current Gap − Past Avg Gap."
+    },
+    "chart": {
+      "title": "Gap Tracker",
+      "empty": "No chart data to display.",
+      "currentGapLine": "Current Gap",
+      "avgGapLine": "{n}D Avg Gap",
+      "gapVsPastAvg": "Gap vs Past Avg",
+      "date": "Date:",
+      "localTime": "Local Time",
+      "introLine1": "This chart is a comparison indicator that helps you see whether the exchange price is trading higher or lower than usual relative to the Korean market reference price.",
+      "introLine2": "For example, if the Current Gap is lower than the 10D Avg Gap, it means the current price is trading lower than its recent average level."
+    },
+    "filters": {
+      "exchange": "Exchange",
+      "stock": "Stock",
+      "averagePeriod": "Average Period",
+      "dayAvg": "{n} Day Avg",
+      "showAvgGap": "Show Avg Gap"
+    },
+    "pip": {
+      "button": "PIP",
+      "unsupported": "PIP is not supported in this browser.",
+      "premiumOnly": "PIP is available for Premium members only.",
+      "premiumHint": "Upgrade to Premium to monitor real-time price gaps while working in another window.",
+      "live": "Live",
+      "ref": "Ref",
+      "gap": "Gap",
+      "binanceShort": "B",
+      "bybitShort": "Y"
+    },
+    "footer": {
+      "aboutTitle": "About Gap",
+      "formulaRef": "Reference Price (USDT) = KR Price / USDT-KRW",
+      "formulaGap": "Gap = Exchange Price − Reference Price",
+      "formulaGapPct": "Gap (%) = Gap / Reference Price × 100",
+      "causes": "Price gaps may occur due to exchange liquidity, market hours, product structure, funding & fees, and FX movement.",
+      "avgTitle": "Past Avg Gap & Gap vs Past Avg",
+      "pastAvgGap": "Past Avg Gap is the average gap at the same minute of the trading day, calculated from available historical data.",
+      "gapVsPastAvg": "Gap vs Past Avg = Current Gap − Past Avg Gap.",
+      "availableData": "Historical average uses available data only.",
+      "notesTitle": "Notes",
+      "noteDelay": "You are viewing 10-minute delayed data.",
+      "noteRefresh": "Delayed data is refreshed every 5 seconds.",
+      "noteLocalTime": "Market data is based on KST. Chart time is shown in your local time.",
+      "noteAdvice": "This information is for market comparison only and does not constitute investment advice."
+    }
+  },
+  "realEstate": {
+    "seo": {
+      "homeTitle": "Compre imóveis na Coreia sem visitar a Coreia | K-Stock Helper",
+      "homeDescription": "O único serviço de ponta a ponta para compradores estrangeiros que compram imóveis na Coreia. Receba suporte com busca de imóveis, corretagem, questões legais, fiscais, documentação, coordenação de pagamento e fechamento.",
+      "requestTitle": "Solicitar suporte de compra | Imóveis na Coreia",
+      "requestDescription": "Envie sua solicitação de suporte para compra de imóveis na Coreia. Informe seu país, orçamento, tipo de imóvel e requisitos.",
+      "breadcrumbHome": "Início",
+      "breadcrumbRealEstate": "Comprar imóveis na Coreia"
+    },
+    "home": {
+      "hero": {
+        "badge": "SUPORTE PARA COMPRA REMOTA DE IMÓVEIS NA COREIA",
+        "titleLine1": "Compre imóveis na Coreia",
+        "titleLine2": "Sem visitar a Coreia",
+        "highlight": "Cuidamos de todo o processo para você",
+        "description": "Ajudamos você a encontrar imóveis na Coreia que atendam às suas necessidades — de grandes cidades a áreas promissoras ligadas à Samsung, SK Hynix e ao crescimento de semicondutores da Coreia. Nossa rede local confiável cuida de corretagem, jurídico, impostos, documentação, coordenação de pagamento e fechamento.",
+        "cta": "Solicitar suporte de compra",
+        "ctaSub": "Prefere visitar a Coreia? O suporte concierge presencial também está disponível."
+      },
+      "trust": {
+        "card1Title": "Seguro e confiável",
+        "card1Desc": "Suas informações são tratadas com confidencialidade.",
+        "card2Title": "Rede local confiável",
+        "card2Desc": "Corretagem, jurídico, impostos e fechamento por profissionais confiáveis na Coreia.",
+        "card3Title": "Adequado às suas necessidades",
+        "card3Desc": "Opções adaptadas ao seu orçamento, região-alvo e tipo de imóvel.",
+        "card4Title": "Claro e transparente",
+        "card4Desc": "Explicamos custos, documentos, cronograma de pagamento e próximos passos."
+      },
+      "scope": {
+        "title": "Como ajudamos",
+        "description": "Da busca ao fechamento, ajudamos a conduzir todo o processo de compra por meio de nossa rede local confiável na Coreia.",
+        "step1": "Busca de imóveis",
+        "step2": "Visitas remotas e triagem",
+        "step3": "Corretagem e negociação",
+        "step4": "Jurídico, impostos e documentação",
+        "step5": "Pagamento e fechamento"
+      },
+      "why": {
+        "title": "Por que compradores estrangeiros nos escolhem",
+        "subtitle": "O único serviço de ponta a ponta para compradores estrangeiros que compram imóveis na Coreia.",
+        "point1": "Compre remotamente ou visite a Coreia com suporte presencial",
+        "point2": "Suporte em inglês e nos principais apps de mensagens",
+        "point3": "Opções de imóveis filtradas conforme suas necessidades",
+        "point4": "Documentos sensíveis são solicitados somente quando necessário"
+      },
+      "values": {
+        "card1Title": "Processo completo",
+        "card1Desc": "O único serviço que combina busca de imóveis, corretagem, jurídico, impostos, documentação, pagamento e suporte de fechamento para compradores estrangeiros na Coreia.",
+        "card2Title": "Remoto ou presencial",
+        "card2Desc": "Compre do exterior ou visite a Coreia com suporte concierge presencial — do traslado no aeroporto às visitas aos imóveis e compromissos de fechamento.",
+        "card3Title": "Não precisa se mudar",
+        "card3Desc": "Talvez você não precise morar na Coreia após a compra."
+      },
+      "contact": {
+        "title": "Tem dúvidas?",
+        "description": "Entre em contato diretamente pelo canal de sua preferência. Podemos explicar o processo de compra e as opções de suporte disponíveis.",
+        "privacyNote": "Suas informações estão seguras e serão usadas apenas para responder à sua solicitação e coordenar o suporte de compra."
+      }
+    },
+    "channels": {
+      "whatsapp": "WhatsApp",
+      "wechat": "WeChat",
+      "line": "LINE",
+      "telegram": "Telegram",
+      "email": "Email"
+    },
+    "request": {
+      "back": "Voltar para a página de imóveis",
+      "header": {
+        "title": "Solicitar suporte de compra",
+        "subtitle": "Conte-nos suas informações",
+        "description": "Preencha o formulário abaixo. Nossa equipe analisará sua solicitação e entrará em contato por email."
+      },
+      "form": {
+        "emailLabel": "Email",
+        "emailPlaceholder": "Digite seu endereço de email",
+        "emailInvalid": "Digite um endereço de email válido.",
+        "countryLabel": "País de residência",
+        "countryPlaceholder": "Selecione seu país",
+        "countryRequired": "Selecione seu país de residência.",
+        "budgetLabel": "Faixa de orçamento",
+        "budgetHelper": "Informe sua faixa de orçamento estimada.",
+        "budgetMinPlaceholder": "Valor mínimo",
+        "budgetMaxPlaceholder": "Valor máximo",
+        "budgetRequired": "Informe sua faixa de orçamento estimada.",
+        "budgetMinGreater": "O valor mínimo não pode ser maior que o valor máximo.",
+        "propertyTypeLabel": "Tipo de imóvel",
+        "propertyTypeRequired": "Selecione um tipo de imóvel.",
+        "propertyTypeApartment": "Apartamento",
+        "propertyTypeOfficetel": "Officetel",
+        "propertyTypeOther": "Outro",
+        "propertyTypeNotSure": "Ainda não sei",
+        "inKoreaLabel": "Você está atualmente na Coreia?",
+        "inKoreaRequired": "Selecione seu status de localização atual.",
+        "inKoreaYes": "Sim",
+        "inKoreaNo": "Não",
+        "messageLabel": "Mensagem",
+        "messagePlaceholder": "Conte-nos sobre o imóvel que você procura, suas áreas preferidas, prazo e outros detalhes.",
+        "messageRequired": "Digite sua mensagem.",
+        "submit": "Enviar solicitação",
+        "submitting": "Enviando...",
+        "submitError": "Algo deu errado. Tente novamente.",
+        "privacyNote": "Suas informações estão seguras e serão usadas apenas para responder à sua solicitação."
+      },
+      "modal": {
+        "title": "Solicitação enviada",
+        "description": "Obrigado. Sua solicitação foi enviada com sucesso. Nossa equipe analisará suas informações e entrará em contato por email.",
+        "ok": "OK"
+      },
+      "channels": {
+        "title": "Precisa de uma resposta mais rápida?",
+        "description": "Você pode entrar em contato conosco pelos canais abaixo antes ou depois de enviar sua solicitação."
+      },
+      "safety": {
+        "title": "Seguro. Privado. Confiável.",
+        "description": "Não solicitamos documentos sensíveis nesta etapa. Os requisitos de documentação serão explicados após analisarmos sua solicitação."
+      }
     }
   }
 }

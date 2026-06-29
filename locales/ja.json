@@ -1,0 +1,492 @@
+{
+  "common": {
+    "loading": "読み込み中…",
+    "submit": "送信",
+    "cancel": "キャンセル",
+    "save": "保存",
+    "close": "閉じる",
+    "retry": "再試行",
+    "submitting": "送信中…",
+    "or": "または",
+    "back": "← 戻る",
+    "backToHome": "← ホームに戻る"
+  },
+  "gnb": {
+    "news": "ニュース",
+    "stocks": "株式",
+    "realEstate": "韓国不動産を購入",
+    "settings": "設定",
+    "logIn": "ログイン",
+    "signUp": "登録",
+    "logOut": "ログアウト",
+    "languageLabel": "言語"
+  },
+  "footer": {
+    "tagline": "グローバル投資家向けの韓国株式市場情報プラットフォーム",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約",
+    "copyright": "© {year} kstockhelper.com"
+  },
+  "banner": {
+    "title": "韓国株式市場を取引",
+    "subtitle": "韓国株式市場への投資に必要な情報を確認できます。",
+    "cta": "取引を始める",
+    "connectPrompt": "取引の始め方"
+  },
+  "auth": {
+    "loginHeading": "ログイン",
+    "signupHeading": "登録",
+    "consentMetaTitle": "規約に同意",
+    "consentHeading": "最後のステップ",
+    "email": "メール",
+    "emailPlaceholder": "you@example.com",
+    "password": "パスワード",
+    "passwordPlaceholder": "••••••••",
+    "passwordWithRule": "パスワード（8〜16文字）",
+    "confirmPassword": "パスワードを確認",
+    "verificationCode": "認証コード",
+    "verificationCodePlaceholder": "6桁のコードを入力",
+    "logIn": "ログイン",
+    "signingIn": "ログイン中…",
+    "noAccount": "アカウントをお持ちでないですか？",
+    "haveAccount": "すでにアカウントをお持ちですか？",
+    "signUp": "登録",
+    "continueWithGoogle": "Googleで続行",
+    "connecting": "接続中…",
+    "googleError": "Googleログインを開始できませんでした。もう一度お試しください。",
+    "stepOf": "3ステップ中 {current}",
+    "sendCode": "認証コードを送信",
+    "sending": "送信中…",
+    "codeSent": "6桁のコードを {email} に送信しました。",
+    "codeResent": "新しいコードを送信しました。",
+    "verifyCode": "コードを認証",
+    "verifying": "認証中…",
+    "changeEmail": "← メールを変更",
+    "resendCode": "コードを再送信",
+    "createAccount": "アカウントを作成",
+    "creatingAccount": "アカウント作成中…",
+    "agreePrefix": "以下を読み、同意します：",
+    "agreeMiddle": "および",
+    "consentIntro": "続行する前に、規約をご確認のうえ同意してください。",
+    "agreeAndContinue": "同意して続行",
+    "saving": "保存中…",
+    "errorAgreeRequired": "利用規約とプライバシーポリシーに同意してください。",
+    "errorConsentFailed": "同意内容を保存できませんでした。もう一度お試しください。",
+    "errorPasswordLength": "パスワードは {min}〜{max} 文字で入力してください。",
+    "errorPasswordMismatch": "パスワードが一致しません。"
+  },
+  "news": {
+    "ariaList": "ニュース",
+    "ariaFilter": "ニュースフィルター",
+    "ariaType": "コンテンツタイプ",
+    "sectionTitle": "ニュースと開示情報",
+    "sectionDescription": "韓国企業の最新ニュースと開示情報を確認できます。",
+    "filterCompany": "企業",
+    "filterAll": "すべて",
+    "typeNews": "ニュース",
+    "typeDisclosures": "開示情報",
+    "badgeNews": "ニュース",
+    "badgeDisclosure": "開示情報",
+    "empty": "ニュースまたは開示情報が見つかりません。",
+    "emptyHint": "コンテンツタイプまたは企業フィルターを変更してみてください。",
+    "summary": "要約",
+    "keyPoints": "キーポイント",
+    "keyFigures": "主要数値"
+  },
+  "newsGate": {
+    "guestTitle": "このコンテンツにはアカウントが必要です",
+    "guestBody": "全文要約、キーポイント、分析を読むには登録またはログインしてください。",
+    "guestSignupCta": "無料で登録",
+    "guestLoginCta": "ログイン",
+    "premiumTitle": "Premiumアクセスを解除",
+    "premiumBody": "UIDを連携すると、すべてのニュースと開示情報にアクセスできます。",
+    "premiumUpgradeCta": "Premiumにアップグレード"
+  },
+  "hotNews": {
+    "sectionTitle": "韓国で注目",
+    "sectionDescription": "現在の韓国市場で注目されているニュース",
+    "carouselAria": "韓国で注目",
+    "prevAria": "前へ",
+    "nextAria": "次へ"
+  },
+  "restrictedPremium": {
+    "title": "Premiumアクセスは利用できません",
+    "body": "申し訳ありません。一部地域の金融規制により、お住まいの国では現在Premiumアクセスをご利用いただけません。",
+    "confirm": "確認",
+    "joinWaitlist": "ウェイトリストに登録",
+    "waitlistSuccess": "ウェイトリストに登録しました。今後お住まいの地域でアクセス可能になった場合に通知します。",
+    "waitlistAlready": "すでにウェイトリストに登録されています。",
+    "waitlistError": "問題が発生しました。もう一度お試しください。",
+    "mypageCardTitle": "お住まいの地域ではPremiumアクセスを利用できません",
+    "mypageCardBody": "一部地域の金融規制により、お住まいの国では取引所連携Premiumアクセスを提供できません。"
+  },
+  "subscription": {
+    "title": "Premiumサブスクリプション",
+    "subtitle": "K-Stock Helper Premium機能へのフルアクセスを解除します。",
+    "priceLine": "初月$1、その後は月額$4.90",
+    "cancelAnytime": "いつでもキャンセル可能",
+    "benefitsTitle": "Premium特典",
+    "benefit1": "リアルタイムPrice Gap Trackerと市場データ",
+    "benefit2": "高度なデータツール",
+    "benefit3": "リアルタイムの韓国市場ニュースをキーポイントに要約",
+    "refundPolicy": "サービスエラー、重複請求、決済処理の問題などの場合、返金審査を行うことがあります。",
+    "cta": "PayPalで続行",
+    "processing": "PayPalに移動中…",
+    "unavailable": "このページは利用できません。",
+    "alreadyPremium": "すでにPremiumアクセスがあります。設定からサブスクリプションを管理してください。",
+    "error": "問題が発生しました。もう一度お試しください。",
+    "activating": "お支払いを確認中…まもなくPremiumが有効になります。",
+    "successTitle": "ご登録ありがとうございます！",
+    "activated": "Premiumアクセスが有効になりました。",
+    "stillActivating": "お支払いを確認中です。少し時間がかかる場合があります。数秒後に更新してください。",
+    "goToMonitor": "Price Gap Monitorへ",
+    "goToSettings": "設定でサブスクリプションを確認",
+    "cardTitle": "サブスクリプション",
+    "statusBadge": {
+      "basic": "Basic",
+      "premium": "Premium"
+    },
+    "active": "Premiumサブスクリプションは有効です。",
+    "nextBilling": "次回請求: {date}",
+    "cancelButton": "サブスクリプションをキャンセル",
+    "canceling": "キャンセル中…",
+    "cancelPending": "Premiumは{date}まで有効です。サブスクリプションはキャンセルされ、更新されません。",
+    "paymentFailed": "お支払いを完了できませんでした。",
+    "subscribeCta": "Premiumに登録",
+    "modal": {
+      "title": "Premiumサブスクリプションが必要です",
+      "body": "リアルタイムPrice GapデータとPremium機能を利用するにはPremiumに登録してください。",
+      "cta": "サブスクリプションを見る"
+    }
+  },
+  "market": {
+    "ariaOverview": "市場概要",
+    "overview": "市場概要",
+    "updated": "更新: {time}"
+  },
+  "connect": {
+    "bybitUidLabel": "Bybit UID",
+    "binanceUidLabel": "Binance UID",
+    "uidPlaceholder": "例: 123456789",
+    "cta": "送信して申請",
+    "uidRequired": "{exchange} UIDを入力してください。",
+    "bybitDoneTitle": "送信完了！Premiumが解除されました。",
+    "binanceDoneTitle": "送信完了！審査中です。",
+    "submitFailed": "送信に失敗しました。もう一度お試しください。"
+  },
+  "settings": {
+    "heading": "設定",
+    "account": "アカウント",
+    "logOut": "ログアウト",
+    "premium": "Premium",
+    "connected": "接続済み",
+    "fullAccess": "すべてのコンテンツにアクセスできます。",
+    "changeUid": "UIDを変更",
+    "bybitConnection": "Bybit連携",
+    "binanceConnection": "Binance連携",
+    "bybitUidLabel": "Bybit UID",
+    "binanceUidLabel": "Binance UID",
+    "bybitUidPlaceholder": "例: 12345678",
+    "binanceUidPlaceholder": "例: 123456789",
+    "uidValue": "UID: {uid}",
+    "connectUnlock": "連携してPremiumを解除",
+    "connecting": "接続中…",
+    "submitAndApply": "送信して申請",
+    "submitting": "送信中…",
+    "reapply": "再申請",
+    "underReview": "審査中",
+    "approved": "承認済み ✅",
+    "rejected": "却下",
+    "binanceUnderReview": "あなたのBinance UID{uidSuffix}は当チームで審査中です（通常24時間以内）。",
+    "binanceRejected": "Binanceの紹介を確認できませんでした。紹介リンクから登録したことを確認し、再申請してください。",
+    "errorBybitUidRequired": "Bybit UIDを入力してください。",
+    "errorBinanceUidRequired": "Binance UIDを入力してください。",
+    "errorBybitReferral": "UIDが見つかりません。紹介リンクから登録したことを確認してください。",
+    "errorSubmitFailed": "送信に失敗しました。もう一度お試しください。",
+    "uidGuideTitle": "{exchange} UIDの確認方法",
+    "uidGuideStep1": "1. {exchange}アプリを開く",
+    "uidGuideStep2": "2. プロフィールアイコンをタップ",
+    "uidGuideStep3": "3. 名前の下にあるUIDをコピー"
+  },
+  "changeUid": {
+    "title": "{exchange} UIDを変更",
+    "intro": "UIDを変更すると：",
+    "bulletDisablePremium": "Premiumメンバーシップが無効になります",
+    "bulletResetStatus": "現在の承認ステータスがリセットされます",
+    "bulletResubmitReview": "新しいUIDを審査に提出します",
+    "bulletResubmitVerify": "新しいUIDを認証に提出します",
+    "newUidLabel": "新しい{exchange} UID",
+    "newUidPlaceholder": "例: 987654321",
+    "errorUidRequired": "新しい{exchange} UIDを入力してください。",
+    "infoReview": "送信後、申請はリセットされ再審査されます。",
+    "infoVerify": "送信後、UIDは自動的に再認証されます。",
+    "cancel": "キャンセル",
+    "submit": "送信して再申請",
+    "submitting": "送信中…"
+  },
+  "pagination": {
+    "aria": "ページネーション",
+    "previous": "前のページ",
+    "next": "次のページ"
+  },
+  "legal": {
+    "lastUpdated": "最終更新: {date}"
+  },
+  "error": {
+    "network": "ネットワークエラーです。もう一度お試しください。",
+    "unknown": "問題が発生しました。もう一度お試しください。",
+    "notAuthenticated": "続行するにはログインしてください。",
+    "bybitVerifyOk": "Bybit UIDが認証されました。Premiumが解除されました。",
+    "bybitUidRequired": "Bybit UIDを入力してください。",
+    "bybitUidAlreadyLinked": "このBybit UIDはすでに別のアカウントに連携されています。",
+    "bybitReferralNotFound": "当社のBybit紹介内でアカウントを確認できませんでした。まず紹介リンクから登録してください。",
+    "bybitUserNotFound": "Bybitユーザーが見つかりません。UIDを確認して再試行してください。",
+    "bybitVerifyError": "Bybit認証に失敗しました。後ほど再試行してください。",
+    "binanceConnectOk": "Binance UIDが送信され、審査中です。",
+    "binanceUidRequired": "Binance UIDを入力してください。",
+    "binanceUidAlreadyLinked": "このBinance UIDはすでに別のアカウントに連携されています。",
+    "binanceUserNotFound": "Binanceユーザーが見つかりません。UIDを確認して再試行してください。",
+    "binanceConnectError": "Binance連携に失敗しました。後ほど再試行してください。",
+    "subscriptionCreateOk": "サブスクリプションを作成しました。PayPalに移動中…",
+    "subscriptionAlreadyActive": "すでに有効なサブスクリプションがあります。",
+    "subscriptionRegionBlocked": "お住まいの地域ではサブスクリプションを利用できません。",
+    "subscriptionCreateError": "サブスクリプションを開始できませんでした。もう一度お試しください。",
+    "subscriptionCancelOk": "サブスクリプションがキャンセルされました。",
+    "subscriptionNotActive": "有効なサブスクリプションはありません。",
+    "subscriptionCancelError": "サブスクリプションをキャンセルできませんでした。もう一度お試しください。"
+  },
+  "seo": {
+    "title": "K-Stock Helper - 韓国株式ニュース（英語）",
+    "description": "グローバル投資家向けの韓国株式市場ニュースと開示情報（英語）",
+    "newsTitleSuffix": "KstockHelper",
+    "newsDescription": "韓国株式市場ニュースの短い要約を読めます。PremiumメンバーはAI分析全文を利用できます。",
+    "disclosureDescription": "韓国株式市場の開示情報と関連背景の短い要約を読めます。PremiumメンバーはAI分析全文を利用できます。",
+    "relatedStocks": "関連銘柄"
+  },
+  "home": {
+    "priceGapCard": {
+      "liveNow": "ライブ中",
+      "title": "Price Gap Monitor",
+      "subtitle": "現在価格が市場基準より高いか低いかを確認できます。",
+      "cta": "Price Gap Monitorを開く"
+    },
+    "realEstateBanner": {
+      "badge": "NEW",
+      "title": "韓国で不動産を購入したいですか？",
+      "subtitle": "外国人購入者向けに、物件探しから法務・税務・クロージングまでエンドツーエンドでサポートします。遠隔購入も、韓国訪問時の対面コンシェルジュサポートも可能です。",
+      "cta": "不動産サポートを見る"
+    }
+  },
+  "priceGap": {
+    "title": "Price Gap Monitor",
+    "subtitle": {
+      "line1": "現在価格が市場基準より高いか低いかを確認できます。",
+      "line2": "韓国市場時間中に、取引所価格を韓国のUSDT基準価格および過去平均ギャップと比較して追跡できます。"
+    },
+    "status": {
+      "koreaMarket": "韓国市場",
+      "open": "オープン",
+      "closed": "クローズ",
+      "hours": "09:00 – 15:35 KST",
+      "usdtKrw": "USDT/KRW",
+      "fxDelayed": "為替遅延",
+      "lastUpdated": "最終更新:",
+      "updated": {
+        "delayed": "10分遅延"
+      }
+    },
+    "state": {
+      "closed": "韓国市場はクローズしています。",
+      "warmingUp": "データを準備中…"
+    },
+    "delay": {
+      "banner": "Basicプランのため、10分遅延データを表示しています。",
+      "cta": "リアルタイムデータを見る"
+    },
+    "guest": {
+      "delayBanner": "You're viewing limited 10-minute delayed data as a guest.",
+      "loginCta": "Log in"
+    },
+    "restricted": {
+      "body": "Price Gap Monitorはお住まいの地域では利用できません。"
+    },
+    "table": {
+      "stock": "銘柄",
+      "krPrice": "KR価格",
+      "referencePrice": "基準価格",
+      "binance": "Binance",
+      "bybit": "Bybit",
+      "price": "価格",
+      "currentGap": "現在のギャップ",
+      "pastAvgGap": "過去平均ギャップ",
+      "gapVsPastAvg": "過去平均比ギャップ",
+      "pastAvgGapTip": "利用可能な履歴データから算出した、取引日の同じ分における平均ギャップ。",
+      "gapVsPastAvgTip": "現在のギャップ − 過去平均ギャップ。"
+    },
+    "chart": {
+      "title": "ギャップトラッカー",
+      "empty": "表示できるチャートデータがありません。",
+      "currentGapLine": "現在のギャップ",
+      "avgGapLine": "{n}日平均ギャップ",
+      "gapVsPastAvg": "過去平均比ギャップ",
+      "date": "日付:",
+      "localTime": "現地時間",
+      "introLine1": "このチャートは、取引所価格が韓国市場の基準価格に対して通常より高いか低いかを確認するための比較指標です。",
+      "introLine2": "たとえば、現在のギャップが10日平均ギャップより低い場合、現在価格が直近の平均水準より低く取引されていることを意味します。"
+    },
+    "filters": {
+      "exchange": "取引所",
+      "stock": "銘柄",
+      "averagePeriod": "平均期間",
+      "dayAvg": "{n}日平均",
+      "showAvgGap": "平均ギャップを表示"
+    },
+    "pip": {
+      "button": "PIP",
+      "unsupported": "このブラウザではPIPに対応していません。",
+      "premiumOnly": "PIPはPremiumメンバーのみ利用できます。",
+      "premiumHint": "Premiumにアップグレードすると、別ウィンドウで作業しながらリアルタイムの価格ギャップを監視できます。",
+      "live": "ライブ",
+      "ref": "基準",
+      "gap": "ギャップ",
+      "binanceShort": "B",
+      "bybitShort": "Y"
+    },
+    "footer": {
+      "aboutTitle": "ギャップについて",
+      "formulaRef": "基準価格（USDT）= KR価格 / USDT-KRW",
+      "formulaGap": "ギャップ = 取引所価格 − 基準価格",
+      "formulaGapPct": "ギャップ（%）= ギャップ / 基準価格 × 100",
+      "causes": "価格ギャップは、取引所の流動性、市場時間、商品構造、資金調達・手数料、為替変動などにより発生する場合があります。",
+      "avgTitle": "過去平均ギャップと過去平均比ギャップ",
+      "pastAvgGap": "過去平均ギャップは、利用可能な履歴データから取引日の同じ分で計算した平均ギャップです。",
+      "gapVsPastAvg": "過去平均比ギャップ = 現在のギャップ − 過去平均ギャップ。",
+      "availableData": "履歴平均は利用可能なデータのみを使用します。",
+      "notesTitle": "注記",
+      "noteDelay": "10分遅延データを表示しています。",
+      "noteRefresh": "遅延データは5秒ごとに更新されます。",
+      "noteLocalTime": "市場データはKST基準です。チャート時間は現地時間で表示されます。",
+      "noteAdvice": "この情報は市場比較のみを目的としており、投資助言ではありません。"
+    }
+  },
+  "realEstate": {
+    "seo": {
+      "homeTitle": "韓国を訪問せずに韓国不動産を購入 | K-Stock Helper",
+      "homeDescription": "韓国で不動産を購入する外国人購入者向けの唯一のエンドツーエンドサービスです。物件探し、仲介、法務、税務、書類、支払い調整、クロージングをサポートします。",
+      "requestTitle": "購入サポートを依頼 | 韓国不動産",
+      "requestDescription": "韓国不動産購入サポートの依頼を送信してください。国、予算、物件タイプ、希望条件をお知らせください。",
+      "breadcrumbHome": "ホーム",
+      "breadcrumbRealEstate": "韓国不動産を購入"
+    },
+    "home": {
+      "hero": {
+        "badge": "リモート韓国不動産購入サポート",
+        "titleLine1": "韓国で不動産を購入",
+        "titleLine2": "韓国を訪問せずに",
+        "highlight": "全プロセスをサポートします",
+        "description": "お客様のニーズに合う韓国不動産を探します。主要都市からSamsung、SK Hynix、韓国の半導体成長に関連する有望エリアまで対応します。信頼できる現地ネットワークが仲介、法務、税務、書類、支払い調整、クロージングを担当します。",
+        "cta": "購入サポートを依頼",
+        "ctaSub": "韓国を訪問したい場合は、対面コンシェルジュサポートも利用できます。"
+      },
+      "trust": {
+        "card1Title": "安全で信頼できます",
+        "card1Desc": "お客様の情報は機密として取り扱います。",
+        "card2Title": "信頼できる現地ネットワーク",
+        "card2Desc": "韓国の信頼できる専門家を通じて、仲介・法務・税務・クロージングをサポートします。",
+        "card3Title": "ニーズに合わせて",
+        "card3Desc": "予算、希望エリア、物件タイプに合わせた選択肢を提供します。",
+        "card4Title": "明確で透明",
+        "card4Desc": "費用、書類、支払いスケジュール、次の手順を説明します。"
+      },
+      "scope": {
+        "title": "サポート内容",
+        "description": "物件探しからクロージングまで、韓国の信頼できる現地ネットワークを通じて購入プロセス全体をサポートします。",
+        "step1": "物件探し",
+        "step2": "リモート内覧・スクリーニング",
+        "step3": "仲介・交渉",
+        "step4": "法務・税務・書類",
+        "step5": "支払い・クロージング"
+      },
+      "why": {
+        "title": "外国人購入者に選ばれる理由",
+        "subtitle": "韓国で不動産を購入する外国人購入者向けの唯一のエンドツーエンドサービスです。",
+        "point1": "遠隔購入、または対面サポート付きで韓国訪問",
+        "point2": "英語と主要メッセージアプリでサポート",
+        "point3": "ニーズに合わせて物件候補を絞り込み",
+        "point4": "機密性の高い書類は必要な場合のみ依頼"
+      },
+      "values": {
+        "card1Title": "フルプロセス",
+        "card1Desc": "韓国の外国人購入者向けに、物件探し、仲介、法務、税務、書類、支払い、クロージング支援を組み合わせた唯一のサービスです。",
+        "card2Title": "リモートまたは対面",
+        "card2Desc": "海外から購入することも、韓国訪問時に空港送迎、物件訪問、クロージングの予定まで対面コンシェルジュサポートを受けることもできます。",
+        "card3Title": "入居不要",
+        "card3Desc": "購入後、韓国に居住する必要がない場合があります。"
+      },
+      "contact": {
+        "title": "ご質問がありますか？",
+        "description": "ご希望のチャネルから直接お問い合わせください。購入プロセスと利用可能なサポート内容をご説明します。",
+        "privacyNote": "お客様の情報は安全に保護され、リクエストへの回答と購入サポートの調整にのみ使用されます。"
+      }
+    },
+    "channels": {
+      "whatsapp": "WhatsApp",
+      "wechat": "WeChat",
+      "line": "LINE",
+      "telegram": "Telegram",
+      "email": "メール"
+    },
+    "request": {
+      "back": "不動産ホームに戻る",
+      "header": {
+        "title": "購入サポートを依頼",
+        "subtitle": "お客様の情報をお知らせください",
+        "description": "下記フォームにご入力ください。当チームが内容を確認し、メールでご連絡します。"
+      },
+      "form": {
+        "emailLabel": "メール",
+        "emailPlaceholder": "メールアドレスを入力",
+        "emailInvalid": "有効なメールアドレスを入力してください。",
+        "countryLabel": "居住国",
+        "countryPlaceholder": "国を選択",
+        "countryRequired": "居住国を選択してください。",
+        "budgetLabel": "予算範囲",
+        "budgetHelper": "想定予算範囲を入力してください。",
+        "budgetMinPlaceholder": "最小金額",
+        "budgetMaxPlaceholder": "最大金額",
+        "budgetRequired": "想定予算範囲を入力してください。",
+        "budgetMinGreater": "最小金額は最大金額を超えることはできません。",
+        "propertyTypeLabel": "物件タイプ",
+        "propertyTypeRequired": "物件タイプを選択してください。",
+        "propertyTypeApartment": "マンション",
+        "propertyTypeOfficetel": "オフィステル",
+        "propertyTypeOther": "その他",
+        "propertyTypeNotSure": "まだ未定",
+        "inKoreaLabel": "現在韓国にいますか？",
+        "inKoreaRequired": "現在の滞在状況を選択してください。",
+        "inKoreaYes": "はい",
+        "inKoreaNo": "いいえ",
+        "messageLabel": "メッセージ",
+        "messagePlaceholder": "お探しの物件、希望エリア、時期、その他の詳細をお知らせください。",
+        "messageRequired": "メッセージを入力してください。",
+        "submit": "リクエストを送信",
+        "submitting": "送信中...",
+        "submitError": "問題が発生しました。もう一度お試しください。",
+        "privacyNote": "お客様の情報は安全に保護され、リクエストへの回答にのみ使用されます。"
+      },
+      "modal": {
+        "title": "リクエストを送信しました",
+        "description": "ありがとうございます。リクエストは正常に送信されました。当チームが内容を確認し、メールでご連絡します。",
+        "ok": "OK"
+      },
+      "channels": {
+        "title": "より早い回答が必要ですか？",
+        "description": "リクエスト送信前後に、以下のチャネルからお問い合わせいただけます。"
+      },
+      "safety": {
+        "title": "安全。プライベート。信頼。",
+        "description": "この段階では機密性の高い書類は求めません。書類要件はリクエスト確認後にご案内します。"
+      }
+    }
+  }
+}

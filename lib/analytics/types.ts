@@ -34,7 +34,13 @@ export type EventName =
   | "subscription_cancelled"
   // My page (settings)
   | "mypage_viewed"
-  | "uid_apply_clicked";
+  | "uid_apply_clicked"
+  // Real Estate buying support
+  | "home_real_estate_banner_clicked"
+  | "real_estate_home_viewed"
+  | "real_estate_request_page_viewed"
+  | "real_estate_request_submit_clicked"
+  | "real_estate_contact_channel_clicked";
 
 /** Arbitrary per-event properties merged into the `properties` jsonb column. */
 export type EventProps = Record<string, unknown>;

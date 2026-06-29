@@ -14,6 +14,7 @@
   "gnb": {
     "news": "समाचार",
     "stocks": "स्टॉक्स",
+    "realEstate": "कोरिया में रियल एस्टेट खरीदें",
     "settings": "सेटिंग्स",
     "logIn": "लॉग इन",
     "signUp": "साइन अप करें",
@@ -104,7 +105,9 @@
   "hotNews": {
     "sectionTitle": "कोरिया में चर्चित",
     "sectionDescription": "इस समय कोरियाई बाज़ार की प्रमुख चर्चित खबरें।",
-    "carouselAria": "कोरिया में चर्चित"
+    "carouselAria": "कोरिया में चर्चित",
+    "prevAria": "Previous",
+    "nextAria": "Next"
   },
   "restrictedPremium": {
     "title": "Premium पहुँच उपलब्ध नहीं है",
@@ -116,6 +119,45 @@
     "waitlistError": "कुछ गलत हो गया। कृपया फिर से प्रयास करें।",
     "mypageCardTitle": "आपके क्षेत्र में Premium पहुँच उपलब्ध नहीं है",
     "mypageCardBody": "कुछ क्षेत्रों में वित्तीय नियमों के कारण, हम आपके देश में एक्सचेंज-लिंक्ड Premium पहुँच प्रदान नहीं कर सकते।"
+  },
+  "subscription": {
+    "title": "प्रीमियम सदस्यता",
+    "subtitle": "K-Stock Helper की Premium सुविधाओं का पूरा एक्सेस अनलॉक करें।",
+    "priceLine": "पहले महीने के लिए $1, फिर $4.90 / माह",
+    "cancelAnytime": "कभी भी रद्द करें",
+    "benefitsTitle": "प्रीमियम लाभ",
+    "benefit1": "रीयल-टाइम Price Gap Tracker और मार्केट डेटा",
+    "benefit2": "उन्नत डेटा टूल",
+    "benefit3": "रीयल-टाइम कोरियाई बाजार समाचार, मुख्य बिंदुओं में सारांशित",
+    "refundPolicy": "सेवा त्रुटि, दोहरा शुल्क या भुगतान प्रसंस्करण समस्या जैसे मामलों में रिफंड की समीक्षा की जा सकती है।",
+    "cta": "PayPal के साथ जारी रखें",
+    "processing": "PayPal पर रीडायरेक्ट किया जा रहा है…",
+    "unavailable": "यह पेज उपलब्ध नहीं है।",
+    "alreadyPremium": "आपके पास पहले से Premium एक्सेस है। Settings में अपनी सदस्यता प्रबंधित करें।",
+    "error": "कुछ गलत हो गया। कृपया फिर से प्रयास करें।",
+    "activating": "आपके भुगतान की पुष्टि की जा रही है… Premium जल्द ही सक्रिय हो जाएगा।",
+    "successTitle": "सदस्यता लेने के लिए धन्यवाद!",
+    "activated": "आपका Premium एक्सेस अब सक्रिय है।",
+    "stillActivating": "आपके भुगतान की पुष्टि की जा रही है। इसमें थोड़ा समय लग सकता है — कृपया कुछ सेकंड बाद रिफ्रेश करें।",
+    "goToMonitor": "Price Gap Monitor पर जाएं",
+    "goToSettings": "Settings में सदस्यता देखें",
+    "cardTitle": "सदस्यता",
+    "statusBadge": {
+      "basic": "Basic",
+      "premium": "Premium"
+    },
+    "active": "आपकी Premium सदस्यता सक्रिय है।",
+    "nextBilling": "अगला बिलिंग: {date}",
+    "cancelButton": "सदस्यता रद्द करें",
+    "canceling": "रद्द किया जा रहा है…",
+    "cancelPending": "Premium {date} तक सक्रिय रहेगा। आपकी सदस्यता रद्द कर दी गई है और नवीनीकृत नहीं होगी।",
+    "paymentFailed": "आपका भुगतान पूरा नहीं हो सका।",
+    "subscribeCta": "Premium की सदस्यता लें",
+    "modal": {
+      "title": "Premium सदस्यता आवश्यक है",
+      "body": "रीयल-टाइम Price Gap डेटा और Premium सुविधाओं तक पहुंचने के लिए Premium की सदस्यता लें।",
+      "cta": "सदस्यता देखें"
+    }
   },
   "market": {
     "ariaOverview": "बाज़ार अवलोकन",
@@ -221,43 +263,230 @@
     "disclosureDescription": "कोरियाई शेयर बाज़ार की एक डिस्क्लोज़र और संबंधित संदर्भ का संक्षिप्त सारांश पढ़ें। पूरा AI विश्लेषण Premium सदस्यों के लिए उपलब्ध है।",
     "relatedStocks": "संबंधित शेयर"
   },
-  "subscription": {
-    "title": "प्रीमियम सदस्यता",
-    "subtitle": "K-Stock Helper की Premium सुविधाओं का पूरा एक्सेस अनलॉक करें।",
-    "priceLine": "पहले महीने के लिए $1, फिर $4.90 / माह",
-    "cancelAnytime": "कभी भी रद्द करें",
-    "benefitsTitle": "प्रीमियम लाभ",
-    "benefit1": "रीयल-टाइम Price Gap Tracker और मार्केट डेटा",
-    "benefit2": "उन्नत डेटा टूल",
-    "benefit3": "रीयल-टाइम कोरियाई बाजार समाचार, मुख्य बिंदुओं में सारांशित",
-    "refundPolicy": "सेवा त्रुटि, दोहरा शुल्क या भुगतान प्रसंस्करण समस्या जैसे मामलों में रिफंड की समीक्षा की जा सकती है।",
-    "cta": "PayPal के साथ जारी रखें",
-    "processing": "PayPal पर रीडायरेक्ट किया जा रहा है…",
-    "unavailable": "यह पेज उपलब्ध नहीं है।",
-    "alreadyPremium": "आपके पास पहले से Premium एक्सेस है। Settings में अपनी सदस्यता प्रबंधित करें।",
-    "error": "कुछ गलत हो गया। कृपया फिर से प्रयास करें।",
-    "activating": "आपके भुगतान की पुष्टि की जा रही है… Premium जल्द ही सक्रिय हो जाएगा।",
-    "successTitle": "सदस्यता लेने के लिए धन्यवाद!",
-    "activated": "आपका Premium एक्सेस अब सक्रिय है।",
-    "stillActivating": "आपके भुगतान की पुष्टि की जा रही है। इसमें थोड़ा समय लग सकता है — कृपया कुछ सेकंड बाद रिफ्रेश करें।",
-    "goToMonitor": "Price Gap Monitor पर जाएं",
-    "goToSettings": "Settings में सदस्यता देखें",
-    "cardTitle": "सदस्यता",
-    "statusBadge": {
-      "basic": "Basic",
-      "premium": "Premium"
+  "home": {
+    "priceGapCard": {
+      "liveNow": "Live Now",
+      "title": "Price Gap Monitor",
+      "subtitle": "See whether the current price is higher or lower than the market reference.",
+      "cta": "Open Price Gap Monitor"
     },
-    "active": "आपकी Premium सदस्यता सक्रिय है।",
-    "nextBilling": "अगला बिलिंग: {date}",
-    "cancelButton": "सदस्यता रद्द करें",
-    "canceling": "रद्द किया जा रहा है…",
-    "cancelPending": "Premium {date} तक सक्रिय रहेगा। आपकी सदस्यता रद्द कर दी गई है और नवीनीकृत नहीं होगी।",
-    "paymentFailed": "आपका भुगतान पूरा नहीं हो सका।",
-    "subscribeCta": "Premium की सदस्यता लें",
-    "modal": {
-      "title": "Premium सदस्यता आवश्यक है",
-      "body": "रीयल-टाइम Price Gap डेटा और Premium सुविधाओं तक पहुंचने के लिए Premium की सदस्यता लें।",
-      "cta": "सदस्यता देखें"
+    "realEstateBanner": {
+      "badge": "नया",
+      "title": "क्या आप कोरिया में प्रॉपर्टी खरीदना चाहते हैं?",
+      "subtitle": "विदेशी खरीदारों के लिए संपूर्ण सहायता पाएं — संपत्ति खोज से लेकर कानूनी, कर और क्लोज़िंग तक। दूर से खरीदें या इन-पर्सन concierge सहायता के साथ कोरिया जाएँ।",
+      "cta": "रियल एस्टेट सहायता देखें"
+    }
+  },
+  "priceGap": {
+    "title": "Price Gap Monitor",
+    "subtitle": {
+      "line1": "See whether the current price is higher or lower than the market reference.",
+      "line2": "Track exchange prices against Korea's USDT reference price and past average gap during Korean market hours."
+    },
+    "status": {
+      "koreaMarket": "Korea Market",
+      "open": "Open",
+      "closed": "Closed",
+      "hours": "09:00 – 15:35 KST",
+      "usdtKrw": "USDT/KRW",
+      "fxDelayed": "FX delayed",
+      "lastUpdated": "Last updated:",
+      "updated": {
+        "delayed": "10 min delayed"
+      }
+    },
+    "state": {
+      "closed": "Korea Market is closed.",
+      "warmingUp": "Preparing data…"
+    },
+    "delay": {
+      "banner": "You are viewing 10-minute delayed data because you are on a Basic plan.",
+      "cta": "View real-time data"
+    },
+    "guest": {
+      "delayBanner": "You're viewing limited 10-minute delayed data as a guest.",
+      "loginCta": "Log in"
+    },
+    "restricted": {
+      "body": "Price Gap Monitor is not available in your region."
+    },
+    "table": {
+      "stock": "Stock",
+      "krPrice": "KR Price",
+      "referencePrice": "Reference Price",
+      "binance": "Binance",
+      "bybit": "Bybit",
+      "price": "Price",
+      "currentGap": "Current Gap",
+      "pastAvgGap": "Past Avg Gap",
+      "gapVsPastAvg": "Gap vs Past Avg",
+      "pastAvgGapTip": "Average gap at the same minute of the trading day, from all available history.",
+      "gapVsPastAvgTip": "Current Gap − Past Avg Gap."
+    },
+    "chart": {
+      "title": "Gap Tracker",
+      "empty": "No chart data to display.",
+      "currentGapLine": "Current Gap",
+      "avgGapLine": "{n}D Avg Gap",
+      "gapVsPastAvg": "Gap vs Past Avg",
+      "date": "Date:",
+      "localTime": "Local Time",
+      "introLine1": "This chart is a comparison indicator that helps you see whether the exchange price is trading higher or lower than usual relative to the Korean market reference price.",
+      "introLine2": "For example, if the Current Gap is lower than the 10D Avg Gap, it means the current price is trading lower than its recent average level."
+    },
+    "filters": {
+      "exchange": "Exchange",
+      "stock": "Stock",
+      "averagePeriod": "Average Period",
+      "dayAvg": "{n} Day Avg",
+      "showAvgGap": "Show Avg Gap"
+    },
+    "pip": {
+      "button": "PIP",
+      "unsupported": "PIP is not supported in this browser.",
+      "premiumOnly": "PIP is available for Premium members only.",
+      "premiumHint": "Upgrade to Premium to monitor real-time price gaps while working in another window.",
+      "live": "Live",
+      "ref": "Ref",
+      "gap": "Gap",
+      "binanceShort": "B",
+      "bybitShort": "Y"
+    },
+    "footer": {
+      "aboutTitle": "About Gap",
+      "formulaRef": "Reference Price (USDT) = KR Price / USDT-KRW",
+      "formulaGap": "Gap = Exchange Price − Reference Price",
+      "formulaGapPct": "Gap (%) = Gap / Reference Price × 100",
+      "causes": "Price gaps may occur due to exchange liquidity, market hours, product structure, funding & fees, and FX movement.",
+      "avgTitle": "Past Avg Gap & Gap vs Past Avg",
+      "pastAvgGap": "Past Avg Gap is the average gap at the same minute of the trading day, calculated from available historical data.",
+      "gapVsPastAvg": "Gap vs Past Avg = Current Gap − Past Avg Gap.",
+      "availableData": "Historical average uses available data only.",
+      "notesTitle": "Notes",
+      "noteDelay": "You are viewing 10-minute delayed data.",
+      "noteRefresh": "Delayed data is refreshed every 5 seconds.",
+      "noteLocalTime": "Market data is based on KST. Chart time is shown in your local time.",
+      "noteAdvice": "This information is for market comparison only and does not constitute investment advice."
+    }
+  },
+  "realEstate": {
+    "seo": {
+      "homeTitle": "कोरिया जाए बिना कोरिया में प्रॉपर्टी खरीदें | K-Stock Helper",
+      "homeDescription": "कोरिया में प्रॉपर्टी खरीदने वाले विदेशी खरीदारों के लिए एकमात्र संपूर्ण सेवा। संपत्ति खोज, ब्रोकरेज, कानूनी, कर, दस्तावेज़, भुगतान समन्वय और क्लोज़िंग में सहायता पाएं।",
+      "requestTitle": "खरीद सहायता का अनुरोध करें | कोरिया रियल एस्टेट",
+      "requestDescription": "कोरियाई रियल एस्टेट खरीद सहायता के लिए अपना अनुरोध भेजें। अपना देश, बजट, संपत्ति प्रकार और आवश्यकताएँ बताएं।",
+      "breadcrumbHome": "होम",
+      "breadcrumbRealEstate": "कोरिया में रियल एस्टेट खरीदें"
+    },
+    "home": {
+      "hero": {
+        "badge": "रिमोट कोरिया रियल एस्टेट खरीद सहायता",
+        "titleLine1": "कोरिया में प्रॉपर्टी खरीदें",
+        "titleLine2": "कोरिया जाए बिना",
+        "highlight": "हम आपके लिए पूरी प्रक्रिया संभालते हैं",
+        "description": "हम आपकी ज़रूरतों के अनुसार कोरियाई रियल एस्टेट खोजने में मदद करते हैं — प्रमुख शहरों से लेकर Samsung, SK Hynix और कोरिया के सेमीकंडक्टर विकास से जुड़े संभावित क्षेत्रों तक। हमारा विश्वसनीय स्थानीय नेटवर्क ब्रोकरेज, कानूनी, कर, दस्तावेज़, भुगतान समन्वय और क्लोज़िंग संभालता है।",
+        "cta": "खरीद सहायता का अनुरोध करें",
+        "ctaSub": "क्या आप कोरिया जाना चाहते हैं? इन-पर्सन concierge सहायता भी उपलब्ध है।"
+      },
+      "trust": {
+        "card1Title": "सुरक्षित और विश्वसनीय",
+        "card1Desc": "आपकी जानकारी गोपनीय रूप से संभाली जाती है।",
+        "card2Title": "विश्वसनीय स्थानीय नेटवर्क",
+        "card2Desc": "कोरिया में विश्वसनीय पेशेवरों के माध्यम से ब्रोकरेज, कानूनी, कर और क्लोज़िंग।",
+        "card3Title": "आपकी ज़रूरतों के अनुसार",
+        "card3Desc": "आपके बजट, लक्षित क्षेत्र और संपत्ति प्रकार के अनुसार विकल्प।",
+        "card4Title": "स्पष्ट और पारदर्शी",
+        "card4Desc": "हम लागत, दस्तावेज़, भुगतान समय-सारिणी और अगले चरण समझाते हैं।"
+      },
+      "scope": {
+        "title": "हम किसमें सहायता करते हैं",
+        "description": "खोज से क्लोज़िंग तक, हम कोरिया में अपने विश्वसनीय स्थानीय नेटवर्क के माध्यम से पूरी खरीद प्रक्रिया में सहायता करते हैं।",
+        "step1": "संपत्ति खोज",
+        "step2": "रिमोट व्यूइंग और स्क्रीनिंग",
+        "step3": "ब्रोकरेज और बातचीत",
+        "step4": "कानूनी, कर और दस्तावेज़",
+        "step5": "भुगतान और क्लोज़िंग"
+      },
+      "why": {
+        "title": "विदेशी खरीदार हमें क्यों चुनते हैं",
+        "subtitle": "कोरिया में प्रॉपर्टी खरीदने वाले विदेशी खरीदारों के लिए एकमात्र संपूर्ण सेवा।",
+        "point1": "दूर से खरीदें या इन-पर्सन सहायता के साथ कोरिया जाएँ",
+        "point2": "अंग्रेज़ी और प्रमुख मैसेजिंग ऐप्स में सहायता",
+        "point3": "आपकी ज़रूरतों के अनुसार फ़िल्टर किए गए संपत्ति विकल्प",
+        "point4": "संवेदनशील दस्तावेज़ केवल आवश्यकता होने पर मांगे जाते हैं"
+      },
+      "values": {
+        "card1Title": "पूरी प्रक्रिया",
+        "card1Desc": "कोरिया में विदेशी खरीदारों के लिए संपत्ति खोज, ब्रोकरेज, कानूनी, कर, दस्तावेज़, भुगतान और क्लोज़िंग सहायता को जोड़ने वाली एकमात्र सेवा।",
+        "card2Title": "दूरस्थ या इन-पर्सन",
+        "card2Desc": "विदेश से खरीदें, या इन-पर्सन concierge सहायता के साथ कोरिया जाएँ — एयरपोर्ट पिकअप से लेकर संपत्ति विज़िट और क्लोज़िंग अपॉइंटमेंट तक।",
+        "card3Title": "रहने के लिए जाना आवश्यक नहीं",
+        "card3Desc": "खरीद के बाद आपको कोरिया में रहना आवश्यक न भी हो सकता है।"
+      },
+      "contact": {
+        "title": "कोई प्रश्न है?",
+        "description": "अपने पसंदीदा चैनल से सीधे हमसे संपर्क करें। हम खरीद प्रक्रिया और उपलब्ध सहायता विकल्प समझा सकते हैं।",
+        "privacyNote": "आपकी जानकारी सुरक्षित है और केवल आपके अनुरोध का जवाब देने तथा खरीद सहायता समन्वय के लिए उपयोग की जाएगी।"
+      }
+    },
+    "channels": {
+      "whatsapp": "WhatsApp",
+      "wechat": "WeChat",
+      "line": "LINE",
+      "telegram": "Telegram",
+      "email": "Email"
+    },
+    "request": {
+      "back": "रियल एस्टेट होम पर वापस जाएँ",
+      "header": {
+        "title": "खरीद सहायता का अनुरोध करें",
+        "subtitle": "अपनी जानकारी बताएं",
+        "description": "कृपया नीचे दिया गया फ़ॉर्म भरें। हमारी टीम आपके अनुरोध की समीक्षा करेगी और ईमेल से संपर्क करेगी।"
+      },
+      "form": {
+        "emailLabel": "ईमेल",
+        "emailPlaceholder": "अपना ईमेल पता दर्ज करें",
+        "emailInvalid": "कृपया मान्य ईमेल पता दर्ज करें।",
+        "countryLabel": "निवास देश",
+        "countryPlaceholder": "अपना देश चुनें",
+        "countryRequired": "कृपया अपना निवास देश चुनें।",
+        "budgetLabel": "बजट सीमा",
+        "budgetHelper": "अपनी अनुमानित बजट सीमा दर्ज करें।",
+        "budgetMinPlaceholder": "न्यूनतम राशि",
+        "budgetMaxPlaceholder": "अधिकतम राशि",
+        "budgetRequired": "कृपया अपनी अनुमानित बजट सीमा दर्ज करें।",
+        "budgetMinGreater": "न्यूनतम राशि अधिकतम राशि से अधिक नहीं हो सकती।",
+        "propertyTypeLabel": "संपत्ति प्रकार",
+        "propertyTypeRequired": "कृपया संपत्ति प्रकार चुनें।",
+        "propertyTypeApartment": "अपार्टमेंट",
+        "propertyTypeOfficetel": "Officetel",
+        "propertyTypeOther": "अन्य",
+        "propertyTypeNotSure": "अभी निश्चित नहीं",
+        "inKoreaLabel": "क्या आप अभी कोरिया में हैं?",
+        "inKoreaRequired": "कृपया अपनी वर्तमान स्थान स्थिति चुनें।",
+        "inKoreaYes": "हाँ",
+        "inKoreaNo": "नहीं",
+        "messageLabel": "संदेश",
+        "messagePlaceholder": "आप जिस संपत्ति की तलाश कर रहे हैं, पसंदीदा क्षेत्र, समय-सीमा और अन्य विवरण बताएं।",
+        "messageRequired": "कृपया अपना संदेश दर्ज करें।",
+        "submit": "अनुरोध भेजें",
+        "submitting": "भेजा जा रहा है...",
+        "submitError": "कुछ गलत हुआ। कृपया फिर से प्रयास करें।",
+        "privacyNote": "आपकी जानकारी सुरक्षित है और केवल आपके अनुरोध का जवाब देने के लिए उपयोग की जाएगी।"
+      },
+      "modal": {
+        "title": "अनुरोध भेजा गया",
+        "description": "धन्यवाद। आपका अनुरोध सफलतापूर्वक भेज दिया गया है। हमारी टीम आपकी जानकारी की समीक्षा करेगी और ईमेल से संपर्क करेगी।",
+        "ok": "OK"
+      },
+      "channels": {
+        "title": "तेज़ जवाब चाहिए?",
+        "description": "अनुरोध भेजने से पहले या बाद में आप नीचे दिए गए चैनलों से हमसे संपर्क कर सकते हैं।"
+      },
+      "safety": {
+        "title": "सुरक्षित। निजी। विश्वसनीय।",
+        "description": "इस चरण में हम संवेदनशील दस्तावेज़ नहीं मांगते। आपके अनुरोध की समीक्षा के बाद दस्तावेज़ आवश्यकताओं को समझाया जाएगा।"
+      }
     }
   }
 }

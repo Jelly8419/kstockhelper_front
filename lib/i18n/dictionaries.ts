@@ -11,6 +11,8 @@ import ur from "@/locales/ur.json";
 import ru from "@/locales/ru.json";
 import uk from "@/locales/uk.json";
 import zhTW from "@/locales/zh-TW.json";
+import ja from "@/locales/ja.json";
+import zhCN from "@/locales/zh-CN.json";
 
 /** A translation dictionary is an arbitrarily-nested map of string leaves. */
 export type Dictionary = { [key: string]: string | Dictionary };
@@ -33,6 +35,8 @@ const DICTIONARIES: Record<SupportedLocale, Dictionary> = {
   ru,
   uk,
   "zh-TW": zhTW,
+  ja,
+  "zh-CN": zhCN,
 };
 
 /** The English dictionary used as the universal fallback (PRD §6.1, §10.4). */

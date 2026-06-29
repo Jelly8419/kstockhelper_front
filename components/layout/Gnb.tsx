@@ -8,6 +8,7 @@ import { LocaleSwitcher } from "@/components/layout/LocaleSwitcher";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { createClient } from "@/lib/supabase/client";
+import { REAL_ESTATE_HOME_PATH } from "@/lib/constants/realEstate";
 
 export function Gnb() {
   const { tier, email, isLoading } = useAuth();
@@ -24,24 +25,35 @@ export function Gnb() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-container items-center justify-between px-4 sm:px-6">
-        {/* Left: logo + wordmark → home */}
-        <Link href="/" className="flex items-center gap-2">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white p-1">
-            <Image
-              src="/logo-k-symbol.png"
-              alt="K-Stock Helper"
-              width={32}
-              height={32}
-              className="h-full w-full"
-              priority
-            />
-          </span>
-          {/* Brand name — not translated. */}
-          {/* eslint-disable-next-line i18next/no-literal-string */}
-          <span className="text-base font-semibold tracking-tight text-foreground">
-            K-Stock Helper
-          </span>
-        </Link>
+        {/* Left: logo + wordmark → home, plus primary nav */}
+        <div className="flex items-center gap-4 sm:gap-6">
+          <Link href="/" className="flex items-center gap-2">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white p-1">
+              <Image
+                src="/logo-k-symbol.png"
+                alt="K-Stock Helper"
+                width={32}
+                height={32}
+                className="h-full w-full"
+                priority
+              />
+            </span>
+            {/* Brand name — not translated. */}
+            {/* eslint-disable-next-line i18next/no-literal-string */}
+            <span className="text-base font-semibold tracking-tight text-foreground">
+              K-Stock Helper
+            </span>
+          </Link>
+
+          {/* Real Estate entry point (SEO PRD §9 internal link). Hidden on
+              narrow screens where the label would crowd the auth actions. */}
+          <Link
+            href={REAL_ESTATE_HOME_PATH}
+            className="hidden text-sm font-medium text-muted transition-colors hover:text-foreground md:inline"
+          >
+            {t("gnb.realEstate")}
+          </Link>
+        </div>
 
         {/* Right: language selector + auth actions */}
         <nav className="flex items-center gap-2">

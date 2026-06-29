@@ -69,6 +69,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...localizedEntries("/login", { lastModified: now, changeFrequency: "monthly", priority: 0.3 }),
     ...localizedEntries("/signup", { lastModified: now, changeFrequency: "monthly", priority: 0.3 }),
     ...localizedEntries("/guide", { lastModified: now, changeFrequency: "monthly", priority: 0.3 }),
+    // Real Estate home — indexed in every UI locale (SEO PRD §6). The /request
+    // page is intentionally NOT listed (noindex conversion page, SEO PRD §3).
+    ...localizedEntries("/buy-korean-real-estate", { lastModified: now, changeFrequency: "weekly", priority: 0.8 }),
     ...localizedEntries("/privacy", { lastModified: now, changeFrequency: "yearly", priority: 0.2 }),
     ...localizedEntries("/terms", { lastModified: now, changeFrequency: "yearly", priority: 0.2 }),
   ];

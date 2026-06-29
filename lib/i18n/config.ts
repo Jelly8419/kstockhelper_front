@@ -28,6 +28,8 @@ export const supportedUiLocales = [
   "ru",
   "uk",
   "zh-TW",
+  "ja",
+  "zh-CN",
 ] as const;
 
 export type SupportedLocale = (typeof supportedUiLocales)[number];
@@ -52,11 +54,18 @@ export function isContentLocale(value: unknown): value is ContentLocale {
   );
 }
 
-/** Excluded or deferred locales — kept for documentation/intent, not selectable. */
+/**
+ * Excluded or deferred locales — kept for documentation/intent, not selectable.
+ *
+ * `ja` and `zh-CN` were previously here (referral restriction), but the Real
+ * Estate service exposes them as UI languages: JP/CN remain restricted at the
+ * *country* level (see BLOCKED_COUNTRIES in geo/bannerGate — banner/subscription/
+ * guide stay blocked), yet the Real Estate pages are open to all regions, so
+ * those visitors need their own language. Restriction is country-based, not
+ * locale-based, so adding the locales doesn't loosen any country gate.
+ */
 export const excludedOrDeferredLocales = [
-  "ja", // Japan referral restriction
   "tr", // Türkiye referral restriction
-  "zh-CN", // Mainland China restriction
   "bn", // deferred — revisit if Bangladesh is targeted
   "th", // deferred — revisit if Thailand is targeted
   "tl", // deferred — revisit if Philippines is targeted
@@ -65,9 +74,11 @@ export const excludedOrDeferredLocales = [
 /**
  * ISO 3166-1 alpha-2 countryCode → BCP 47 UI locale.
  *
- * This drives *automatic* UI locale selection by geo, so it intentionally
- * excludes restricted countries: HK (mapped to nothing — NOT zh-TW), JP, TR, CN.
- * Countries absent from this map fall back to `en`.
+ * This drives *automatic* UI locale selection by geo. JP→ja and CN→zh-CN are
+ * mapped so those visitors see the Real Estate pages in their language; the
+ * country-level restrictions (banner/subscription/guide) still apply via
+ * BLOCKED_COUNTRIES, independent of locale. HK is still mapped to nothing (NOT
+ * zh-TW) and TR is excluded. Countries absent from this map fall back to `en`.
  */
 export const countryLocaleMap: Record<string, SupportedLocale> = {
   VN: "vi",
@@ -88,6 +99,8 @@ export const countryLocaleMap: Record<string, SupportedLocale> = {
   RU: "ru",
   UA: "uk",
   TW: "zh-TW",
+  JP: "ja",
+  CN: "zh-CN",
 };
 
 /** Dropdown labels — each language shown in its own native name (PRD §9.3). */
@@ -102,6 +115,8 @@ export const localeDisplayNames: Record<SupportedLocale, string> = {
   ru: "Русский",
   uk: "Українська",
   "zh-TW": "繁體中文",
+  ja: "日本語",
+  "zh-CN": "简体中文",
 };
 
 /** localStorage + cookie key persisting the user's explicit locale choice. */

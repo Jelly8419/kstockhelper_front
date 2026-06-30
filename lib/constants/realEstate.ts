@@ -5,8 +5,8 @@
  * and LINE also show a friend-add ID under the QR. Telegram was removed (no
  * translation, account needs a phone number we don't have). Email stays a mailto.
  *
- * QR image files live under /public/real-estate (PM-provided assets). The fixed
- * support email and the WeChat/LINE IDs come from the PRD.
+ * QR image files live in /public as qr-{channel}.jpg (PM-provided assets). The
+ * fixed support email and the WeChat/LINE IDs come from the PRD.
  */
 
 /** Support email shown under the Email channel (PRD-fixed). */
@@ -32,19 +32,19 @@ export interface RealEstateChannel {
 export const REAL_ESTATE_CONTACT_CHANNELS: RealEstateChannel[] = [
   {
     key: "whatsapp",
-    qr: "/real-estate/qr-whatsapp.png",
+    qr: "/qr-whatsapp.jpg",
     id: null,
     href: null,
   },
   {
     key: "wechat",
-    qr: "/real-estate/qr-wechat.png",
+    qr: "/qr-wechat.jpg",
     id: "koreaproperty",
     href: null,
   },
   {
     key: "line",
-    qr: "/real-estate/qr-line.png",
+    qr: "/qr-line.jpg",
     id: "Koreaproperty",
     href: null,
   },

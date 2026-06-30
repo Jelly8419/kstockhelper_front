@@ -16,7 +16,7 @@ export async function RealEstateBanner() {
     <section className="overflow-hidden rounded-2xl border border-border bg-gradient-to-r from-brand/15 via-surface to-surface p-6 sm:p-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-2">
-          <span className="inline-flex w-fit items-center rounded-full bg-brand px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide text-white">
+          <span className="inline-flex w-fit items-center rounded-full bg-orange-500 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide text-white">
             {t("home.realEstateBanner.badge")}
           </span>
           <h2 className="text-xl font-semibold text-foreground sm:text-2xl">

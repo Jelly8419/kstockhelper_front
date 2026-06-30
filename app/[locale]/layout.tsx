@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale, getMessages } from "next-intl/server";
+import { SiteChrome } from "@/components/layout/SiteChrome";
 import { Gnb } from "@/components/layout/Gnb";
 import { Footer } from "@/components/layout/Footer";
 import { RealEstateGnb } from "@/components/layout/RealEstateGnb";
@@ -11,15 +11,7 @@ import { routing } from "@/lib/i18n/routing";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { translate } from "@/lib/i18n/translate";
 import { localizedAlternates } from "@/lib/i18n/seo";
-import { PATHNAME_HEADER } from "@/lib/admin/constants";
-import { REAL_ESTATE_HOME_PATH } from "@/lib/constants/realEstate";
 import type { SupportedLocale } from "@/lib/i18n/config";
-
-/** Whether the current path is a Real Estate page (home or request). */
-function isRealEstatePath(pathname: string): boolean {
-  // Matches `/{locale}/buy-korean-real-estate` and its `/request` child.
-  return pathname.includes(REAL_ESTATE_HOME_PATH);
-}
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -75,31 +67,20 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
   const messages = await getMessages();
 
-  // Real Estate pages (k-property revisions §3-§4): light theme + dedicated GNB,
-  // no footer. Detected from the middleware-set pathname header. Reading headers()
-  // makes this layout dynamic, which is fine — the Real Estate pages opt into the
-  // distinct chrome and the rest still renders normally.
-  const pathname = headers().get(PATHNAME_HEADER) ?? "";
-  const realEstate = isRealEstatePath(pathname);
-
-  if (realEstate) {
-    return (
-      <NextIntlClientProvider messages={messages}>
-        <SiteJsonLd locale={locale} />
-        <div className="theme-realestate-light flex min-h-screen flex-col bg-background text-foreground">
-          <RealEstateGnb />
-          <main className="flex-1">{children}</main>
-        </div>
-      </NextIntlClientProvider>
-    );
-  }
-
+  // SiteChrome picks the chrome by path on the client (usePathname): Real Estate
+  // pages get the light theme + dedicated GNB (no footer); everything else gets
+  // the default dark Gnb + Footer. Doing this client-side keeps the page static
+  // and avoids depending on a request header that next-intl's response drops.
   return (
     <NextIntlClientProvider messages={messages}>
       <SiteJsonLd locale={locale} />
-      <Gnb />
-      <main className="flex-1">{children}</main>
-      <Footer />
+      <SiteChrome
+        gnb={<Gnb />}
+        footer={<Footer />}
+        realEstateGnb={<RealEstateGnb />}
+      >
+        {children}
+      </SiteChrome>
     </NextIntlClientProvider>
   );
 }

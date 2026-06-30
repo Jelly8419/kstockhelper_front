@@ -90,3 +90,48 @@ export interface PremiumApplication {
   status: ApplicationStatus;
   appliedAt: string;
 }
+
+/* ------------------------------------------------------------------ */
+/* Real Estate purchase requests (Admin — 부동산 구매 요청 관리)        */
+/* (프론트연동가이드_부동산_API.md §B)                                  */
+/* ------------------------------------------------------------------ */
+
+/** Request handling status (backend `0015`): 접수 / 답변완료 only. */
+export type RealEstateRequestStatus = "RECEIVED" | "ANSWERED";
+
+/** Property type submitted in the form. */
+export type RealEstatePropertyType =
+  | "apartment"
+  | "officetel"
+  | "other"
+  | "not_sure";
+
+/** Row in the request list (GET /real-estate-requests). created_at desc. */
+export interface RealEstateRequestListItem {
+  id: string;
+  createdAt: string;
+  countryOfResidence: string;
+  email: string;
+  currentlyInKorea: boolean;
+  status: RealEstateRequestStatus;
+}
+
+/** Full request detail (GET /real-estate-requests/{id}). */
+export interface RealEstateRequestDetail {
+  id: string;
+  createdAt: string;
+  email: string;
+  countryOfResidence: string;
+  budgetCurrency: string;
+  budgetMin: number;
+  budgetMax: number;
+  propertyType: RealEstatePropertyType;
+  currentlyInKorea: boolean;
+  message: string;
+  status: RealEstateRequestStatus;
+  /** Single overwrite memo (null when unset). */
+  adminMemo: string | null;
+  userId: string | null;
+  locale: string | null;
+  countryCode: string | null;
+}

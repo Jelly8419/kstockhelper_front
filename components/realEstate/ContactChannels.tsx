@@ -8,13 +8,21 @@ import {
 } from "@/lib/constants/realEstate";
 
 /**
+ * Section where the channel buttons are rendered — logged as the `section`
+ * property on the click event (event-log PRD §5.2/§5.3):
+ *  - `have_questions`       → Real Estate home "Have questions?" block
+ *  - `need_faster_response` → request page "Need a faster response?" block
+ */
+export type ContactChannelSection = "have_questions" | "need_faster_response";
+
+/**
  * Direct-contact channel buttons (WhatsApp / WeChat / LINE / Telegram / Email),
  * shared by the Real Estate home ("Have questions?") and the request page
  * ("Need a faster response?"). Channel hrefs come from config; an unconfigured
  * channel renders disabled rather than linking to a dead target (PRD §8-7/§9).
- * Each click logs `real_estate_contact_channel_clicked` with the channel key.
+ * Each click logs `real_estate_contact_channel_clicked` with `section` + `channel`.
  */
-export function ContactChannels() {
+export function ContactChannels({ section }: { section: ContactChannelSection }) {
   const { t } = useTranslation();
   const track = useTrackEvent();
 
@@ -47,6 +55,7 @@ export function ContactChannels() {
               rel={channel.external ? "noopener noreferrer" : undefined}
               onClick={() =>
                 track("real_estate_contact_channel_clicked", {
+                  section,
                   channel: channel.key,
                 })
               }

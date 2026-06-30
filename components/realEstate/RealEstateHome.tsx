@@ -66,7 +66,7 @@ export async function RealEstateHome() {
           {t("realEstate.home.hero.description")}
         </p>
         <div className="flex flex-col items-center gap-2">
-          <TrackedLink event="real_estate_request_page_viewed" href={REAL_ESTATE_REQUEST_PATH}>
+          <TrackedLink event="real_estate_request_button_clicked" href={REAL_ESTATE_REQUEST_PATH}>
             <Button variant="primary" size="lg">
               {t("realEstate.home.hero.cta")} →
             </Button>
@@ -158,7 +158,7 @@ export async function RealEstateHome() {
             {t("realEstate.home.contact.description")}
           </p>
         </div>
-        <ContactChannels />
+        <ContactChannels section="have_questions" />
         <p className="flex items-center gap-1.5 text-xs text-muted">
           <span aria-hidden="true">🔒</span>
           {t("realEstate.home.contact.privacyNote")}

@@ -1,67 +1,61 @@
 /**
- * Real Estate buying-support contact channels.
+ * Real Estate buying-support contact channels (k-property revisions §2).
  *
- * Per PRD ("부동산 구매 요청 홈 PRD" §8-7, "구매 지원 요청 입력 페이지 PRD" §9),
- * channel URLs/IDs are configuration values, not hardcoded business data — they
- * are sourced from env so they can change per environment without a code change.
- * Only the support email is fixed in the PRD (kstockhelper@gmail.com).
+ * The messaging channels (WhatsApp / WeChat / LINE) are shown as QR codes; WeChat
+ * and LINE also show a friend-add ID under the QR. Telegram was removed (no
+ * translation, account needs a phone number we don't have). Email stays a mailto.
  *
- * A channel with an empty href is still rendered but disabled (no link target
- * configured yet), so the UI never points at a dead "#" link.
+ * QR image files live in /public as qr-{channel}.jpg (PM-provided assets). The
+ * fixed support email and the WeChat/LINE IDs come from the PRD.
  */
 
 /** Support email shown under the Email channel (PRD-fixed). */
 export const REAL_ESTATE_SUPPORT_EMAIL = "kstockhelper@gmail.com";
 
-export type RealEstateChannelKey =
-  | "whatsapp"
-  | "wechat"
-  | "line"
-  | "telegram"
-  | "email";
+export type RealEstateChannelKey = "whatsapp" | "wechat" | "line" | "email";
 
 export interface RealEstateChannel {
   /** Channel key — maps to `realEstate.channels.<key>` i18n label. */
   key: RealEstateChannelKey;
-  /** Link target. Empty string = not configured (rendered disabled). */
-  href: string;
-  /** Whether to open in a new tab (external messaging apps; not the mailto). */
-  external: boolean;
+  /** QR image path under /public, or null for the email channel. */
+  qr: string | null;
+  /** Friend-add ID shown under the QR (WeChat/LINE), or null. */
+  id: string | null;
+  /** mailto/link target for the email channel, or null for QR channels. */
+  href: string | null;
 }
 
 /**
- * Ordered channel list (display order matches PRD: WhatsApp, WeChat, LINE,
- * Telegram, Email). URLs come from env; Email is a mailto built from the fixed
- * support address. WeChat is typically an ID/QR rather than a URL — when its env
- * is blank the button renders disabled, leaving room to swap in a QR modal later.
+ * Channel list (PRD order: WhatsApp, WeChat, LINE, Email). QR image filenames are
+ * assumed; swap to the actual PM-provided filenames if they differ.
  */
-export const REAL_ESTATE_CHANNELS: RealEstateChannel[] = [
+export const REAL_ESTATE_CONTACT_CHANNELS: RealEstateChannel[] = [
   {
     key: "whatsapp",
-    href: process.env.NEXT_PUBLIC_RE_WHATSAPP_URL ?? "",
-    external: true,
+    qr: "/qr-whatsapp.jpg",
+    id: null,
+    href: null,
   },
   {
     key: "wechat",
-    href: process.env.NEXT_PUBLIC_RE_WECHAT_URL ?? "",
-    external: true,
+    qr: "/qr-wechat.jpg",
+    id: "koreaproperty",
+    href: null,
   },
   {
     key: "line",
-    href: process.env.NEXT_PUBLIC_RE_LINE_URL ?? "",
-    external: true,
-  },
-  {
-    key: "telegram",
-    href: process.env.NEXT_PUBLIC_RE_TELEGRAM_URL ?? "",
-    external: true,
+    qr: "/qr-line.jpg",
+    id: "Koreaproperty",
+    href: null,
   },
   {
     key: "email",
+    qr: null,
+    id: null,
     href: `mailto:${REAL_ESTATE_SUPPORT_EMAIL}`,
-    external: false,
   },
 ];
+
 
 /** Un-prefixed route path of the Real Estate home (slug fixed in English). */
 export const REAL_ESTATE_HOME_PATH = "/buy-korean-real-estate";

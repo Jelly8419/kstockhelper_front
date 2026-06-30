@@ -9,6 +9,8 @@ import type {
   Exchange,
   MembershipTier,
   MemberStatus,
+  RealEstatePropertyType,
+  RealEstateRequestStatus,
   UidStatus,
 } from "@/types/admin";
 
@@ -52,6 +54,42 @@ export const UID_STATUS_TONE: Record<UidStatus, Tone> = {
   approved: "up",
   rejected: "down",
 };
+
+/* ------------------------------------------------------------------ */
+/* Real Estate purchase requests                                       */
+/* ------------------------------------------------------------------ */
+
+export const RE_STATUS_LABEL: Record<RealEstateRequestStatus, string> = {
+  RECEIVED: "접수",
+  ANSWERED: "답변완료",
+};
+
+export const RE_STATUS_TONE: Record<RealEstateRequestStatus, Tone> = {
+  RECEIVED: "neutral",
+  ANSWERED: "up",
+};
+
+export const RE_PROPERTY_TYPE_LABEL: Record<RealEstatePropertyType, string> = {
+  apartment: "Apartment",
+  officetel: "Officetel",
+  other: "Other",
+  not_sure: "Not sure yet",
+};
+
+/** Yes/No label for the "currently in Korea" flag. */
+export function formatInKorea(value: boolean): string {
+  return value ? "Yes" : "No";
+}
+
+/** Budget range cell: `USD 300,000 ~ 500,000` (PRD 13). */
+export function formatBudgetRange(
+  currency: string,
+  min: number,
+  max: number
+): string {
+  const fmt = (n: number) => n.toLocaleString("en-US");
+  return `${currency} ${fmt(min)} ~ ${fmt(max)}`;
+}
 
 /** Render the approved-exchange list for the table cell (empty → em dash). */
 export function formatApprovedExchanges(exchanges: Exchange[]): string {

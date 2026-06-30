@@ -49,6 +49,12 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
               프리미엄 회원 신청 관리
             </Link>
             <Link
+              href={`${ADMIN_BASE_PATH}/real-estate-requests`}
+              className="text-sm text-muted hover:text-foreground"
+            >
+              부동산 구매 요청 관리
+            </Link>
+            <Link
               href={`${ADMIN_BASE_PATH}/hot-news`}
               className="text-sm text-muted hover:text-foreground"
             >

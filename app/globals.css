@@ -27,6 +27,29 @@ body {
   background: var(--background);
 }
 
+/*
+ * Real Estate light theme (k-property revisions §3). The Real Estate home +
+ * request pages render light while the rest of the (financial) site stays dark.
+ * Scoped via a wrapper class so only that subtree is overridden — every UI token
+ * is a CSS variable, so re-declaring them here flips the whole subtree to light
+ * with no per-component changes. Market colors (up/down) keep their hue but are
+ * darkened for contrast on a white surface.
+ */
+.theme-realestate-light {
+  --background: #ffffff;
+  --foreground: #1a1d23;
+  --surface: #f6f7f9;
+  --surface-hover: #eceef2;
+  --border: #e2e5ea;
+  --muted: #5b6470;
+  --brand: #2e7cf6;
+  --brand-hover: #1f6ae0;
+  --up: #e0414d;
+  --down: #2f6fe0;
+  --gain: #16a34a;
+  --danger: #dc2626;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

@@ -33,7 +33,7 @@ export default async function RealEstateRequestPage() {
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-8 px-4 py-8 sm:px-6 sm:py-12">
-      <PageView event="real_estate_request_page_viewed" />
+      <PageView event="real_estate_request_form_viewed" />
 
       {/* Back link */}
       <Link
@@ -71,7 +71,7 @@ export default async function RealEstateRequestPage() {
             {t("realEstate.request.channels.description")}
           </p>
         </div>
-        <ContactChannels />
+        <ContactChannels section="need_faster_response" />
       </section>
 
       {/* Safety notice */}

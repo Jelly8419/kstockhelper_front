@@ -38,7 +38,8 @@ export type EventName =
   // Real Estate buying support
   | "home_real_estate_banner_clicked"
   | "real_estate_home_viewed"
-  | "real_estate_request_page_viewed"
+  | "real_estate_request_button_clicked"
+  | "real_estate_request_form_viewed"
   | "real_estate_request_submit_clicked"
   | "real_estate_contact_channel_clicked";
 

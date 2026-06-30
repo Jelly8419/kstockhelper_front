@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { useTrackEvent } from "@/lib/analytics/useTrackEvent";
-import { COUNTRIES } from "@/lib/constants/countries";
+import { CountrySelect } from "@/components/realEstate/CountrySelect";
 import {
   REAL_ESTATE_CURRENCIES,
   REAL_ESTATE_PROPERTY_TYPES,
@@ -53,10 +53,9 @@ export function RequestForm() {
   const track = useTrackEvent();
 
   const [email, setEmail] = useState("");
-  // `country` holds the resolved ISO code (stored value); `countryQuery` holds
-  // the free-typed text bound to the datalist input until it matches a name.
+  // `country` holds the selected ISO code (stored value); CountrySelect manages
+  // its own search query internally.
   const [country, setCountry] = useState("");
-  const [countryQuery, setCountryQuery] = useState("");
   const [currency, setCurrency] = useState<string>(REAL_ESTATE_CURRENCIES[0].code);
   const [budgetMin, setBudgetMin] = useState("");
   const [budgetMax, setBudgetMax] = useState("");
@@ -70,16 +69,6 @@ export function RequestForm() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
-
-  // Resolve typed text → ISO code when it exactly matches a country name
-  // (datalist selection or full type-in); otherwise keep code empty.
-  function onCountryInput(value: string) {
-    setCountryQuery(value);
-    const match = COUNTRIES.find(
-      (c) => c.name.toLowerCase() === value.trim().toLowerCase()
-    );
-    setCountry(match ? match.code : "");
-  }
 
   const propertyTypeLabel = useMemo(
     () => ({
@@ -168,7 +157,6 @@ export function RequestForm() {
   function resetForm() {
     setEmail("");
     setCountry("");
-    setCountryQuery("");
     setCurrency(REAL_ESTATE_CURRENCIES[0].code);
     setBudgetMin("");
     setBudgetMax("");
@@ -195,24 +183,21 @@ export function RequestForm() {
           error={errors.email}
         />
 
-        {/* Country of residence (searchable via native datalist) */}
+        {/* Country of residence (custom searchable dropdown — §5) */}
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="re-country" className="text-sm font-medium text-foreground">
+          <span className="text-sm font-medium text-foreground">
             {t("realEstate.request.form.countryLabel")} *
-          </label>
-          <input
-            id="re-country"
-            list="re-country-options"
+          </span>
+          <CountrySelect
+            value={country}
+            onChange={setCountry}
             placeholder={t("realEstate.request.form.countryPlaceholder")}
-            value={countryQuery}
-            onChange={(e) => onCountryInput(e.target.value)}
-            className={`${selectBase} ${errors.country ? "border-down" : ""}`}
+            // Form is English-only (request-page PRD); kept literal to avoid a new
+            // i18n key (which would require a PM translation round before deploy).
+            // eslint-disable-next-line i18next/no-literal-string
+            emptyLabel="No countries found"
+            error={!!errors.country}
           />
-          <datalist id="re-country-options">
-            {COUNTRIES.map((c) => (
-              <option key={c.code} value={c.name} />
-            ))}
-          </datalist>
           {errors.country && <p className="text-xs text-down">{errors.country}</p>}
         </div>
 

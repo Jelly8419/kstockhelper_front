@@ -14,15 +14,27 @@ export const REAL_ESTATE_SUPPORT_EMAIL = "kstockhelper@gmail.com";
 
 export type RealEstateChannelKey = "whatsapp" | "wechat" | "line" | "email";
 
+/**
+ * Mobile modal behaviour per channel (k-property mobile revisions):
+ *  - `link` → QR + a message button (WhatsApp: opens wa.me link)
+ *  - `copy` → QR + a Copy-ID button that copies `id` and shows a toast (WeChat/LINE)
+ *  - `none` → no modal (Email is shown as a plain address under the section)
+ */
+export type RealEstateChannelModal = "link" | "copy" | "none";
+
 export interface RealEstateChannel {
   /** Channel key — maps to `realEstate.channels.<key>` i18n label. */
   key: RealEstateChannelKey;
   /** QR image path under /public, or null for the email channel. */
   qr: string | null;
-  /** Friend-add ID shown under the QR (WeChat/LINE), or null. */
+  /** Friend-add ID shown under the QR / copied to clipboard (WeChat/LINE), or null. */
   id: string | null;
   /** mailto/link target for the email channel, or null for QR channels. */
   href: string | null;
+  /** Mobile modal behaviour (see RealEstateChannelModal). */
+  modal: RealEstateChannelModal;
+  /** WhatsApp message deep-link (wa.me), used by the `link` modal button. */
+  waLink: string | null;
 }
 
 /**
@@ -35,24 +47,32 @@ export const REAL_ESTATE_CONTACT_CHANNELS: RealEstateChannel[] = [
     qr: "/qr-whatsapp.jpg",
     id: null,
     href: null,
+    modal: "link",
+    waLink: "https://wa.me/821023236834",
   },
   {
     key: "wechat",
     qr: "/qr-wechat.jpg",
     id: "koreaproperty",
     href: null,
+    modal: "copy",
+    waLink: null,
   },
   {
     key: "line",
     qr: "/qr-line.jpg",
     id: "Koreaproperty",
     href: null,
+    modal: "copy",
+    waLink: null,
   },
   {
     key: "email",
     qr: null,
     id: null,
     href: `mailto:${REAL_ESTATE_SUPPORT_EMAIL}`,
+    modal: "none",
+    waLink: null,
   },
 ];
 

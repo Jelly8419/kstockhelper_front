@@ -93,11 +93,39 @@ export function ContactChannels({ section }: { section: ContactChannelSection })
         })}
       </div>
 
-      {/* Mobile (<sm): circular brand icons → modal, then Email address */}
+      {/* Mobile (<sm): circular brand icons. WhatsApp opens the chat directly;
+          WeChat/LINE open a QR/ID modal (k-property mobile revisions). */}
       <div className="flex w-full flex-col gap-5 sm:hidden">
         <div className="flex items-start justify-center gap-8">
           {messagingChannels.map((channel) => {
             const label = t(`realEstate.channels.${channel.key}`);
+            const iconBadge = (
+              <>
+                <span className="flex h-16 w-16 items-center justify-center rounded-full border border-border bg-white shadow-sm transition-transform active:scale-95">
+                  <ChannelIcon channel={channel.key} size={32} />
+                </span>
+                <span className="text-xs font-medium text-foreground">{label}</span>
+              </>
+            );
+
+            // WhatsApp — go straight to the chat (no modal).
+            if (channel.modal === "link" && channel.waLink) {
+              return (
+                <a
+                  key={channel.key}
+                  href={channel.waLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => logClick(channel.key)}
+                  className="flex flex-col items-center gap-2"
+                  aria-label={label}
+                >
+                  {iconBadge}
+                </a>
+              );
+            }
+
+            // WeChat / LINE — open the QR/ID modal.
             return (
               <button
                 key={channel.key}
@@ -109,10 +137,7 @@ export function ContactChannels({ section }: { section: ContactChannelSection })
                 className="flex flex-col items-center gap-2"
                 aria-label={label}
               >
-                <span className="flex h-16 w-16 items-center justify-center rounded-full border border-border bg-white shadow-sm transition-transform active:scale-95">
-                  <ChannelIcon channel={channel.key} size={32} />
-                </span>
-                <span className="text-xs font-medium text-foreground">{label}</span>
+                {iconBadge}
               </button>
             );
           })}

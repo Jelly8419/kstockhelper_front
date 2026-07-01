@@ -122,4 +122,25 @@ export const RAW_EVENT_AREAS: RawEventArea[] = [
     ],
     propColumns: [{ key: "action_source", label: "action_source" }],
   },
+  {
+    // Real Estate (부동산) funnel. PRD asks for anonymous_id + locale + section
+    // + channel; those live in `properties` (anon_id is the stored key), so they
+    // go in propColumns alongside the common columns the table always shows.
+    id: "real_estate",
+    label: "Real Estate",
+    eventNames: [
+      "home_real_estate_banner_clicked",
+      "real_estate_home_viewed",
+      "real_estate_request_button_clicked",
+      "real_estate_request_form_viewed",
+      "real_estate_request_submit_clicked",
+      "real_estate_contact_channel_clicked",
+    ],
+    propColumns: [
+      { key: "anon_id", label: "anonymous_id" },
+      { key: "locale", label: "locale" },
+      { key: "section", label: "section" },
+      { key: "channel", label: "channel" },
+    ],
+  },
 ];

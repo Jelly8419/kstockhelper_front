@@ -434,7 +434,19 @@
       "wechat": "WeChat",
       "line": "LINE",
       "telegram": "Telegram",
-      "email": "Email"
+      "email": "Email",
+      "modal": {
+        "whatsappDescription": "Scan the QR code or tap the button below to message us on WhatsApp.",
+        "whatsappButton": "Message us on WhatsApp",
+        "addFriendDescription": "Scan the QR code or copy our ID to add us as a friend.",
+        "copyButton": "Copy",
+        "wechatHelper": "After copying the ID, search for us in WeChat.",
+        "lineHelper": "After copying the ID, search for us in LINE."
+      },
+      "toast": {
+        "copySuccess": "Copied to clipboard",
+        "copyError": "Could not copy. Please try again."
+      }
     },
     "request": {
       "back": "Kembali ke Halaman Real Estat",

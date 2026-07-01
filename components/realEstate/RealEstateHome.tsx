@@ -3,6 +3,7 @@ import { getAppTranslations } from "@/lib/i18n/getTranslations";
 import { TrackedLink } from "@/lib/analytics/TrackedLink";
 import { PageView } from "@/lib/analytics/PageView";
 import { ContactChannels } from "./ContactChannels";
+import { ScopeStepIcon } from "./ScopeStepIcon";
 import { REAL_ESTATE_REQUEST_PATH } from "@/lib/constants/realEstate";
 
 /**
@@ -98,14 +99,19 @@ export async function RealEstateHome() {
             {t("realEstate.home.scope.description")}
           </p>
         </div>
-        <ol className="flex flex-col gap-3 lg:flex-row lg:items-stretch lg:gap-2">
+        <ol className="mx-auto flex w-full max-w-xl flex-col gap-3">
           {steps.map((step, i) => (
             <li
               key={step}
-              className="flex flex-1 items-center gap-3 rounded-xl border border-border bg-surface p-4 lg:flex-col lg:text-center"
+              className="flex items-center gap-3 rounded-xl border border-border bg-surface p-4"
             >
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand/15 text-sm font-semibold text-brand">
+              {/* Solid blue circular number badge */}
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-semibold text-white">
                 {i + 1}
+              </span>
+              {/* Step icon */}
+              <span className="shrink-0 text-brand">
+                <ScopeStepIcon index={i} size={24} />
               </span>
               <span className="text-sm font-medium text-foreground">{step}</span>
             </li>

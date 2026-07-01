@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useTranslation } from "@/lib/i18n/useTranslation";
 import { useTrackEvent } from "@/lib/analytics/useTrackEvent";
-import { Button } from "@/components/ui/Button";
+import { ChannelIcon } from "@/components/realEstate/ChannelIcon";
 import { ChannelModal } from "@/components/realEstate/ChannelModal";
 import { Toast } from "@/components/realEstate/Toast";
 import {
@@ -93,23 +93,27 @@ export function ContactChannels({ section }: { section: ContactChannelSection })
         })}
       </div>
 
-      {/* Mobile (<sm): channel buttons → modal, then Email address */}
-      <div className="flex w-full flex-col gap-3 sm:hidden">
-        <div className="grid grid-cols-1 gap-2">
+      {/* Mobile (<sm): circular brand icons → modal, then Email address */}
+      <div className="flex w-full flex-col gap-5 sm:hidden">
+        <div className="flex items-start justify-center gap-8">
           {messagingChannels.map((channel) => {
             const label = t(`realEstate.channels.${channel.key}`);
             return (
-              <Button
+              <button
                 key={channel.key}
-                variant="secondary"
-                className="w-full"
+                type="button"
                 onClick={() => {
                   logClick(channel.key);
                   setActiveModal(channel);
                 }}
+                className="flex flex-col items-center gap-2"
+                aria-label={label}
               >
-                {label}
-              </Button>
+                <span className="flex h-16 w-16 items-center justify-center rounded-full border border-border bg-white shadow-sm transition-transform active:scale-95">
+                  <ChannelIcon channel={channel.key} size={32} />
+                </span>
+                <span className="text-xs font-medium text-foreground">{label}</span>
+              </button>
             );
           })}
         </div>

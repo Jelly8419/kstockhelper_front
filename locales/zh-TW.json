@@ -436,16 +436,16 @@
       "telegram": "Telegram",
       "email": "Email",
       "modal": {
-        "whatsappDescription": "Scan the QR code or tap the button below to message us on WhatsApp.",
-        "whatsappButton": "Message us on WhatsApp",
-        "addFriendDescription": "Scan the QR code or copy our ID to add us as a friend.",
-        "copyButton": "Copy",
-        "wechatHelper": "After copying the ID, search for us in WeChat.",
-        "lineHelper": "After copying the ID, search for us in LINE."
+        "whatsappDescription": "掃描 QR Code，或點擊下方按鈕透過 WhatsApp 與我們聯繫。",
+        "whatsappButton": "透過 WhatsApp 聯繫我們",
+        "addFriendDescription": "掃描 QR Code，或複製我們的 ID 加為好友。",
+        "copyButton": "複製",
+        "wechatHelper": "複製 ID 後，請在 WeChat 中搜尋我們。",
+        "lineHelper": "複製 ID 後，請在 LINE 中搜尋我們。"
       },
       "toast": {
-        "copySuccess": "Copied to clipboard",
-        "copyError": "Could not copy. Please try again."
+        "copySuccess": "已複製到剪貼簿",
+        "copyError": "無法複製。請再試一次。"
       }
     },
     "request": {

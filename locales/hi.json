@@ -436,16 +436,16 @@
       "telegram": "Telegram",
       "email": "Email",
       "modal": {
-        "whatsappDescription": "Scan the QR code or tap the button below to message us on WhatsApp.",
-        "whatsappButton": "Message us on WhatsApp",
-        "addFriendDescription": "Scan the QR code or copy our ID to add us as a friend.",
-        "copyButton": "Copy",
-        "wechatHelper": "After copying the ID, search for us in WeChat.",
-        "lineHelper": "After copying the ID, search for us in LINE."
+        "whatsappDescription": "QR कोड स्कैन करें या WhatsApp पर हमें संदेश भेजने के लिए नीचे दिया बटन टैप करें.",
+        "whatsappButton": "WhatsApp पर संदेश भेजें",
+        "addFriendDescription": "QR कोड स्कैन करें या हमें मित्र के रूप में जोड़ने के लिए हमारा ID कॉपी करें.",
+        "copyButton": "कॉपी करें",
+        "wechatHelper": "ID कॉपी करने के बाद, WeChat में हमें खोजें.",
+        "lineHelper": "ID कॉपी करने के बाद, LINE में हमें खोजें."
       },
       "toast": {
-        "copySuccess": "Copied to clipboard",
-        "copyError": "Could not copy. Please try again."
+        "copySuccess": "क्लिपबोर्ड पर कॉपी हो गया",
+        "copyError": "कॉपी नहीं हो सका. कृपया फिर से कोशिश करें."
       }
     },
     "request": {

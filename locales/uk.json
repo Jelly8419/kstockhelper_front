@@ -436,16 +436,16 @@
       "telegram": "Telegram",
       "email": "Email",
       "modal": {
-        "whatsappDescription": "Scan the QR code or tap the button below to message us on WhatsApp.",
-        "whatsappButton": "Message us on WhatsApp",
-        "addFriendDescription": "Scan the QR code or copy our ID to add us as a friend.",
-        "copyButton": "Copy",
-        "wechatHelper": "After copying the ID, search for us in WeChat.",
-        "lineHelper": "After copying the ID, search for us in LINE."
+        "whatsappDescription": "Відскануйте QR-код або натисніть кнопку нижче, щоб написати нам у WhatsApp.",
+        "whatsappButton": "Написати у WhatsApp",
+        "addFriendDescription": "Відскануйте QR-код або скопіюйте наш ID, щоб додати нас у друзі.",
+        "copyButton": "Копіювати",
+        "wechatHelper": "Після копіювання ID знайдіть нас у WeChat.",
+        "lineHelper": "Після копіювання ID знайдіть нас у LINE."
       },
       "toast": {
-        "copySuccess": "Copied to clipboard",
-        "copyError": "Could not copy. Please try again."
+        "copySuccess": "Скопійовано в буфер обміну",
+        "copyError": "Не вдалося скопіювати. Спробуйте ще раз."
       }
     },
     "request": {

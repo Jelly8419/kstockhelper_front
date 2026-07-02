@@ -436,16 +436,16 @@
       "telegram": "Telegram",
       "email": "Email",
       "modal": {
-        "whatsappDescription": "Scan the QR code or tap the button below to message us on WhatsApp.",
-        "whatsappButton": "Message us on WhatsApp",
-        "addFriendDescription": "Scan the QR code or copy our ID to add us as a friend.",
-        "copyButton": "Copy",
-        "wechatHelper": "After copying the ID, search for us in WeChat.",
-        "lineHelper": "After copying the ID, search for us in LINE."
+        "whatsappDescription": "Quét mã QR hoặc nhấn nút bên dưới để nhắn tin cho chúng tôi trên WhatsApp.",
+        "whatsappButton": "Nhắn tin qua WhatsApp",
+        "addFriendDescription": "Quét mã QR hoặc sao chép ID để kết bạn với chúng tôi.",
+        "copyButton": "Sao chép",
+        "wechatHelper": "Sau khi sao chép ID, hãy tìm chúng tôi trên WeChat.",
+        "lineHelper": "Sau khi sao chép ID, hãy tìm chúng tôi trên LINE."
       },
       "toast": {
-        "copySuccess": "Copied to clipboard",
-        "copyError": "Could not copy. Please try again."
+        "copySuccess": "Đã sao chép vào bộ nhớ tạm",
+        "copyError": "Không thể sao chép. Vui lòng thử lại."
       }
     },
     "request": {

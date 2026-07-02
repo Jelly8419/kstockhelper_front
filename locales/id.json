@@ -436,16 +436,16 @@
       "telegram": "Telegram",
       "email": "Email",
       "modal": {
-        "whatsappDescription": "Scan the QR code or tap the button below to message us on WhatsApp.",
-        "whatsappButton": "Message us on WhatsApp",
-        "addFriendDescription": "Scan the QR code or copy our ID to add us as a friend.",
-        "copyButton": "Copy",
-        "wechatHelper": "After copying the ID, search for us in WeChat.",
-        "lineHelper": "After copying the ID, search for us in LINE."
+        "whatsappDescription": "Pindai kode QR atau ketuk tombol di bawah untuk mengirim pesan kepada kami di WhatsApp.",
+        "whatsappButton": "Kirim pesan di WhatsApp",
+        "addFriendDescription": "Pindai kode QR atau salin ID kami untuk menambahkan kami sebagai teman.",
+        "copyButton": "Salin",
+        "wechatHelper": "Setelah menyalin ID, cari kami di WeChat.",
+        "lineHelper": "Setelah menyalin ID, cari kami di LINE."
       },
       "toast": {
-        "copySuccess": "Copied to clipboard",
-        "copyError": "Could not copy. Please try again."
+        "copySuccess": "Disalin ke clipboard",
+        "copyError": "Tidak dapat menyalin. Silakan coba lagi."
       }
     },
     "request": {
